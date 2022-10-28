@@ -24,9 +24,9 @@ const mockEntity: Entity = {
     },
 };
 type ArgoResponse = {
-    Status: number,
-    Message: Array<string>,
+    message: string,
 }
+
 class MockPluginClient implements ArgocdAutopilotApi {
 
     async PostArgoApi(): Promise<{ status: string; }> {
@@ -37,16 +37,15 @@ class MockPluginClient implements ArgocdAutopilotApi {
                     'git-repo': 'https://github.com/tony-mw/autotest-argo-demo.git',
                     'git-token-path': '/Users/tonyprestifilippo/.github_token',
                     'root-command': 'argocd-autopilot',
-                    'args': ['repo', 'bootstrap']
+                    'args': ['repo', '--help']
                 },
                 {
                     headers: {'Content-Type': 'application/json'},
-                    Accept: 'application/json',
                 },
             );
-            console.log(JSON.stringify(data, null, 4))
-            // let obj = JSON.parse(data)
-            return { status: JSON.stringify(data, null, 4)};
+            console.log(typeof data)
+           //let obj = JSON.parse(data)
+            return { status: data.message};
         } catch(error) {
             if (axios.isAxiosError(error)) {
                 console.log('error message: ', error.message);
@@ -63,8 +62,8 @@ class MockPluginClient implements ArgocdAutopilotApi {
 createDevApp()
   .registerPlugin(argocdAutopilotPlugin)
   .addPage({
-    path: '/fixture-1',
-    title: 'Fixture 1',
+    path: '/ArgocdAutopilot',
+    title: 'ArgoCD Autopilot',
     element: (
         <TestApiProvider
             apis={[[argocdAutopilotApiRef, new MockPluginClient()]]}

@@ -1,39 +1,35 @@
-import React, {useCallback, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import {useMyPluginObjects} from "../../hooks/useMyPluginObjects";
 import Button from "./CustomButtonComponent";
+import {useApi} from "@backstage/core-plugin-api";
+import {argocdAutopilotApiRef} from "../../api";
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
-    const { error, loading, status } = useMyPluginObjects();
-    if (loading) {
-        return <div>Loading</div>;
+    const [loading, setLoading] = useState<boolean>(true);
+    const [status, setStatus] = useState<string>('N/A');
+    const [error, setError] = useState<boolean>(false);
+    const myPluginApi = useApi(argocdAutopilotApiRef);
+
+    async function getObjects() {
+        try {
+            const resp = await myPluginApi.PostArgoApi();
+            setStatus(resp.status);
+        } catch (e) {
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
     }
-    if (error) {
-        return <div>Error</div>;
-    }
+
+    // useEffect(() => {
+    //     getObjects();
+    // });
+
     return (<>
-        <div>Hello {entity.metadata.name}</div>
+        <div>ArgoCD Autopilot {entity.metadata.name} Plugin</div>
+        <button type="button" onClick={getObjects}>Trigger</button>
         <div>Status: {status}</div>
     </>);
-    // const { entity } = useEntity();
-    // const [isSending, setIsSending] = useState(false)
-    // const sendRequest = useCallback(async () => {
-    //     // don't send again while we are sending
-    //     if (isSending) return
-    //     // update state
-    //     setIsSending(true)
-    //     // send the actual request
-    //     const { error, loading, status } = useMyPluginObjects()
-    //     // once the request is sent, update state again
-    //     setIsSending(false)
-    // }, [isSending]) // update the callback if the state changes
-    //
-    // return (<>
-    //     <div>Hello {entity.metadata.name}</div>
-    //     <div>
-    //         <input type="button" disabled={isSending} onClick={sendRequest} />
-    //     </div>
-    //     <div>Status: {status}</div>
-    //     </>)
 }

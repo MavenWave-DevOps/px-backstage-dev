@@ -22,8 +22,6 @@ export const useMyPluginObjects = () => {
         getObjects();
     });
     return {
-        error,
-        loading,
-        status,
+        status
     }
 }
