@@ -10,7 +10,7 @@ interface Props {
     width: string;
 }
 
-const Button: React.FC<Props> = ({
+const CustomButtonComponent: React.FC<Props> = ({
                                      border,
                                      color,
                                      children,
@@ -35,4 +35,4 @@ const Button: React.FC<Props> = ({
     );
 }
 
-export default Button;
+export default CustomButtonComponent;
