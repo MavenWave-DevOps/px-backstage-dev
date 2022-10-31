@@ -19,13 +19,16 @@ import Typography, {AppBar} from "@material-ui/core";
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [status, setStatus] = useState<string>('N/A');
     const [error, setError] = useState<boolean>(false);
     const myPluginApi = useApi(argocdAutopilotApiRef);
 
     async function getObjects() {
         try {
+            if(!loading) {
+                setLoading(true)
+            }
             const resp = await myPluginApi.PostArgoApi();
             setStatus(resp.status);
         } catch (e) {
@@ -39,7 +42,7 @@ export const ExampleComponent = () => {
     //     getObjects();
     // });
     // if (loading) {
-    //     return <div>Loading</div>;
+    //     setStatus("loading")
     // }
     return (<>
         <h1>
@@ -84,7 +87,7 @@ export const ExampleComponent = () => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="primary" onClick={getObjects}>Submit</Button>
+                    <Button variant="contained" color="primary" onClick={getObjects}>{loading ? <>Loading..</> : <>Submit</>}</Button>
                 </Grid>
                 </Grid>
             </form>
