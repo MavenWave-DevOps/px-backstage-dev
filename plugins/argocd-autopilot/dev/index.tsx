@@ -30,27 +30,34 @@ type ArgoResponse = {
 class MockPluginClient implements ArgocdAutopilotApi {
 
     async PostArgoApi(): Promise<{ status: string; }> {
+        const repo=document.getElementById('git-repo') as HTMLInputElement
+        const tokenPath=document.getElementById('git-token-path') as HTMLInputElement
+        const command=document.getElementById('root-command') as HTMLInputElement
+        const args=document.getElementById('args') as HTMLInputElement
+        const argsSplit = args.value.split(",")
         try {
+            const d = {
+                    //'https://github.com/tony-mw/autotest-argo-demo.git'
+                    'git-repo': repo.value,
+                    'git-token-path': tokenPath.value,
+                    'root-command': command.value,
+                    'args': argsSplit
+                }
+            console.log(d)
             const { data } = await axios.post<ArgoResponse>(
                 'http://localhost:8080/run',
-                {
-                    'git-repo': 'https://github.com/tony-mw/autotest-argo-demo.git',
-                    'git-token-path': '/Users/tonyprestifilippo/.github_token',
-                    'root-command': 'argocd-autopilot',
-                    'args': ['repo', '--help']
-                },
+                d,
                 {
                     headers: {'Content-Type': 'application/json'},
                 },
             );
-            console.log(typeof data)
            //let obj = JSON.parse(data)
             return { status: data.message};
         } catch(error) {
             if (axios.isAxiosError(error)) {
                 console.log('error message: ', error.message);
                 // 👇️ error: AxiosError<any, any>
-                return error.message;
+                return {status: error.message};
             } else {
                 console.log('unexpected error: ', error);
                 return {status: 'An unexpected error occurred'};
