@@ -92,7 +92,7 @@ export const ExampleComponent = () => {
                 </Grid>
             </form>
         <div>
-            <h3>Status: {status}</h3>
+            <h3>Status: {loading ? <>N/A</> : status}</h3>
         </div>
     </>);
 }
