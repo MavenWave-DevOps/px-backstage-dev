@@ -5,32 +5,45 @@ import {useApi} from "@backstage/core-plugin-api";
 import {argocdAutopilotApiRef} from "../../api";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import Select from "@material-ui/core/Select";
+import FormControl from '@mui/material/FormControl';
+// import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
-import Typography, {AppBar} from "@material-ui/core";
-
+import { InputLabel} from "@material-ui/core";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import Bootstrap from './components/bootstrap'
+import AddApp from './components/newApp'
+import NewProject from './components/newProject'
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
     const [loading, setLoading] = useState<boolean>(false);
     const [status, setStatus] = useState<string>('N/A');
     const [error, setError] = useState<boolean>(false);
+    const [action, setAction] = React.useState('');
+    const [bootstrapFormVisible, setBootstrapFormVisible] = useState(false);
+    const [newAppFormVisible, setnewAppFormVisible] = useState(false);
+    const [newProjectFormVisible, setnewProjectFormVisible] = useState(false);
+
+    useEffect(() => {
+        action === 'bootstrap' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
+        action === 'app-add' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
+        action === 'project-add' ? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
+    },[action])
+
     const myPluginApi = useApi(argocdAutopilotApiRef);
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setAction(event.target.value as string);
+    };
 
     async function getObjects() {
         try {
             if(!loading) {
                 setLoading(true)
             }
-            const resp = await myPluginApi.PostArgoApi();
+            const resp = await myPluginApi.PostArgoApi(action);
             setStatus(resp.status);
         } catch (e) {
             setError(true);
@@ -39,53 +52,52 @@ export const ExampleComponent = () => {
         }
     }
 
-    // useEffect(() => {
-    //     getObjects();
-    // });
-    // if (loading) {
-    //     setStatus("loading")
-    // }
     return (<>
         <h1>
             ArgoCD Autopilot {entity.metadata.name} Plugin
         </h1>
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl >
+                <InputLabel id="argo-select-label">Action</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="select-action"
+                    value={action}
+                    label="action"
+                    onChange={handleChange}
+                >
+                    <MenuItem value={'bootstrap'}>Bootstrap</MenuItem>
+                    <MenuItem value={'app-add'}>Add App</MenuItem>
+                    <MenuItem value={'project-add'}>Add Project</MenuItem>
+                    <MenuItem value={'test'}>Test</MenuItem>
+                </Select>
+            </FormControl>
+        </Box>
         <form>
         <Grid container alignItems="flex-start" direction="column">
             <Grid item>
-                <FormControl>
+                <FormControl fullWidth>
                     <TextField
                         fullWidth
-                        id="git-repo"
-                        name="Git Repo"
-                        label="git-repo"
+                        id="git-repo-org"
+                        name="Git Repo Org"
+                        label="Github Organization"
                         type="text"
                         // value={formValues.age}
                         // onChange={handleInputChange}
                         />
                     <TextField
-                        id="git-token-path"
-                        name="Git Token Path"
-                        label="git-token-path"
+                        id="repo-name"
+                        name="Repo Name"
+                        label="Repo Name"
                         type="text"
                         // value={formValues.age}
                         // onChange={handleInputChange}
                     />
-                    <TextField
-                        id="root-command"
-                        name="Command"
-                        label="root-command"
-                        type="text"
-                        // value={formValues.age}
-                        // onChange={handleInputChange}
-                    />
-                    <TextField
-                        id="args"
-                        name="Arguments"
-                        label="args"
-                        type="text"
-                        // value={formValues.age}
-                        // onChange={handleInputChange}
-                    />
+                    {bootstrapFormVisible && <Bootstrap />}
+                    {newAppFormVisible && <AddApp />}
+                    {newProjectFormVisible && <NewProject />}
+
                     </FormControl>
                 </Grid>
                 <Grid item>
