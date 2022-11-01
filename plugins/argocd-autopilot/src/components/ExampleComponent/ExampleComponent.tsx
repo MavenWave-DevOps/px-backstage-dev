@@ -5,6 +5,7 @@ import {useApi} from "@backstage/core-plugin-api";
 import {argocdAutopilotApiRef} from "../../api";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -53,6 +54,7 @@ export const ExampleComponent = () => {
             <Grid item>
                 <FormControl>
                     <TextField
+                        fullWidth
                         id="git-repo"
                         name="Git Repo"
                         label="git-repo"

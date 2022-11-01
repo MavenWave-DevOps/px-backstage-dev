@@ -1,9 +1,25 @@
-import { createPlugin, createRoutableExtension } from '@backstage/core-plugin-api';
-
+import {
+    createApiFactory,
+    createPlugin,
+    createRoutableExtension,
+    discoveryApiRef,
+} from '@backstage/core-plugin-api';
+import { ArgocdAutopilotBackendClient } from "./api/ArgocdAutopilotBackendClient";
+import  { argocdAutopilotApiRef } from "./api/types"
 import { rootCatalogArgocdAutopilotRouteRef } from './routes';
 
 export const argocdAutopilotPlugin = createPlugin({
   id: 'argocd-autopilot',
+  apis: [
+    createApiFactory({
+        api: argocdAutopilotApiRef,
+        deps: {
+            discoveryApi: discoveryApiRef,
+        },
+        factory: ({ discoveryApi }) =>
+            new ArgocdAutopilotBackendClient({ discoveryApi }),
+    }),
+  ],
   routes: {
     root: rootCatalogArgocdAutopilotRouteRef,
   },
