@@ -16,8 +16,17 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: plugin-argocd-autopilot
+spec:
+  lifecycle: production
+  owner: my-team
+  type: service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
   annotations:
     argocd/app-name: test-app
+  name: argocd
 spec:
   lifecycle: production
   owner: my-team
