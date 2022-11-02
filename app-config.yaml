@@ -50,7 +50,14 @@ proxy:
   '/test':
     target: 'https://example.com'
     changeOrigin: true
-
+  '/argocd/api':
+    target: https://localhost:8083/api/v1/
+    changeOrigin: true
+    # only if your argocd api has self-signed cert
+    secure: false
+    headers:
+      Cookie:
+        $env: ARGOCD_AUTH_TOKEN
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
 # and an external cloud storage when deploying TechDocs for production use-case.
