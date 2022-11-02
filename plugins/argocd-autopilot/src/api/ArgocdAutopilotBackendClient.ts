@@ -20,7 +20,7 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
     //     return await response.json();
     // }
 
-    async PostArgoApi(action: string): Promise<{ status: string; }> {
+    async PostArgoApi(action: string, manType: string): Promise<{ status: string; }> {
         const unneededurlithink = `${await this.discoveryApi.getBaseUrl('argocd-autopilot')}/run`;
         console.log(unneededurlithink)
 
@@ -45,8 +45,7 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
             var appName = document.getElementById('app-name') as HTMLInputElement
             var appRepo = document.getElementById('app-repo') as HTMLInputElement
             var project = document.getElementById('project') as HTMLInputElement
-            var manifestType = document.getElementById('manifest-type') as HTMLInputElement
-            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manifestType.value]
+            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType]
         } else if (action === "project-add") {
             var projectName = document.getElementById('new-project') as HTMLInputElement
             argsArray = ["project", "create", projectName.value]

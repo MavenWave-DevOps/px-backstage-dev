@@ -29,7 +29,8 @@ type ArgoResponse = {
 
 class MockPluginClient implements ArgocdAutopilotApi {
 
-    async PostArgoApi(action: string): Promise<{ status: string; }> {
+    async PostArgoApi(action: string, manType: string): Promise<{ status: string; }> {
+
         console.log(action)
         const tokenPath=".github_token"
         const command="argocd-autopilot"
@@ -51,8 +52,8 @@ class MockPluginClient implements ArgocdAutopilotApi {
             var appName = document.getElementById('app-name') as HTMLInputElement
             var appRepo = document.getElementById('app-repo') as HTMLInputElement
             var project = document.getElementById('project') as HTMLInputElement
-            var manifestType = document.getElementById('manifest-type') as HTMLInputElement
-            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manifestType.value]
+            //var manifestType = document.getElementById('man-type') as HTMLInputElement
+            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType]
         } else if (action === "project-add") {
             var projectName = document.getElementById('new-project') as HTMLInputElement
             argsArray = ["project", "create", projectName.value]

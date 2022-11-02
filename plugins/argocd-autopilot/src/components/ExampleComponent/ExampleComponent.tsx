@@ -13,8 +13,10 @@ import { InputLabel} from "@material-ui/core";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Bootstrap from './components/bootstrap'
+import {finalManType} from "./components/newApp";
 import AddApp from './components/newApp'
 import NewProject from './components/newProject'
+import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
@@ -25,6 +27,7 @@ export const ExampleComponent = () => {
     const [bootstrapFormVisible, setBootstrapFormVisible] = useState(false);
     const [newAppFormVisible, setnewAppFormVisible] = useState(false);
     const [newProjectFormVisible, setnewProjectFormVisible] = useState(false);
+    const [manType, setManifestType] = React.useState('kustomize');
 
     useEffect(() => {
         action === 'bootstrap' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
@@ -33,6 +36,10 @@ export const ExampleComponent = () => {
     },[action])
 
     const myPluginApi = useApi(argocdAutopilotApiRef);
+
+    const handleManifestChange = (event: SelectChangeEvent) => {
+        setManifestType(event.target.value as string);
+    };
 
     const handleChange = (event: SelectChangeEvent) => {
         setAction(event.target.value as string);
@@ -43,7 +50,7 @@ export const ExampleComponent = () => {
             if(!loading) {
                 setLoading(true)
             }
-            const resp = await myPluginApi.PostArgoApi(action);
+            const resp = await myPluginApi.PostArgoApi(action, manType);
             setStatus(resp.status);
         } catch (e) {
             setError(true);
@@ -94,6 +101,19 @@ export const ExampleComponent = () => {
                         // value={formValues.age}
                         // onChange={handleInputChange}
                     />
+                    {newAppFormVisible &&
+                        <><FormLabel id="manifest-type">Manifest Type</FormLabel><RadioGroup
+                            id="man-type"
+                            value={manType}
+                            aria-labelledby="manifest-type"
+                            defaultValue="kustomize"
+                            name="manifest-type-group"
+                            onChange={handleManifestChange}
+                        >
+                            <FormControlLabel value="kustomize" control={<Radio/>} label="kustomize"/>
+                            <FormControlLabel value="dir" control={<Radio/>} label="dir"/>
+                        </RadioGroup></>
+                    }
                     {bootstrapFormVisible && <Bootstrap />}
                     {newAppFormVisible && <AddApp />}
                     {newProjectFormVisible && <NewProject />}
