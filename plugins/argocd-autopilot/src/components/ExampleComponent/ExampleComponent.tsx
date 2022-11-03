@@ -61,7 +61,7 @@ export const ExampleComponent = () => {
 
     return (<>
         <h1>
-            {entity.metadata.name} Plugin
+            {entity.metadata.name} plugin
         </h1>
         <Box>
             <FormControl fullWidth>

@@ -26,7 +26,7 @@ kind: Component
 metadata:
   annotations:
     argocd/app-selector: "app.kubernetes.io/managed-by=argocd-autopilot"
-  name: "Argocd-Autpilot"
+  name: "argocd-autopilot"
 spec:
   lifecycle: production
   owner: my-team
