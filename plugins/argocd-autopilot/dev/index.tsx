@@ -53,7 +53,7 @@ class MockPluginClient implements ArgocdAutopilotApi {
             var appRepo = document.getElementById('app-repo') as HTMLInputElement
             var project = document.getElementById('project') as HTMLInputElement
             //var manifestType = document.getElementById('man-type') as HTMLInputElement
-            staticArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels='backstage=enabled'"]
+            staticArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels=backstage=enabled"]
         } else if (action === "project-add") {
             var projectName = document.getElementById('new-project') as HTMLInputElement
             argsArray = ["project", "create", projectName.value]
