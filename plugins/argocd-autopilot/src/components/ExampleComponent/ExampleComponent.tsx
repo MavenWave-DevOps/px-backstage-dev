@@ -83,7 +83,7 @@ export const ExampleComponent = () => {
         <form>
         {/*<Grid container alignItems="flex-start" direction="column">*/}
         {/*    <Grid item>*/}
-            <FormControl fullWidth>
+            <FormControl fullWidth  sx={{ p:2 }}>
                 <TextField
                     fullWidth
                     id="git-repo-org"
@@ -102,7 +102,8 @@ export const ExampleComponent = () => {
                     // onChange={handleInputChange}
                 />
                 {newAppFormVisible &&
-                    <><FormLabel id="manifest-type">Manifest Type</FormLabel><RadioGroup
+                    <><FormLabel color="info" sx={{ p:1 }} id="manifest-type">Manifest Type</FormLabel>
+                        <RadioGroup
                         id="man-type"
                         value={manType}
                         aria-labelledby="manifest-type"
