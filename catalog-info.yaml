@@ -12,21 +12,21 @@
 #  owner: john@example.com
 #  lifecycle: experimental
 
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: plugin-argocd-autopilot
-spec:
-  lifecycle: production
-  owner: my-team
-  type: service
----
+#apiVersion: backstage.io/v1alpha1
+#kind: Component
+#metadata:
+#  name: plugin-argocd-autopilot
+#spec:
+#  lifecycle: production
+#  owner: my-team
+#  type: service
+#---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   annotations:
     argocd/app-selector: "app.kubernetes.io/managed-by=argocd-autopilot"
-  name: argocd-new
+  name: "Argocd Autpilot"
 spec:
   lifecycle: production
   owner: my-team

@@ -13,10 +13,9 @@ import { InputLabel} from "@material-ui/core";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Bootstrap from './components/bootstrap'
-import {finalManType} from "./components/newApp";
 import AddApp from './components/newApp'
 import NewProject from './components/newProject'
-import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import { FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
@@ -28,6 +27,7 @@ export const ExampleComponent = () => {
     const [newAppFormVisible, setnewAppFormVisible] = useState(false);
     const [newProjectFormVisible, setnewProjectFormVisible] = useState(false);
     const [manType, setManifestType] = React.useState('kustomize');
+
 
     useEffect(() => {
         action === 'bootstrap' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
@@ -61,10 +61,10 @@ export const ExampleComponent = () => {
 
     return (<>
         <h1>
-            ArgoCD Autopilot {entity.metadata.name} Plugin
+            {entity.metadata.name} Plugin
         </h1>
-        <Box sx={{ minWidth: 120 }}>
-            <FormControl >
+        <Box>
+            <FormControl fullWidth>
                 <InputLabel id="argo-select-label">Action</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -81,52 +81,50 @@ export const ExampleComponent = () => {
             </FormControl>
         </Box>
         <form>
-        <Grid container alignItems="flex-start" direction="column">
-            <Grid item>
-                <FormControl fullWidth>
-                    <TextField
-                        fullWidth
-                        id="git-repo-org"
-                        name="Git Repo Org"
-                        label="Github Organization"
-                        type="text"
-                        // value={formValues.age}
-                        // onChange={handleInputChange}
-                        />
-                    <TextField
-                        id="repo-name"
-                        name="Repo Name"
-                        label="Repo Name"
-                        type="text"
-                        // value={formValues.age}
-                        // onChange={handleInputChange}
+        {/*<Grid container alignItems="flex-start" direction="column">*/}
+        {/*    <Grid item>*/}
+            <FormControl fullWidth>
+                <TextField
+                    fullWidth
+                    id="git-repo-org"
+                    name="Git Repo Org"
+                    label="Github Organization"
+                    type="text"
+                    // value={formValues.age}
+                    // onChange={handleInputChange}
                     />
-                    {newAppFormVisible &&
-                        <><FormLabel id="manifest-type">Manifest Type</FormLabel><RadioGroup
-                            id="man-type"
-                            value={manType}
-                            aria-labelledby="manifest-type"
-                            defaultValue="kustomize"
-                            name="manifest-type-group"
-                            onChange={handleManifestChange}
-                        >
-                            <FormControlLabel value="kustomize" control={<Radio/>} label="kustomize"/>
-                            <FormControlLabel value="dir" control={<Radio/>} label="dir"/>
-                        </RadioGroup></>
-                    }
-                    {bootstrapFormVisible && <Bootstrap />}
-                    {newAppFormVisible && <AddApp />}
-                    {newProjectFormVisible && <NewProject />}
+                <TextField
+                    id="repo-name"
+                    name="Repo Name"
+                    label="Repo Name"
+                    type="text"
+                    // value={formValues.age}
+                    // onChange={handleInputChange}
+                />
+                {newAppFormVisible &&
+                    <><FormLabel id="manifest-type">Manifest Type</FormLabel><RadioGroup
+                        id="man-type"
+                        value={manType}
+                        aria-labelledby="manifest-type"
+                        defaultValue="kustomize"
+                        name="manifest-type-group"
+                        onChange={handleManifestChange}
+                    >
+                        <FormControlLabel value="kustomize" control={<Radio/>} label="kustomize"/>
+                        <FormControlLabel value="dir" control={<Radio/>} label="dir"/>
+                    </RadioGroup></>
+                }
+                {bootstrapFormVisible && <Bootstrap />}
+                {newAppFormVisible && <AddApp />}
+                {newProjectFormVisible && <NewProject />}
 
-                    </FormControl>
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" color="primary" onClick={getObjects}>{loading ? <>Loading..</> : <>Submit</>}</Button>
-                </Grid>
-                </Grid>
+                </FormControl>
+            <Box sx={{ p: 2 }}>
+                <Button variant="contained" color="primary" onClick={getObjects}>{loading ? <>Loading..</> : <>Submit</>}</Button>
+            </Box>
             </form>
         <div>
-            <h3>Status: {loading ? <>N/A</> : status}</h3>
+            <h3>Status: {loading ? <></> : status}</h3>
         </div>
     </>);
 }
