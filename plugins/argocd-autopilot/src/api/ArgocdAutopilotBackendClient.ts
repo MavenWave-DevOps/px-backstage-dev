@@ -45,7 +45,7 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
             var appName = document.getElementById('app-name') as HTMLInputElement
             var appRepo = document.getElementById('app-repo') as HTMLInputElement
             var project = document.getElementById('project') as HTMLInputElement
-            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType]
+            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels='backstage=enabled'"]
         } else if (action === "project-add") {
             var projectName = document.getElementById('new-project') as HTMLInputElement
             argsArray = ["project", "create", projectName.value]
