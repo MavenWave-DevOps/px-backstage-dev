@@ -25,7 +25,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   annotations:
-    argocd/selector: "app.kubernetes.io/managed-by=argocd-autopilot"
+    argocd/app-selector: "app.kubernetes.io/managed-by=argocd-autopilot"
   name: argocd-new
 spec:
   lifecycle: production
