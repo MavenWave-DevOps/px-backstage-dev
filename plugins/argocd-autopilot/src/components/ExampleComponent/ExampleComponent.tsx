@@ -31,8 +31,11 @@ export const ExampleComponent = () => {
 
     useEffect(() => {
         action === 'bootstrap' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
-        action === 'app-add' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
-        action === 'project-add' ? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
+        action === 'uninstall' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
+        action === 'app-create' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
+        action === 'app-delete' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
+        action === 'project-create' ? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
+        action === 'project-delete' ? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
     },[action])
 
     const myPluginApi = useApi(argocdAutopilotApiRef);
@@ -74,8 +77,11 @@ export const ExampleComponent = () => {
                     onChange={handleChange}
                 >
                     <MenuItem value={'bootstrap'}>Bootstrap</MenuItem>
-                    <MenuItem value={'app-add'}>Add App</MenuItem>
-                    <MenuItem value={'project-add'}>Add Project</MenuItem>
+                    <MenuItem value={'uninstall'}>Uninstall Repo</MenuItem>
+                    <MenuItem value={'app-create'}>Add App</MenuItem>
+                    <MenuItem value={'app-delete'}>Delete App</MenuItem>
+                    <MenuItem value={'project-create'}>Add Project</MenuItem>
+                    <MenuItem value={'project-delete'}>Delete Project</MenuItem>
                     <MenuItem value={'test'}>Test</MenuItem>
                 </Select>
             </FormControl>
