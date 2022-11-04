@@ -30,12 +30,9 @@ export const ExampleComponent = () => {
 
 
     useEffect(() => {
-        action === 'bootstrap' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
-        action === 'uninstall' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
-        action === 'app-create' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
-        action === 'app-delete' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
-        action === 'project-create' ? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
-        action === 'project-delete' ? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
+        action === 'bootstrap' || action === 'uninstall' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
+        action === 'app-create' || action === 'app-delete' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
+        action === 'project-create' || action === 'project-delete'? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
     },[action])
 
     const myPluginApi = useApi(argocdAutopilotApiRef);
