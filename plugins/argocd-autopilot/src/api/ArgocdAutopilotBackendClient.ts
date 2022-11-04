@@ -20,6 +20,35 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
     //     return await response.json();
     // }
 
+    buildCommand(action: string,  manType: string): Array<string> {
+        let baseCommand: string = ""
+        if (action === "bootstrap" || action === "uninstall") {
+            let extraArgs=document.getElementById('extra-args') as HTMLInputElement
+            let commandArr: Array<string> = []
+            baseCommand = "repo"
+            commandArr = [baseCommand, action]
+            let splitArgs = extraArgs.value.split(",")
+            return commandArr.concat(splitArgs)
+        }  else if  (action === "app-add" || action === "app-delete") {
+            let appName = document.getElementById('app-name') as HTMLInputElement
+            let appRepo = document.getElementById('app-repo') as HTMLInputElement
+            let project = document.getElementById('project') as HTMLInputElement
+            //var manifestType = document.getElementById('man-type') as HTMLInputElement
+            baseCommand = action.split("-")[1]
+            return ["app", baseCommand, appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels=backstage=enabled"]
+        } else if (action === "project-create" || action === "project-delete") {
+            console.log("Matched condition: ", action)
+            let projectName = document.getElementById('new-project') as HTMLInputElement
+            baseCommand = action.split("-")[1]
+            return ["project", baseCommand, projectName.value]
+        } else if (action === "test") {
+            return ["--help"]
+        } else {
+            console.log("Didn't match a condition: ", action)
+        }
+        return ['Form is invalid']
+    }
+
     async PostArgoApi(action: string, manType: string): Promise<{ status: string; }> {
         const unneededurlithink = `${await this.discoveryApi.getBaseUrl('argocd-autopilot')}/run`;
         console.log(unneededurlithink)
@@ -32,33 +61,12 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
         const repoOrg = document.getElementById('git-repo-org') as HTMLInputElement
         // https://github.com/tony-mw/autotest-argo.git example
         const repo = "https://github.com/"+repoOrg.value+"/"+repoName.value+".git"
-
-        var argsArray: Array<string> = []
-        if (action === "bootstrap") {
-            var staticArray = ["repo", "bootstrap"]
-            var args=document.getElementById('extra-args') as HTMLInputElement
-            console.log("Extra args: "+args)
-            var extraArgs = args.value.split(",")
-            argsArray = staticArray.concat(extraArgs)
-
-        } else if (action === "app-add") {
-            var appName = document.getElementById('app-name') as HTMLInputElement
-            var appRepo = document.getElementById('app-repo') as HTMLInputElement
-            var project = document.getElementById('project') as HTMLInputElement
-            argsArray = ["app", "create", appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels=backstage=enabled"]
-        } else if (action === "project-add") {
-            var projectName = document.getElementById('new-project') as HTMLInputElement
-            argsArray = ["project", "create", projectName.value]
-        } else if (action === "test") {
-            argsArray = ["--help"]
-        } else {
-            console.log(action)
-            return {status: 'Form is invalid'}
-        }
-
+        let argsArray = this.buildCommand(action, manType)
         let trimmedArgsArr = argsArray.map(s=>s.trim())
+
         console.log(trimmedArgsArr)
         console.log(repo)
+
         try {
             const d = {
                 //'https://github.com/tony-mw/autotest-argo-demo.git'

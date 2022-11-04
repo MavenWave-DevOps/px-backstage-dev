@@ -38,7 +38,7 @@ class MockPluginClient implements ArgocdAutopilotApi {
             commandArr = [baseCommand, action]
             let splitArgs = extraArgs.value.split(",")
             return commandArr.concat(splitArgs)
-        }  else if  (action === "app-add" || action === "app-delete") {
+        }  else if  (action === "app-create" || action === "app-delete") {
             let appName = document.getElementById('app-name') as HTMLInputElement
             let appRepo = document.getElementById('app-repo') as HTMLInputElement
             let project = document.getElementById('project') as HTMLInputElement
