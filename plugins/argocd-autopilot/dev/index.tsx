@@ -46,13 +46,14 @@ class MockPluginClient implements ArgocdAutopilotApi {
             baseCommand = action.split("-")[1]
             return ["app", baseCommand, appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels=backstage=enabled"]
         } else if (action === "project-create" || action === "project-delete") {
+            console.log("Matched condition: ", action)
             let projectName = document.getElementById('new-project') as HTMLInputElement
             baseCommand = action.split("-")[1]
             return ["project", baseCommand, projectName.value]
         } else if (action === "test") {
             return ["--help"]
         } else {
-            console.log(action)
+            console.log("Didn't match a condition: ", action)
         }
         return ['Form is invalid']
     }
