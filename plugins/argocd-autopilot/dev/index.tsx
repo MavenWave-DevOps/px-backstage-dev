@@ -5,7 +5,10 @@ import { createDevApp } from '@backstage/dev-utils';
 import { TestApiProvider } from '@backstage/test-utils';
 import { argocdAutopilotPlugin, EntityArgocdAutopilotContent } from '../src/plugin';
 import { ArgocdAutopilotApi, argocdAutopilotApiRef} from "../src";
+// import * as fs from 'fs';
+// import * as stream from 'stream';
 import axios from 'axios';
+// import { promisify } from 'util';
 
 const mockEntity: Entity = {
     apiVersion: 'backstage.io/v1alpha1',
@@ -23,8 +26,9 @@ const mockEntity: Entity = {
         owner: 'user:guest',
     },
 };
-type ArgoResponse = {
+export type ArgoResponse = {
     message: string,
+    logs: Array<string>
 }
 
 class MockPluginClient implements ArgocdAutopilotApi {
@@ -58,8 +62,7 @@ class MockPluginClient implements ArgocdAutopilotApi {
         return ['Form is invalid']
     }
 
-    async PostArgoApi(action: string, manType: string): Promise<{ status: string; }> {
-
+    async PostArgoApi(action: string, manType: string): Promise<ArgoResponse> {
         console.log(action)
         const tokenPath=".github_token"
         const command="argocd-autopilot"
@@ -74,7 +77,13 @@ class MockPluginClient implements ArgocdAutopilotApi {
         console.log(trimmedArgsArr)
         console.log(repo)
 
+        let formattedResponse: Array<string> = []
+        let logArr: Array<string> = []
+
         try {
+            axios.defaults.adapter = require('axios/lib/adapters/http')
+
+
             const d = {
                     //'https://github.com/tony-mw/autotest-argo-demo.git'
                     'git-repo': repo,
@@ -83,23 +92,41 @@ class MockPluginClient implements ArgocdAutopilotApi {
                     'args': trimmedArgsArr
                 }
             console.log(d)
-            const { data } = await axios.post<ArgoResponse>(
+            const { data } = await axios.post<string>(
                 'http://localhost:8080/run',
                 d,
                 {
                     headers: {'Content-Type': 'application/json'},
                 },
-            );
-           //let obj = JSON.parse(data)
-            return { status: data.message};
+            )
+            formattedResponse = data.split("\n")
+            console.log(typeof formattedResponse)
+            for (let i=1; i<formattedResponse.length-1; i++) {
+                logArr.push(JSON.parse(formattedResponse[i])["logMessage"])
+            }
+            let returnMessage: ArgoResponse = {
+                message: JSON.parse(formattedResponse[0])["message"],
+                logs: logArr
+            }
+            console.log(returnMessage.logs)
+            //return { status: returnMessage.message};
+            return returnMessage
         } catch(error) {
             if (axios.isAxiosError(error)) {
                 console.log('error message: ', error.message);
                 // 👇️ error: AxiosError<any, any>
-                return {status: error.message};
+                let returnMessage: ArgoResponse = {
+                    message: error.message,
+                    logs: logArr
+                }
+                return returnMessage;
             } else {
                 console.log('unexpected error: ', error);
-                return {status: 'An unexpected error occurred'};
+                let returnMessage: ArgoResponse = {
+                    message: "An unexpected error occurred",
+                    logs: logArr
+                }
+                return returnMessage;
             }
         }
     }

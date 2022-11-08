@@ -1,7 +1,8 @@
 import { createApiRef } from '@backstage/core-plugin-api';
+import {ArgoResponse} from "../../dev";
 
 export interface ArgocdAutopilotApi {
-    PostArgoApi(action: string, manType: string): Promise<{ status: string; }>;
+    PostArgoApi(action: string, manType: string): Promise<ArgoResponse>;
 }
 
 export const argocdAutopilotApiRef = createApiRef<ArgocdAutopilotApi>({

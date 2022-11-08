@@ -15,12 +15,13 @@ import Box from '@mui/material/Box';
 import Bootstrap from './components/bootstrap'
 import AddApp from './components/newApp'
 import NewProject from './components/newProject'
-import { FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {FormControlLabel, FormLabel, Radio, RadioGroup, TextareaAutosize} from "@mui/material";
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
     const [loading, setLoading] = useState<boolean>(false);
     const [status, setStatus] = useState<string>('N/A');
+    const [logs, setLogs] = useState<Array<string>>(['N/A']);
     const [error, setError] = useState<boolean>(false);
     const [action, setAction] = React.useState('');
     const [bootstrapFormVisible, setBootstrapFormVisible] = useState(false);
@@ -51,7 +52,8 @@ export const ExampleComponent = () => {
                 setLoading(true)
             }
             const resp = await myPluginApi.PostArgoApi(action, manType);
-            setStatus(resp.status);
+            setStatus(resp.message);
+            setLogs(resp.logs)
         } catch (e) {
             setError(true);
         } finally {
@@ -129,6 +131,13 @@ export const ExampleComponent = () => {
             </form>
         <div>
             <h3>Status: {loading ? <></> : status}</h3>
+            <h3>Logs:</h3>
+            {loading ? <></> : logs.map((log) => (
+                            <>
+                                <p>{log}<br /></p>
+                                {/*<hr />*/}
+                            </>
+            ))}
         </div>
     </>);
 }
