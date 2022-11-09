@@ -3,7 +3,6 @@ import { useEntity } from '@backstage/plugin-catalog-react';
 // import Button from "./CustomButtonComponent";
 import {useApi} from "@backstage/core-plugin-api";
 import {argocdAutopilotApiRef} from "../../api";
-import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FormControl from '@mui/material/FormControl';
 // import Select from "@material-ui/core/Select";
@@ -15,7 +14,8 @@ import Box from '@mui/material/Box';
 import Bootstrap from './components/bootstrap'
 import AddApp from './components/newApp'
 import NewProject from './components/newProject'
-import {FormControlLabel, FormLabel, Radio, RadioGroup, TextareaAutosize} from "@mui/material";
+import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import RemoveApp from "./components/removeApp";
 
 export const ExampleComponent = () => {
     const { entity } = useEntity();
@@ -26,13 +26,15 @@ export const ExampleComponent = () => {
     const [action, setAction] = React.useState('');
     const [bootstrapFormVisible, setBootstrapFormVisible] = useState(false);
     const [newAppFormVisible, setnewAppFormVisible] = useState(false);
+    const [removeAppFormVisible, setremoveAppFormVisible] = useState(false);
     const [newProjectFormVisible, setnewProjectFormVisible] = useState(false);
     const [manType, setManifestType] = React.useState('kustomize');
 
 
     useEffect(() => {
         action === 'bootstrap' || action === 'uninstall' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
-        action === 'app-create' || action === 'app-delete' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
+        action === 'app-create' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
+        action === 'app-delete' ? setremoveAppFormVisible(true): setremoveAppFormVisible(false)
         action === 'project-create' || action === 'project-delete'? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
     },[action])
 
@@ -56,6 +58,7 @@ export const ExampleComponent = () => {
             setLogs(resp.logs)
         } catch (e) {
             setError(true);
+            console.log(error)
         } finally {
             setLoading(false);
         }
@@ -122,6 +125,7 @@ export const ExampleComponent = () => {
                 }
                 {bootstrapFormVisible && <Bootstrap />}
                 {newAppFormVisible && <AddApp />}
+                {removeAppFormVisible && <RemoveApp />}
                 {newProjectFormVisible && <NewProject />}
 
                 </FormControl>

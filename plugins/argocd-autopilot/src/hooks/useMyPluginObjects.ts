@@ -25,3 +25,4 @@ export const useMyPluginObjects = () => {
         status
     }
 }
+@ts-ignore

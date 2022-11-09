@@ -32,11 +32,17 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
             return commandArr.concat(splitArgs)
         }  else if  (action === "app-create" || action === "app-delete") {
             let appName = document.getElementById('app-name') as HTMLInputElement
-            let appRepo = document.getElementById('app-repo') as HTMLInputElement
+
+            let appRepo: HTMLInputElement
             let project = document.getElementById('project') as HTMLInputElement
             //var manifestType = document.getElementById('man-type') as HTMLInputElement
             baseCommand = action.split("-")[1]
-            return ["app", baseCommand, appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels=backstage=enabled"]
+            if (action === "app-create") {
+                appRepo = document.getElementById('app-repo') as HTMLInputElement
+                return ["app", baseCommand, appName.value, "--app="+appRepo.value, "--project="+project.value, "--type="+manType, "--labels=backstage=enabled"]
+            } else {
+                return ["app", baseCommand, appName.value, "--project="+project.value]
+            }
         } else if (action === "project-create" || action === "project-delete") {
             console.log("Matched condition: ", action)
             let projectName = document.getElementById('new-project') as HTMLInputElement
