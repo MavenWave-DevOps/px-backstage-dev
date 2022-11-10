@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Bootstrap from './components/bootstrap'
 import AddApp from './components/newApp'
 import NewProject from './components/newProject'
-import {FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {Checkbox, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import RemoveApp from "./components/removeApp";
 
 export const ExampleComponent = () => {
@@ -24,19 +24,26 @@ export const ExampleComponent = () => {
     const [logs, setLogs] = useState<Array<string>>(['N/A']);
     const [error, setError] = useState<boolean>(false);
     const [action, setAction] = React.useState('');
+    const [addonAction, setAddonAction] = React.useState('');
     const [bootstrapFormVisible, setBootstrapFormVisible] = useState(false);
     const [newAppFormVisible, setnewAppFormVisible] = useState(false);
+    const [addonFormVisible, setAddonFormVisible] = useState(false)
     const [removeAppFormVisible, setremoveAppFormVisible] = useState(false);
     const [newProjectFormVisible, setnewProjectFormVisible] = useState(false);
     const [manType, setManifestType] = React.useState('kustomize');
-
+    const [checkedItems, setCheckedItems] = useState({});
 
     useEffect(() => {
         action === 'bootstrap' || action === 'uninstall' ? setBootstrapFormVisible(true): setBootstrapFormVisible(false)
         action === 'app-create' ? setnewAppFormVisible(true): setnewAppFormVisible(false)
         action === 'app-delete' ? setremoveAppFormVisible(true): setremoveAppFormVisible(false)
         action === 'project-create' || action === 'project-delete'? setnewProjectFormVisible(true): setnewProjectFormVisible(false)
+        action === 'manage-addons' ? setAddonFormVisible(true) : setAddonFormVisible(false)
     },[action])
+
+    useEffect(() => {
+        console.log("checkedItems: ", checkedItems);
+    }, [checkedItems]);
 
     const myPluginApi = useApi(argocdAutopilotApiRef);
 
@@ -44,16 +51,74 @@ export const ExampleComponent = () => {
         setManifestType(event.target.value as string);
     };
 
+    const handleAddonChange = (event: SelectChangeEvent) => {
+        setAddonAction(event.target.value as string);
+    };
+
     const handleChange = (event: SelectChangeEvent) => {
         setAction(event.target.value as string);
     };
+
+    const handleChecked = (event) => {
+        // updating an object instead of a Map
+        setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
+    }
+
+    const checkboxes = [
+        {
+            name:  'cert-manager',
+            key:   'cert-manager',
+            label: 'cert-manager',
+        },
+        {
+            name:  'crossplane',
+            key:   'crossplane',
+            label: 'crossplane',
+        },
+        {
+            name:  'crossplane-provider-configs',
+            key:   'crossplane-provider-configs',
+            label: 'crossplane-provider-configs',
+        },
+        {
+            name:  'external-secrets',
+            key:   'external-secrets',
+            label: 'external-secrets',
+        },
+        {
+            name:  'external-dns',
+            key:   'external-dns',
+            label: 'external-dns',
+        },
+        {
+            name:  'nginx-ingress',
+            key:   'nginx-ingress',
+            label: 'nginx-ingress',
+        },
+        {
+            name:  'istio',
+            key:   'istio',
+            label: 'istio',
+        },
+        {
+            name:  'istio-ingress',
+            key:   'istio-ingress',
+            label: 'istio-ingress',
+        },
+        {
+            name:  'opa-gatekeeper',
+            key:   'opa-gatekeeper',
+            label: 'opa-gatekeeper',
+        },
+
+    ];
 
     async function getObjects() {
         try {
             if(!loading) {
                 setLoading(true)
             }
-            const resp = await myPluginApi.PostArgoApi(action, manType);
+            const resp = await myPluginApi.PostArgoApi(action, manType, checkedItems);
             setStatus(resp.message);
             setLogs(resp.logs)
         } catch (e) {
@@ -80,6 +145,7 @@ export const ExampleComponent = () => {
                 >
                     <MenuItem value={'bootstrap'}>Bootstrap</MenuItem>
                     <MenuItem value={'uninstall'}>Uninstall Repo</MenuItem>
+                    <MenuItem value={'manage-addons'}>Manage Addons</MenuItem>
                     <MenuItem value={'app-create'}>Add App</MenuItem>
                     <MenuItem value={'app-delete'}>Delete App</MenuItem>
                     <MenuItem value={'project-create'}>Add Project</MenuItem>
@@ -109,6 +175,39 @@ export const ExampleComponent = () => {
                     // value={formValues.age}
                     // onChange={handleInputChange}
                 />
+                {addonFormVisible &&
+                    <>
+                        <p><br /></p>
+                        <InputLabel id="argo-addon-selection">Addon Action</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="select-action"
+                            value={addonAction}
+                            label="addonAction"
+                            onChange={handleAddonChange}
+                        >
+                            <MenuItem value={'install-addons'}>Install</MenuItem>
+                            <MenuItem value={'delete-addons'}>Delete</MenuItem>
+                        </Select>
+                        <p><br /></p>
+                        <TextField
+                            fullWidth
+                            id="addon-project"
+                            name="addon-project"
+                            label="Project Name"
+                            type="text"
+                        />
+                        <FormLabel color="info" sx={{ p:1 }} id="addons">Addon Selection</FormLabel>
+                        {
+                            checkboxes.map(item => (
+                                <label key={item.key}>
+                                    {item.name}
+                                    <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleChecked} />
+                                </label>
+                            ))
+                        }
+                    </>
+                }
                 {newAppFormVisible &&
                     <><FormLabel color="info" sx={{ p:1 }} id="manifest-type">Manifest Type</FormLabel>
                         <RadioGroup
