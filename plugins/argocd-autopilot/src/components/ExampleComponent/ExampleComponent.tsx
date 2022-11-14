@@ -20,8 +20,10 @@ import RemoveApp from "./components/removeApp";
 export const ExampleComponent = () => {
     const { entity } = useEntity();
     const [loading, setLoading] = useState<boolean>(false);
-    const [status, setStatus] = useState<string>('N/A');
-    const [logs, setLogs] = useState<Array<string>>(['N/A']);
+    const [triggered, setTriggered] = useState<boolean>(false);
+    const [status, setStatus] = useState<string>('');
+    const [logs, setLogs] = useState<Array<string>>([]);
+    const [link, setLink] = useState<string>('https://localhost:8083');
     const [error, setError] = useState<boolean>(false);
     const [action, setAction] = React.useState('');
     const [addonAction, setAddonAction] = React.useState('');
@@ -119,8 +121,12 @@ export const ExampleComponent = () => {
                 setLoading(true)
             }
             const resp = await myPluginApi.PostArgoApi(action, manType, checkedItems);
+            setTriggered(true)
+            console.log("Returned link: ", resp.link)
+            console.log("Returned message: ", resp.message)
             setStatus(resp.message);
             setLogs(resp.logs)
+            setLink(resp.link)
         } catch (e) {
             setError(true);
             console.log(error)
@@ -234,8 +240,9 @@ export const ExampleComponent = () => {
             </form>
         <div>
             <h3>Status: {loading ? <></> : status}</h3>
+            {triggered ? <h3><a href={link}>ArgoCD UI Link</a></h3> : <></> }
             <h3>Logs:</h3>
-            {loading ? <></> : logs.map((log) => (
+            {triggered ? <></> : logs.map((log) => (
                             <>
                                 <p>{log}<br /></p>
                                 {/*<hr />*/}

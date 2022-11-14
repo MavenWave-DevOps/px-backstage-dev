@@ -27,6 +27,7 @@ const mockEntity: Entity = {
     },
 };
 export type ArgoResponse = {
+    link: string,
     message: string,
     logs: Array<string>
 }
