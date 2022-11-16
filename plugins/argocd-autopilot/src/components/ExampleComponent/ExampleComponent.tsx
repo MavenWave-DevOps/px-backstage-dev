@@ -127,6 +127,7 @@ export const ExampleComponent = () => {
             setStatus(resp.message);
             setLogs(resp.logs)
             setLink(resp.link)
+            console.log("Logs: ", logs)
         } catch (e) {
             setError(true);
             console.log(error)
@@ -242,7 +243,7 @@ export const ExampleComponent = () => {
             <h3>Status: {loading ? <></> : status}</h3>
             {triggered ? <h3><a href={link}>ArgoCD UI Link</a></h3> : <></> }
             <h3>Logs:</h3>
-            {triggered ? <></> : logs.map((log) => (
+            {loading ? <></> : logs.map((log) => (
                             <>
                                 <p>{log}<br /></p>
                                 {/*<hr />*/}
