@@ -1,6 +1,6 @@
 
 steps:
-- name: "gcr.io/kaniko-project/docker"
+- name: "gcr.io/kaniko-project/executor:latest"
   args: ['build', '-t', 'us-central1-docker.pkg.dev/px-mike-project-hje/px-backstage-dev/backstage', '.']
 - name: "gcr.io/cloud-builders/docker"
   args: ['push', 'us-central1-docker.pkg.dev/px-mike-project-hje/px-backstage-dev/backstage']
