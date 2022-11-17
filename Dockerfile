@@ -2,6 +2,8 @@
 
 FROM node:16-bullseye-slim
 
+RUN yarn backstage-cli package build --role backend
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && \

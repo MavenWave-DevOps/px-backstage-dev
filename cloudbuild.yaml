@@ -2,19 +2,17 @@
 steps:
 - name: node:14
   entrypoint: yarn
-  args: ['install']
-- name: node:14
-  entrypoint: yarn
   args:
   - '-c'
   - |
+    install && \
     cd packages/backend/ && \
     backstage-cli package build --role backend
 
 - name: "gcr.io/kaniko-project/executor:latest"
   args:
     - --destination=us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage:latest
-    # - --dockerfile=./packages/backend/Dockerfile
+    - --dockerfile=./packages/backend/Dockerfile
     - --context=.
     - --cache=true
     - --cache-ttl=240h
