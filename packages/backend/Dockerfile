@@ -14,6 +14,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
+ENTRYPOINT "/root"
+
 COPY --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./
 RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
