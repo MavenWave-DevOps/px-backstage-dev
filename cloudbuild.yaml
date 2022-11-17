@@ -1,13 +1,11 @@
 
 steps:
 - name: node:14
-  entrypoint: yarn
+  entrypoint: "bash"
   args:
   - '-c'
   - |
-    install && \
-    cd packages/backend/ && \
-    ['build:backend']
+    yarn install; cd packages/backend; yarn backstage-cli packages build --role backend
 
 - name: "gcr.io/kaniko-project/executor:latest"
   args:
