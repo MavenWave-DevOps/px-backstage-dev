@@ -18,10 +18,11 @@ steps:
   args:
   - run
   - --filename=manifests/deployment.yaml
-  - --image=gcr.io/px-mike-project-hje/backstage:latest
+  # - --image=gcr.io/px-mike-project-hje/backstage:latest
   - --location=us-central1
   - --cluster=primary-cluster
 
 timeout: 1200s
 options:
-  machineType: E2_HIGHCPU_32
+  machineType: E2_HIGHCPU_8
+
