@@ -2,15 +2,13 @@
 
 FROM node:16-bullseye-slim
 
-USER root
-
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && \
     apt-get install -y --no-install-recommends libsqlite3-dev python3 build-essential && \
     yarn config set python /usr/bin/python3
 
-USER node
+USER root
 
 WORKDIR /app
 
