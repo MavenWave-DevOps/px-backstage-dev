@@ -5,7 +5,7 @@ steps:
   args: ['install']
 - name: node
   entrypoint: yarn
-  args ['backstage-cli package build --role backend']
+  args: ['backstage-cli package build --role backend']
 - name: "gcr.io/kaniko-project/executor:latest"
   # args: ['build', '-t', 'us-central1-docker.pkg.dev/px-mike-project-hje/px-backstage-dev/backstage', '.']
   args:
