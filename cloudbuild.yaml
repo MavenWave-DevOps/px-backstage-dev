@@ -12,8 +12,8 @@ steps:
     - --destination=us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage:latest
     - --dockerfile=./packages/backend/Dockerfile
     - --context=.
-    # - --cache=true
-    # - --cache-ttl=240h
+    - --cache=true
+    - --cache-ttl=240h
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
