@@ -114,9 +114,9 @@ export const ExampleComponent = () => {
         },
 
     ];
-    //const config = useApi(configApiRef);
-    // console.log("Config: ", config)
-    // console.log("apiUrl: ",  config.getString("argocdAutopilot.apiUrl"))
+    const config = useApi(configApiRef);
+    console.log("Config: ", config)
+    console.log("apiUrl: ",  config.getString("argocdAutopilot.apiUrl"))
     async function getObjects() {
         try {
             if(!loading) {
