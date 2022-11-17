@@ -14,7 +14,7 @@ steps:
 - name: "gcr.io/kaniko-project/executor:latest"
   args:
     - --destination=us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage:latest
-    - --dockerfile=./packages/backend
+    - --dockerfile=./packages/backend/Dockerfile
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
