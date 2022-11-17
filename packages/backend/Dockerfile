@@ -2,6 +2,8 @@
 
 FROM node:16-bullseye-slim
 
+USER root
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && \
@@ -13,8 +15,6 @@ USER node
 WORKDIR /app
 
 ENV NODE_ENV production
-
-ENTRYPOINT "/root"
 
 COPY --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./
 RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
