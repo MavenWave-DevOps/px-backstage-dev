@@ -7,7 +7,7 @@ steps:
   - |
     install && \
     cd packages/backend/ && \
-    backstage-cli repo build --all
+    yarn backstage-cli repo build --all
 
 - name: "gcr.io/kaniko-project/executor:latest"
   args:
