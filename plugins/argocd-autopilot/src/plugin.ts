@@ -1,4 +1,5 @@
 import {
+    configApiRef,
     createApiFactory,
     createPlugin,
     createRoutableExtension,
@@ -15,9 +16,13 @@ export const argocdAutopilotPlugin = createPlugin({
         api: argocdAutopilotApiRef,
         deps: {
             discoveryApi: discoveryApiRef,
+            configApi: configApiRef,
         },
-        factory: ({ discoveryApi }) =>
-            new ArgocdAutopilotBackendClient({ discoveryApi }),
+        factory: ({ discoveryApi, configApi }) =>
+            new ArgocdAutopilotBackendClient({
+                discoveryApi,
+                apiUrl: configApi.getString('argocdAutopilot.apiUrl'),
+            }),
     }),
   ],
   routes: {

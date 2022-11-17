@@ -9,7 +9,6 @@ import { ArgocdAutopilotApi, argocdAutopilotApiRef } from "../src";
 // import * as stream from 'stream';
 import axios from 'axios';
 // import { promisify } from 'util';
-
 const mockEntity: Entity = {
     apiVersion: 'backstage.io/v1alpha1',
     kind: 'Component',
@@ -34,7 +33,7 @@ export type ArgoResponse = {
 
 class MockPluginClient implements ArgocdAutopilotApi {
 
-    buildCommand(action: string,  manType: string, checkedItems: any): Array<Array<string>> {
+    buildCommand(action: string,  manType: string, checkedItems: any,): Array<Array<string>> {
         let baseCommand: string = ""
         if (action === "bootstrap" || action === "uninstall") {
             let extraArgs=document.getElementById('extra-args') as HTMLInputElement
@@ -106,7 +105,8 @@ class MockPluginClient implements ArgocdAutopilotApi {
         return [['Form is invalid']]
     }
 
-    async PostArgoApi(action: string, manType: string, checkedItems: any): Promise<ArgoResponse> {
+    async PostArgoApi(action: string, manType: string, checkedItems: any, apiUrl: string,): Promise<ArgoResponse> {
+        console.log("Called Post func")
         console.log(action)
         console.log("Checked Items are: ", checkedItems)
         const tokenPath=".github_token"
@@ -120,7 +120,8 @@ class MockPluginClient implements ArgocdAutopilotApi {
         let argsArray = this.buildCommand(action, manType, checkedItems)
         let returnMessage: ArgoResponse = {
             message: "",
-            logs: []
+            logs: [],
+            link: "",
         }
 
         for (let j=0; j<argsArray.length; j++) {
@@ -143,9 +144,9 @@ class MockPluginClient implements ArgocdAutopilotApi {
                     'root-command': command,
                     'args': trimmedArgsArr
                 }
-                console.log(d)
+                console.log("data: ", d)
                 const {data} = await axios.post<string>(
-                    'http://localhost:8080/run',
+                    apiUrl,
                     d,
                     {
                         headers: {'Content-Type': 'application/json'},
@@ -158,7 +159,8 @@ class MockPluginClient implements ArgocdAutopilotApi {
                 }
                 returnMessage = {
                     message: JSON.parse(formattedResponse[0])["message"],
-                    logs: logArr
+                    logs: logArr,
+                    link: JSON.parse(formattedResponse[0])["link"]
                 }
                 console.log(returnMessage.logs)
                 //return { status: returnMessage.message};
@@ -168,14 +170,16 @@ class MockPluginClient implements ArgocdAutopilotApi {
                     // 👇️ error: AxiosError<any, any>
                     returnMessage = {
                         message: error.message,
-                        logs: logArr
+                        logs: logArr,
+                        link: "",
                     }
                     return returnMessage;
                 } else {
                     console.log('unexpected error: ', error);
                     returnMessage = {
                         message: "An unexpected error occurred",
-                        logs: logArr
+                        logs: logArr,
+                        link: "",
                     }
                     return returnMessage;
                 }

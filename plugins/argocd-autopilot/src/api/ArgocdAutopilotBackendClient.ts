@@ -9,11 +9,14 @@ export type ArgoResponse = {
 }
 
 export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
-   private readonly discoveryApi: DiscoveryApi;
+    private readonly apiUrl: string
+    private readonly discoveryApi: DiscoveryApi;
     constructor(options: {
         discoveryApi: DiscoveryApi;
+        apiUrl: string;
     }) {
         this.discoveryApi = options.discoveryApi;
+        this.apiUrl = options.apiUrl
     }
     // private async handleResponse(response: Response): Promise<any> {
     //     if (!response.ok) {
@@ -94,7 +97,8 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
         return [['Form is invalid']]
     }
 
-    async PostArgoApi(action: string, manType: string, checkedItems: any): Promise<ArgoResponse> {
+    async PostArgoApi(action: string, manType: string, checkedItems: any,): Promise<ArgoResponse> {
+        console.log("Api Url: ", this.apiUrl)
         console.log(action)
         console.log("Checked Items are: ", checkedItems)
         const tokenPath=".github_token"
@@ -134,7 +138,7 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
                 }
                 console.log(d)
                 const {data} = await axios.post<string>(
-                    'http://localhost:8080/run',
+                    this.apiUrl,
                     d,
                     {
                         headers: {'Content-Type': 'application/json'},

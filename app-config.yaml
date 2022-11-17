@@ -5,6 +5,9 @@ app:
 organization:
   name: My Company
 
+argocdAutopilot:
+  apiUrl: "http://localhost:8080/run"
+
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/tutorials/backend-to-backend-auth for

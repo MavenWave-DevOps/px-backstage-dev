@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useEntity } from '@backstage/plugin-catalog-react';
 // import Button from "./CustomButtonComponent";
-import {useApi} from "@backstage/core-plugin-api";
+import {useApi, configApiRef} from "@backstage/core-plugin-api";
 import {argocdAutopilotApiRef} from "../../api";
 import TextField from "@material-ui/core/TextField";
 import FormControl from '@mui/material/FormControl';
@@ -114,12 +114,15 @@ export const ExampleComponent = () => {
         },
 
     ];
-
+    //const config = useApi(configApiRef);
+    // console.log("Config: ", config)
+    // console.log("apiUrl: ",  config.getString("argocdAutopilot.apiUrl"))
     async function getObjects() {
         try {
             if(!loading) {
                 setLoading(true)
             }
+            //const apiUrl = config.getString('backend.apiUrl')
             const resp = await myPluginApi.PostArgoApi(action, manType, checkedItems);
             setTriggered(true)
             console.log("Returned link: ", resp.link)
