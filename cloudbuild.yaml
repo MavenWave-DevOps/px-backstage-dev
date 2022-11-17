@@ -5,7 +5,7 @@ steps:
   args:
   - '-c'
   - |
-    yarn install #; # cd packages/backend; yarn backstage-cli package build --role backend
+    yarn install; cd packages/backend; yarn backstage-cli package build --role backend
 
 - name: "gcr.io/kaniko-project/executor:latest"
   args:
@@ -22,3 +22,6 @@ steps:
   - --location=us-central1
   - --cluster=primary-cluster
 
+timeout: 1200s
+options:
+  machineType: E2_HIGHCPU_8

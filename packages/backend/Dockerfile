@@ -8,14 +8,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get install -y --no-install-recommends libsqlite3-dev python3 build-essential && \
     yarn config set python /usr/bin/python3
 
-RUN yarn backstage-cli package build --role backend
-
 USER root
 
 WORKDIR /app
 
 ENV NODE_ENV production
-
 
 COPY --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./
 RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
