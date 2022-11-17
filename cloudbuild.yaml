@@ -8,7 +8,6 @@ steps:
     yarn install; cd packages/backend; yarn backstage-cli package build --role backend
 
 - name: "gcr.io/kaniko-project/executor:latest"
-  entrypoint: "root"
   args:
     - --destination=us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage:latest
     - --dockerfile=./packages/backend/Dockerfile
