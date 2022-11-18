@@ -1,26 +1,26 @@
 
 steps:
-- name: node:14
+# - name: node:14
+#   entrypoint: "bash"
+#   args:
+#   - '-c'
+#   - |
+#     yarn install; cd packages/backend; yarn backstage-cli package build --role backend
+#
+# - name: "gcr.io/kaniko-project/executor:latest"
+#   args:
+#     - --destination=us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage:latest
+#     - --dockerfile=./packages/backend/Dockerfile
+#     - --context=.
+#     - --cache=true
+#     - --cache-ttl=240h
+- name: "gcr.io/px-mike-project-hje/cloud-builders-helm"
   entrypoint: "bash"
-  args:
-  - '-c'
-  - |
-    yarn install; cd packages/backend; yarn backstage-cli package build --role backend
-
-- name: "gcr.io/kaniko-project/executor:latest"
-  args:
-    - --destination=us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage:latest
-    - --dockerfile=./packages/backend/Dockerfile
-    - --context=.
-    - --cache=true
-    - --cache-ttl=240h
-- name: "gcr.io/cloud-builders/gke-deploy"
-  args:
-  - run
-  - --filename=manifests/deployment.yaml
-  # - --image=gcr.io/px-mike-project-hje/backstage:latest
-  - --location=us-central1
-  - --cluster=primary-cluster
+  args: 
+    - '-c'
+    - |
+      helm template backstage ./manifests/backstage -n backstage -f ./manifests/values.yaml
+      helm upgrade -i backstage ./manifests/backstage -n backstage
 
 timeout: 1200s
 options:

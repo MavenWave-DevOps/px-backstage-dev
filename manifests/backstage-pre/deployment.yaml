@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backstage
-          image: backstage:1.0.0
+          image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
