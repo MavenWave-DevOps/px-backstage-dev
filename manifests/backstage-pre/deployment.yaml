@@ -17,7 +17,7 @@ spec:
       containers:
         - name: backstage
           image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: backstage
               containerPort: 7007
