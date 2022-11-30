@@ -19,11 +19,22 @@ spec:
           image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
           imagePullPolicy: IfNotPresent
           ports:
-            - name: http
+            - name: backstage
               containerPort: 7007
-          envFrom:
-            - secretRef:
-                name: postgres-secrets
-            - secretRef:
-                name: backstage-secrets
-
+          env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: pg-db-ref
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pg-db-ref
+                key: password
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: pg-db-ref
+                key: endpoint
+            
