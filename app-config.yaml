@@ -30,11 +30,19 @@ backend:
   # The production database configuration is stored in app-config.production.yaml
   database:
     client: pg
+    pluginDivisionMode: schema
     connection:
       host: ${POSTGRES_HOST}
       port: 5432
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+
+    knexConfig:
+      pool:
+        min: 3
+        max: 12
+        acquireTimeoutMillis: 60000
+        idleTimeoutMillis: 60000
       
   #   client: better-sqlite3
   #   connection: ':memory:'
