@@ -44,6 +44,7 @@ backend:
         max: 12
         acquireTimeoutMillis: 60000
         idleTimeoutMillis: 60000
+      acquireConnectionTimeout: 10000
       
   #   client: better-sqlite3
   #   connection: ':memory:'
