@@ -1,6 +1,6 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: http://backstage-mike.px.ignitme.dev:3000
 
 organization:
   name: Tidal Wave
@@ -38,18 +38,18 @@ backend:
     ensureExists: false
     pluginDivisionMode: schema
 
-    knexConfig:
-      pool:
-        min: 3
-        max: 12
-        acquireTimeoutMillis: 60000
-        idleTimeoutMillis: 60000
-      acquireConnectionTimeout: 10000
+  cache:
+    store: memory
+    # knexConfig:
+    #   pool:
+    #     min: 3
+    #     max: 12
+    #     acquireTimeoutMillis: 60000
+    #     idleTimeoutMillis: 60000
+    #   acquireConnectionTimeout: 10000
       
   #   client: better-sqlite3
   #   connection: ':memory:'
-  # cache:
-  #   store: memory
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
