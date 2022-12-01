@@ -38,6 +38,13 @@ backend:
     database: pg-database
     ensureExists: false
     pluginDivisionMode: schema
+    knexConfig:
+      pool:
+        min: 3
+        max: 12
+        acquireTimeoutMillis: 60000
+        idleTimeoutMillis: 60000
+      acquireConnectionTimeout: 10000
     plugin: 
       catalog:
         connection:
@@ -51,13 +58,6 @@ backend:
 
   cache:
     store: memory
-    # knexConfig:
-    #   pool:
-    #     min: 3
-    #     max: 12
-    #     acquireTimeoutMillis: 60000
-    #     idleTimeoutMillis: 60000
-    #   acquireConnectionTimeout: 10000
       
   #   client: better-sqlite3
   #   connection: ':memory:'
