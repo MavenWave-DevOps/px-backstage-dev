@@ -35,8 +35,19 @@ backend:
       port: 5432
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+    database: pg-database
     ensureExists: false
     pluginDivisionMode: schema
+    plugin: 
+      catalog:
+        connection:
+          database: pg-database
+      auth:
+        connection:
+          database: pg-database
+      app:
+        connection:
+          database: pg-database
 
   cache:
     store: memory
