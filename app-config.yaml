@@ -40,8 +40,8 @@ backend:
     pluginDivisionMode: schema
     knexConfig:
       pool:
-        min: 15
-        max: 30
+        min: 20
+        max: 40
         acquireTimeoutMillis: 60000
         idleTimeoutMillis: 60000
       acquireConnectionTimeout: 10000

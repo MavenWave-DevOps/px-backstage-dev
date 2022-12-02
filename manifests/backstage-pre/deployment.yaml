@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backstage
+  name: backstage-deployment
   namespace: backstage
 spec:
   replicas: 1
@@ -14,7 +14,6 @@ spec:
       labels:
         app: backstage
     spec:
-      serviceAccountName: backstage-app
       containers:
         - name: backstage
           image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
