@@ -14,7 +14,7 @@ spec:
       labels:
         app: backstage
     spec:
-      serviceAccountName: backstage-app@px-mike-project-hje.iam.gserviceaccount.com
+      serviceAccountName: backstage-sa
       containers:
         - name: backstage
           image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
@@ -38,4 +38,18 @@ spec:
               secretKeyRef:
                 name: pg-db-ref
                 key: endpoint
-            
+
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout"
+            - "-instances=px-mike-project-hje:us-central1:pg-database=tcp:5432"
+          securityContext:
+            runAsNonRoot: true
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+
