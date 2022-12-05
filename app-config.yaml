@@ -31,10 +31,10 @@ backend:
   database:
     client: pg
     connection:
-      host: ${POSTGRES_HOST}
+      host: 127.0.0.1 #${POSTGRES_HOST}
       port: 5432
-      user: ${POSTGRES_USER}
-      password: ${POSTGRES_PASSWORD}
+      user: postgres #${POSTGRES_USER}
+      password: secret #${POSTGRES_PASSWORD}
     database: pg-database
     ensureExists: false
     pluginDivisionMode: schema
@@ -46,15 +46,17 @@ backend:
         idleTimeoutMillis: 60000
       acquireConnectionTimeout: 10000
     plugin: 
-      catalog:
-        connection:
-          database: pg-database
+      # catalog:
+        # connection:
+        #   database: pg-database
       auth:
-        connection:
-          database: pg-database
-      app:
-        connection:
-          database: pg-database
+        client: better-sqlite3
+        connection: ':memory:'
+        # connection:
+        #   database: pg-database
+      # app:
+        # connection:
+        #   database: pg-database
 
   cache:
     store: memory
