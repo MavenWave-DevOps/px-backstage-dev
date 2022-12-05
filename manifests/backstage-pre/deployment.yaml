@@ -14,6 +14,7 @@ spec:
       labels:
         app: backstage
     spec:
+      serviceAccountName: backstage-app@px-mike-project-hje.iam.gserviceaccount.com
       containers:
         - name: backstage
           image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
