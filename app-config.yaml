@@ -31,10 +31,10 @@ backend:
   database:
     client: pg
     connection:
-      host: 127.0.0.1 #${POSTGRES_HOST}
+      host: ${POSTGRES_HOST}
       port: 5432
-      user: postgres #${POSTGRES_USER}
-      password: secret #${POSTGRES_PASSWORD}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
     database: pg-database
     ensureExists: false
     pluginDivisionMode: schema
