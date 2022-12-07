@@ -5,7 +5,7 @@ steps:
   args:
   - '-c'
   - |
-    yarn install; cd packages/backend; yarn backstage-cli package build --role backend
+    yarn install; yarn add --cwd packages/backend; cd packages/backend; yarn backstage-cli package build --role backend
 
 - name: "gcr.io/kaniko-project/executor:latest"
   args:

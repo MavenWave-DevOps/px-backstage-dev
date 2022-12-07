@@ -10,5 +10,6 @@ spec:
     - port: 443
       targetPort: 7007
   selector:
-    app.kubernetes.io/name: backstage-deployment
+    app: backstage
+    component: backend
 
