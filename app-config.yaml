@@ -29,36 +29,36 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
-    # client: pg
-    # connection:
-    #   host: localhost #${POSTGRES_HOST}
-    #   port: 5432
-    #   user: postgres #${POSTGRES_USER}
-    #   password: secret #${POSTGRES_PASSWORD}
-    # database: pg-database
-    # ensureExists: false
-    # pluginDivisionMode: schema
-    # knexConfig:
-    #   pool:
-    #     min: 15
-    #     max: 30
-    #     acquireTimeoutMillis: 60000
-    #     idleTimeoutMillis: 60000
-    #   acquireConnectionTimeout: 10000
-    # plugin: 
-    #   catalog:
-    #     connection:
-    #       database: pg-database
-    #   auth:
-    #     connection:
-    #       database: pg-database
-      #   client: better-sqlite3
-      #   connection: ':memory:'
-      # app:
-      #   connection:
-      #     database: pg-database
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: 5432
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+    database: pg-database
+    ensureExists: false
+    pluginDivisionMode: schema
+    knexConfig:
+      pool:
+        min: 15
+        max: 30
+        acquireTimeoutMillis: 60000
+        idleTimeoutMillis: 60000
+      acquireConnectionTimeout: 10000
+    plugin: 
+      catalog:
+        connection:
+          database: pg-database
+      auth:
+        connection:
+          database: pg-database
+        # client: better-sqlite3
+        # connection: ':memory:'
+      app:
+        connection:
+          database: pg-database
+    # client: better-sqlite3
+    # connection: ':memory:'
 
   cache:
     store: memory
