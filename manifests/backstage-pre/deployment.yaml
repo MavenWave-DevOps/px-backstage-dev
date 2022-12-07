@@ -22,34 +22,4 @@ spec:
           ports:
             - name: backstage
               containerPort: 7007
-          env:
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: pg-db-ref
-                key: username
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: pg-db-ref
-                key: password
-          - name: POSTGRES_HOST
-            valueFrom:
-              secretKeyRef:
-                name: pg-db-ref
-                key: endpoint
-
-        - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
-          command:
-            - "/cloud_sql_proxy"
-            - "-ip_address_types=PRIVATE"
-            - "-log_debug_stdout"
-            - "-instances=px-mike-project-hje:us-central1:pg-database=tcp:5432"
-          securityContext:
-            runAsNonRoot: true
-          resources:
-            requests:
-              memory: "2Gi"
-              cpu: "1"
 
