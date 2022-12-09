@@ -46,10 +46,10 @@ backend:
         acquireTimeoutMillis: 60000
         idleTimeoutMillis: 60000
       acquireConnectionTimeout: 10000
-    # plugin: 
-    #   catalog:
-    #     connection:
-    #       database: postgres
+    plugin: 
+      catalog:
+        connection:
+          database: ${DB_NAME}
       # auth:
       #   connection:
       #     database: postgres
