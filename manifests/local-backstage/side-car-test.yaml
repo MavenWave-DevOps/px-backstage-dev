@@ -2,31 +2,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backstage-deployment
+  name: side-car-deployment
   namespace: backstage
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backstage
+      app: side-car-test
   template:
     metadata:
       labels:
-        app: backstage
+        app: side-car-test
     spec:
       serviceAccountName: backstage-sa
       containers:
-        - name: backstage
-          command: ["node"]
-          args:
-            - "packages/backend"
-            - "--config"
-            - "app-config.yaml"
-          image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
+        - name: postgres
+          image: postgres:10.1
           imagePullPolicy: Always
-          ports:
-            - name: backstage
-              containerPort: 7007
+          ports: 
+          - name: database 
+            containerPort: 3307
           env:
           - name: POSTGRES_USER
             valueFrom:
@@ -38,11 +33,6 @@ spec:
               secretKeyRef:
                 name: pg-db-secret
                 key: password
-          - name: POSTGRES_HOST
-            valueFrom:
-              secretKeyRef:
-                name: pg-db-secret
-                key: database
           - name: DB_USER
             valueFrom:
               secretKeyRef:
@@ -58,7 +48,6 @@ spec:
               secretKeyRef:
                 name: pg-db-secret
                 key: database
-
         - name: cloud-sql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
           command:
@@ -75,4 +64,3 @@ spec:
           env:
           - name: POSTGRES_DB
             value: backstage_plugin_catalog
-
