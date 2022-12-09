@@ -35,13 +35,14 @@ backend:
       port: 5432
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+      database: backstage_plugin_catalog
     database: postgres
     ensureExists: false
     pluginDivisionMode: schema
     knexConfig:
       pool:
-        min: 15
-        max: 30
+        min: 2
+        max: 10
         acquireTimeoutMillis: 60000
         idleTimeoutMillis: 60000
       acquireConnectionTimeout: 10000
@@ -49,14 +50,14 @@ backend:
       catalog:
         connection:
           database: postgres
-      auth:
-        connection:
-          database: postgres
+      # auth:
+      #   connection:
+      #     database: postgres
         # client: better-sqlite3
         # connection: ':memory:'
-      app:
-        connection:
-          database: postgres
+      # app:
+      #   connection:
+      #     database: postgres
     # client: better-sqlite3
     # connection: ':memory:'
 
