@@ -35,7 +35,7 @@ backend:
       port: 5432
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
-    database: pg-database
+    database: postgres
     ensureExists: false
     pluginDivisionMode: schema
     knexConfig:
@@ -48,15 +48,15 @@ backend:
     plugin: 
       catalog:
         connection:
-          database: pg-database
+          database: postgres
       auth:
         connection:
-          database: pg-database
+          database: postgres
         # client: better-sqlite3
         # connection: ':memory:'
       app:
         connection:
-          database: pg-database
+          database: postgres
     # client: better-sqlite3
     # connection: ':memory:'
 
