@@ -49,7 +49,7 @@ backend:
     plugin: 
       catalog:
         connection:
-          database: ${DB_NAME}
+          database: postgres
       # auth:
       #   connection:
       #     database: postgres
