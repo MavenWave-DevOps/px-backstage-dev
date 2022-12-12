@@ -29,14 +29,14 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    # client: pg
-    # pluginDivisionMode: schema
-    # searchPath: database_schema
+    client: pg
     connection:
       host: localhost #${POSTGRES_HOST}
       port: 5432
       user: postgres # ${POSTGRES_USER}
       password: secret # ${POSTGRES_PASSWORD}
+    # pluginDivisionMode: schema
+    # searchPath: database_schema
     # database: postgres
     # ensureExists: false
     # knexConfig:
