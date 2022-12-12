@@ -16,23 +16,12 @@ spec:
     spec:
       serviceAccountName: backstage-sa
       containers:
-        - name: postgres
+        - name: psql
           image: postgres:10.1
-          imagePullPolicy: Always
-          ports: 
-          - name: database 
-            containerPort: 3307
+          command: ["psql", "-U postgres", "-d postgres", "-c 'GRANT SELECT ON postgres TO postgres;"]
           env:
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: pg-db-secret
-                key: username
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: pg-db-secret
-                key: password
+          - name: DB_HOST
+            value: "127.0.0.1"
           - name: DB_USER
             valueFrom:
               secretKeyRef:
@@ -48,6 +37,7 @@ spec:
               secretKeyRef:
                 name: pg-db-secret
                 key: database
+
         - name: cloud-sql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
           command:
@@ -61,6 +51,7 @@ spec:
             requests:
               memory: "2Gi"
               cpu: "1"
-          env:
-          - name: POSTGRES_DB
-            value: backstage_plugin_catalog
+          # env:
+          # - name: POSTGRES_DB
+          #   value: backstage_plugin_catalog
+

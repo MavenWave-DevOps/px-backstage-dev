@@ -29,27 +29,27 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: pg
-    pluginDivisionMode: schema
+    # client: pg
+    # pluginDivisionMode: schema
     # searchPath: database_schema
     connection:
       host: localhost #${POSTGRES_HOST}
       port: 5432
-      user: ${POSTGRES_USER}
-      password: ${POSTGRES_PASSWORD}
+      user: postgres # ${POSTGRES_USER}
+      password: secret # ${POSTGRES_PASSWORD}
     # database: postgres
     # ensureExists: false
-    knexConfig:
-      pool:
-        min: 2
-        max: 10
-        acquireTimeoutMillis: 60000
-        idleTimeoutMillis: 60000
-      acquireConnectionTimeout: 10000
-    plugin: 
-      catalog:
-        connection:
-          database: postgres
+    # knexConfig:
+    #   pool:
+    #     min: 2
+    #     max: 10
+    #     acquireTimeoutMillis: 60000
+    #     idleTimeoutMillis: 60000
+    #   acquireConnectionTimeout: 10000
+    # plugin: 
+    #   catalog:
+    #     connection:
+    #       database: postgres
       # auth:
       #   connection:
       #     database: postgres
