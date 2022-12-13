@@ -8,5 +8,5 @@ spec:
   selector:
     app: backstage
   ports:
-  - port: 7000
+  - port: 443
 

@@ -12,22 +12,25 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: backstage-ingress
+  name: backstage-ingress-2
   namespace: backstage
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: backstage-ip
     networking.gke.io/managed-certificates: backstage-cert
     networking.gke.io/v1beta1.FrontendConfig: gke-frontendconfig
 spec:
+  defaultBackend:
+    service:
+      name: backstage-service
+      port:
+        number: 443
   rules:
-  - host: backstage-mike.px.igniteme.dev
-    http:
+  - http:
       paths:
-      - path: /api
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: backstage
+            name: backstage-service
             port:
               number: 443
 

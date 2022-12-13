@@ -58,10 +58,6 @@ spec:
               secretKeyRef:
                 name: pg-db-secret
                 key: database
-          # volumeMounts:
-          #   - mountPath: /var/lib/postgresql/data
-          #     name: postgresdb
-
 
         - name: cloud-sql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
@@ -76,12 +72,4 @@ spec:
             requests:
               memory: "2Gi"
               cpu: "1"
-          # env:
-          # - name: POSTGRES_DB
-          #   value: backstage_plugin_catalog
-
-      # volumes:
-      #   - name: postgresdb
-      #     persistentVolumeClaim:
-      #       claimName: postgres-storage-claim
 

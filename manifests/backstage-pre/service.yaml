@@ -4,6 +4,10 @@ kind: Service
 metadata:
   name: backstage-service
   namespace: backstage
+  annotations:
+    # cloud.google.com/backend-config: 
+    cloud.google.com/neg: '{"ingress": true}'
+
 spec:
   type: ClusterIP
   ports:
@@ -11,5 +15,4 @@ spec:
       targetPort: 7007
   selector:
     app: backstage
-    component: backend
 
