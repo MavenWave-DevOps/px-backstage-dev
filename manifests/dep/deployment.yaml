@@ -1,0 +1,38 @@
+#
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: backstage-deployment
+#   namespace: backstage
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: backstage
+#   template:
+#     metadata:
+#       labels:
+#         app: backstage
+#     spec:
+#       serviceAccountName: backstage-sa
+#       containers:
+#         - name: backstage
+#           image: us-central1-docker.pkg.dev/px-mike-project-hje/backstage/backstage
+#           imagePullPolicy: Always
+#           ports:
+#             - containerPort: 7007
+#           volumeMounts:
+#             - mountPath: app/backstage-db
+#               name: db-volume
+#           env:
+#           - name: POSTGRES_DB
+#             value: backstage_plugin_catalog
+#       volumes:
+#         - name: app-config
+#           configMap:
+#             name: backstage-backend-app-config
+#         - name: db-volume
+#           # persistentVolumeClaim:
+#           #   claimName: gce-pvc
+#           emptyDir: {}
+#

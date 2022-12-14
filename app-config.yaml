@@ -1,6 +1,6 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: http://backstage-mike.px.igniteme.dev
 
 organization:
   name: Tidal Wave
@@ -12,7 +12,7 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  baseUrl: http://localhost:7007
+  baseUrl: http://backstage-mike.px.igniteme.dev
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
@@ -35,21 +35,10 @@ backend:
       port: 5432
       user: postgres # ${POSTGRES_USER}
       password: secret # ${POSTGRES_PASSWORD}
-    # pluginDivisionMode: schema
-    # searchPath: database_schema
-    # database: postgres
-    # ensureExists: false
-    # knexConfig:
-    #   pool:
-    #     min: 2
-    #     max: 10
-    #     acquireTimeoutMillis: 60000
-    #     idleTimeoutMillis: 60000
-    #   acquireConnectionTimeout: 10000
-    # plugin: 
-    #   catalog:
-    #     connection:
-    #       database: postgres
+    plugin: 
+      catalog:
+        connection:
+          database: postgres
       # auth:
       #   connection:
       #     database: postgres
@@ -58,11 +47,9 @@ backend:
       # app:
       #   connection:
       #     database: postgres
-    # client: better-sqlite3
-    # connection: ':memory:'
-
   cache:
     store: memory
+
       
   # workingdirectory: /tmp # use this to configure a working directory for the scaffolder, defaults to the os temp-dir
 

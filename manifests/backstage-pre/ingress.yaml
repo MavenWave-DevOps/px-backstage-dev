@@ -2,7 +2,8 @@
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: backstage-cert
+  name: backstage-cert-2
+  namespace: backstage
 spec:
   domains:
     - backstage-mike.px.igniteme.dev
@@ -15,8 +16,9 @@ metadata:
   name: backstage-ingress-2
   namespace: backstage
   annotations:
-    networking.gke.io/managed-certificates: backstage-cert
+    external-dns.alpha.kubernetes.io/hostname: backstage-mike.px.igniteme.dev
     networking.gke.io/v1beta1.FrontendConfig: gke-frontendconfig
+    networking.gke.io/managed-certificates: backstage-cert-2
 spec:
   defaultBackend:
     service:
@@ -26,7 +28,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /api/
         pathType: Prefix
         backend:
           service:
