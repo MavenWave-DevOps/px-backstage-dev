@@ -14,6 +14,14 @@ steps:
     - --context=.
     - --cache=true
     - --cache-ttl=240h
+
+# - name: "gcr.io/walker-cpl/helm"
+#   id: Helm-Upgrade
+#   entrypoint: "bash"
+#   args:
+#     - "c"
+#     - |
+#       helm template backstage-dev ./charts -n backstage-dev -f ./
 # - name: "gcr.io/px-mike-project-hje/cloud-builders-helm"
 #   entrypoint: "bash"
 #   args: 
