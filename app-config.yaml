@@ -136,3 +136,29 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [user, group]
+
+# This is for k8s cluster management
+# Currently, just using a minikube cluster
+# TODO: Install backstage in GKE then point to GKE cluster
+
+kubernetes:
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocationMethdos:
+    - type: 'config'
+      clusters:
+        - url: http://127.0.0.1:9999 # found by running `kubectl cluster-info`
+          name: minikube # unique within backstage project
+          authProvider: 'serviceAccount' # uses a k8s sa, can use google sa
+          skipTLSVerify: false # k8s client verifies the TLS certificate presented by the API
+          skipMetricsLookup: true
+          # serviceAccountToken: ${K8S_MINIKUBE_TOKEN} # kubectl get secret
+          # dashboardUrl: http://127.0.0.1:64713
+          # dashboardApp: standard
+          # caData: ${K8S_CONFIG_CA_DATA}
+          caFile: '~/.minikube/ca.pem'
+          # customResources:
+          #   - group: 'argoproj.io'
+          #     apiVersion: 'v1alpha1'
+          #     plural: 'rollouts'
+
