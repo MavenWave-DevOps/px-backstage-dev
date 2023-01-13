@@ -1,9 +1,9 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: http://backstage-mike.px.igniteme.dev
 
 organization:
-  name: My Company
+  name: Tidal Wave
 
 argocdAutopilot:
   apiUrl: "http://localhost:8080/run"
@@ -16,7 +16,7 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  baseUrl: http://localhost:7007
+  baseUrl: http://backstage-mike.px.igniteme.dev
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
@@ -27,92 +27,142 @@ backend:
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
-    origin: http://localhost:3000
+    origin: http://localhost:7007
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
+    client: pg
+    connection:
+      host: localhost #${POSTGRES_HOST}
+      port: 5432
+      user: postgres # ${POSTGRES_USER}
+      password: secret # ${POSTGRES_PASSWORD}
+    plugin: 
+      catalog:
+        connection:
+          database: postgres
+      # auth:
+      #   connection:
+      #     database: postgres
+        # client: better-sqlite3
+        # connection: ':memory:'
+      # app:
+      #   connection:
+      #     database: postgres
   cache:
     store: memory
-  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+
+      
+  # workingdirectory: /tmp # use this to configure a working directory for the scaffolder, defaults to the os temp-dir
 
 integrations:
   github:
     - host: github.com
-      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
-      # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
+      # this is a personal access token or pat from github. you can find out how to generate this token, and more information
+      # about setting up the github integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
+      token: ${github_token}
+    ### example for how to add your github enterprise instance using the api:
     # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
+    #   apibaseurl: https://ghe.example.net/api/v3
+    #   token: ${ghe_token}
 
 proxy:
   '/test':
     target: 'https://example.com'
-    changeOrigin: true
+    changeorigin: true
   '/argocd/api':
     target: https://localhost:8083/api/v1/
-    changeOrigin: true
+    changeorigin: true
     # only if your argocd api has self-signed cert
     secure: false
     headers:
-      Cookie:
-        $env: ARGOCD_AUTH_TOKEN
-# Reference documentation http://backstage.io/docs/features/techdocs/configuration
-# Note: After experimenting with basic setup, use CI/CD to generate docs
-# and an external cloud storage when deploying TechDocs for production use-case.
+      cookie:
+        $env: argocd_auth_token
+# reference documentation http://backstage.io/docs/features/techdocs/configuration
+# note: after experimenting with basic setup, use ci/cd to generate docs
+# and an external cloud storage when deploying techdocs for production use-case.
 # https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
 techdocs:
-  builder: 'local' # Alternatives - 'external'
+  builder: 'local' # alternatives - 'external'
   generator:
-    runIn: 'docker' # Alternatives - 'local'
+    runin: 'docker' # alternatives - 'local'
   publisher:
-    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+    type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
 
 auth:
-  # see https://backstage.io/docs/auth/ to learn about auth providers
   providers: {}
+  # see https://backstage.io/docs/auth/ to learn about auth providers
+  # environment: development
+  # providers: 
+  #   github:
+  #     development:
+  #       clientId: ${GITHUB_CLIENT_ID}
+  #       clientSecret: ${GITHUB_CLIENT_SECRET}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
   import:
-    entityFilename: catalog-info.yaml
-    pullRequestBranchName: backstage-integration
+    entityfilename: catalog-info.yaml
+    pullrequestbranchname: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [component, system, api, resource, location]
   locations:
-    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    # local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
       target: ../../examples/entities.yaml
 
-    # Local example template
+    # local example template
     - type: file
       target: ../../examples/template/template.yaml
       rules:
-        - allow: [Template]
+        - allow: [template]
 
-    # Local example organizational data
+    # local example organizational data
     - type: file
       target: ../../examples/org.yaml
       rules:
-        - allow: [User, Group]
+        - allow: [user, group]
     - type: url
       target: https://github.com/tony-mw/plugin-argocd-autopilot/blob/main/template.yaml
       rules:
-        - allow: [ Template ]
+        - allow: [ template ]
 
-    ## Uncomment these lines to add more example data
+    ## uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
 
-    ## Uncomment these lines to add an example org
+    ## uncomment these lines to add an example org
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
-    #     - allow: [User, Group]
+    #     - allow: [user, group]
+
+# This is for k8s cluster management
+# Currently, just using a minikube cluster
+# TODO: Install backstage in GKE then point to GKE cluster
+
+kubernetes:
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocationMethdos:
+    - type: 'config'
+      clusters:
+        - url: http://127.0.0.1:9999 # found by running `kubectl cluster-info`
+          name: minikube # unique within backstage project
+          authProvider: 'serviceAccount' # uses a k8s sa, can use google sa
+          skipTLSVerify: false # k8s client verifies the TLS certificate presented by the API
+          skipMetricsLookup: true
+          # serviceAccountToken: ${K8S_MINIKUBE_TOKEN} # kubectl get secret
+          # dashboardUrl: http://127.0.0.1:64713
+          # dashboardApp: standard
+          # caData: ${K8S_CONFIG_CA_DATA}
+          caFile: '~/.minikube/ca.pem'
+          # customResources:
+          #   - group: 'argoproj.io'
+          #     apiVersion: 'v1alpha1'
+          #     plural: 'rollouts'
+

@@ -32,3 +32,13 @@ spec:
   owner: my-team
   type: service
 
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kubernetes
+spec:
+  lifecycle: production
+  owner: my-team
+  type: service
+
