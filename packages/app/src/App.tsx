@@ -36,6 +36,7 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 
 // import { githubAuthApiRef } from '@backstage/core-plugin-api';
 // import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
+// import { PluginArgocdAutopilotPage } from '@internal/plugin-plugin-argocd-autopilot';
 
 // const githubProvider: SignInProviderConfig = {
 //     id: 'github-auth-provider',
