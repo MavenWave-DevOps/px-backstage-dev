@@ -36,6 +36,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
+  annotations:
+    'backstage.io/kubernetes-id': dice-roller
   name: kubernetes
 spec:
   lifecycle: production
