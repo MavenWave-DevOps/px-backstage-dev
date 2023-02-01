@@ -1,6 +1,7 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://backstage-mike.px.igniteme.dev
+  # baseUrl: http://backstage-mike.px.igniteme.dev
+  baseUrl: http://localhost:3000
 
 organization:
   name: Tidal Wave
@@ -16,7 +17,10 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  baseUrl: http://backstage-mike.px.igniteme.dev
+
+  # baseUrl: http://backstage-mike.px.igniteme.dev
+
+  baseUrl: http://localhost:7007
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
@@ -92,7 +96,14 @@ techdocs:
     type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
 
 auth:
-  providers: {}
+  environment: development
+  providers: 
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        callbackUrl: https://localhost:7007/api/auth/github/handler/frame
+
   # see https://backstage.io/docs/auth/ to learn about auth providers
   # environment: development
   # providers: 
