@@ -36,13 +36,10 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-<<<<<<< HEAD
   name: gcp-folder
-=======
   annotations:
     'backstage.io/kubernetes-id': dice-roller
   name: kubernetes
->>>>>>> 50ef37e53231cded186893729d0ccbb996c7e9bc
 spec:
   lifecycle: production
   owner: mirage-team

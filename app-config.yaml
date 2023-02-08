@@ -93,9 +93,7 @@ techdocs:
     type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
 
 auth:
-<<<<<<< HEAD
   # providers: {}
-=======
   environment: development
   providers: 
     github:
@@ -104,7 +102,6 @@ auth:
         clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
         callbackUrl: https://localhost:7007/api/auth/github/handler/frame
 
->>>>>>> 50ef37e53231cded186893729d0ccbb996c7e9bc
   # see https://backstage.io/docs/auth/ to learn about auth providers
   # environment: development
   providers: 
