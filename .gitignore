@@ -51,6 +51,9 @@ site
 # vscode database functionality support files
 *.session.sql
 
+<<<<<<< HEAD
 /secrets/*
+=======
+>>>>>>> 50ef37e53231cded186893729d0ccbb996c7e9bc
 secrets/
 secrets/*
