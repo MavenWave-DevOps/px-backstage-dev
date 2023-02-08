@@ -21,24 +21,24 @@
 #  owner: my-team
 #  type: service
 #---
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  annotations:
-    argocd/app-selector: "app.kubernetes.io/managed-by=argocd-autopilot"
-  name: argocd-autopilot
-spec:
-  lifecycle: production
-  owner: my-team
-  type: service
-
+# apiVersion: backstage.io/v1alpha1
+# kind: Component
+# metadata:
+#   annotations:
+#     argocd/app-selector: "app.kubernetes.io/managed-by=argocd-autopilot"
+#   name: argocd-autopilot
+# spec:
+#   lifecycle: production
+#   owner: my-team
+#   type: service
+#
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: kubernetes
+  name: gcp-folder
 spec:
   lifecycle: production
-  owner: my-team
+  owner: mirage-team
   type: service
 

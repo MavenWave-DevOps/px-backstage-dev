@@ -92,44 +92,21 @@ techdocs:
     type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
 
 auth:
-  providers: {}
+  # providers: {}
   # see https://backstage.io/docs/auth/ to learn about auth providers
   # environment: development
-  # providers: 
-  #   github:
-  #     development:
-  #       clientId: ${GITHUB_CLIENT_ID}
-  #       clientSecret: ${GITHUB_CLIENT_SECRET}
+  providers: 
+    github:
+      development:
+        clientId: ${GITHUB_CLIENT_ID}
+        clientSecret: ${GITHUB_CLIENT_SECRET}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
-  import:
-    entityfilename: catalog-info.yaml
-    pullrequestbranchname: backstage-integration
   rules:
-    - allow: [component, system, api, resource, location]
-  locations:
-    # local example data, file locations are relative to the backend process, typically `packages/backend`
-    - type: file
-      target: ../../examples/entities.yaml
-
-    # local example template
-    - type: file
-      target: ../../examples/template/template.yaml
-      rules:
-        - allow: [template]
-
-    # local example organizational data
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [user, group]
-    - type: url
-      target: https://github.com/tony-mw/plugin-argocd-autopilot/blob/main/template.yaml
-      rules:
-        - allow: [ template ]
+    - allow: [Component, System, API, Resource, Location]
 
     ## uncomment these lines to add more example data
     # - type: url
