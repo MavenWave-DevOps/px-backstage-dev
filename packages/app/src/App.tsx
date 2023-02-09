@@ -35,14 +35,7 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
-<<<<<<< HEAD
 import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
-=======
-import { SignInPage } from '@backstage/core-components';
-
-// import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
->>>>>>> 50ef37e53231cded186893729d0ccbb996c7e9bc
-// import { PluginArgocdAutopilotPage } from '@internal/plugin-plugin-argocd-autopilot';
 
 const githubProvider: SignInProviderConfig = {
     id: 'github-auth-provider',
@@ -82,7 +75,6 @@ const app = createApp({
       catalogIndex: catalogPlugin.routes.catalogIndex,
     });
   },
-<<<<<<< HEAD
   components: {
       SignInPage: props => (
         <SignInPage
@@ -92,8 +84,6 @@ const app = createApp({
         />
       ),
     },
-=======
->>>>>>> 50ef37e53231cded186893729d0ccbb996c7e9bc
 });
 
 const AppProvider = app.getProvider();

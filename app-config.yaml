@@ -61,13 +61,10 @@ backend:
 integrations:
   github:
     - host: github.com
-      # this is a personal access token or pat from github. you can find out how to generate this token, and more information
-      # about setting up the github integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${github_token}
-    ### example for how to add your github enterprise instance using the api:
-    # - host: ghe.example.net
-    #   apibaseurl: https://ghe.example.net/api/v3
-    #   token: ${ghe_token}
+      token: 
+        $env: ${GITHUB_TOKEN}
+      # apps:
+        # - $include: github-app-backstage-projectx-test1-credentials.yaml
 
 proxy:
   '/test':
@@ -93,15 +90,6 @@ techdocs:
     type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
 
 auth:
-  # providers: {}
-  environment: development
-  providers: 
-    github:
-      development:
-        clientId: ${AUTH_GITHUB_CLIENT_ID}
-        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-        callbackUrl: https://localhost:7007/api/auth/github/handler/frame
-
   # see https://backstage.io/docs/auth/ to learn about auth providers
   # environment: development
   providers: 
