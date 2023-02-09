@@ -61,8 +61,7 @@ backend:
 integrations:
   github:
     - host: github.com
-      token: 
-        $env: ${GITHUB_TOKEN}
+      token: ${GITHUB_TOKEN}
       # apps:
         # - $include: github-app-backstage-projectx-test1-credentials.yaml
 
@@ -90,8 +89,6 @@ techdocs:
     type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
 
 auth:
-  # see https://backstage.io/docs/auth/ to learn about auth providers
-  # environment: development
   providers: 
     github:
       development:
