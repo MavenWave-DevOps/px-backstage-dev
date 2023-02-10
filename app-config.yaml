@@ -1,16 +1,13 @@
 app:
   title: Mirage Backstage
-  # baseUrl: http://backstage-mike.px.igniteme.dev
   baseUrl: https://mirage.px-dev.mavenwave.dev/
 
 organization:
   name: Maven Wave
 
-# argocdAutopilot:
-#   apiUrl: "http://localhost:8080/run"
 
 backend:
-  apiUrl: "http://localhost:8080/run"
+  apiUrl: "http://mirage.px-dev.mavenwave.dev/run"
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
   # information on the format
