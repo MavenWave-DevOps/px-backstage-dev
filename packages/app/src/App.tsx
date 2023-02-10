@@ -39,7 +39,7 @@ import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
 
 const githubProvider: SignInProviderConfig = {
     id: 'github-auth-provider',
-    title: 'GitHub',
+    title: 'Github',
     message: 'Sign in using Github',
     apiRef: githubAuthApiRef,
 };
