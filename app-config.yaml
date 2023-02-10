@@ -96,8 +96,12 @@ scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
-  rules:
-    - allow: [Component, System, API, Resource, Location]
+  locations:
+    - type: file
+      target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
+  # rules:
+  #   - allow: [Component, System, API, Resource, Location]
+
 
     ## uncomment these lines to add more example data
     # - type: url
