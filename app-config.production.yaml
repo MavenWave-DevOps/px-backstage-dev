@@ -1,40 +1,137 @@
 app:
-  # Should be the same as backend.baseUrl when using the `app-backend` plugin.
-  baseUrl: http://localhost:7007
+  title: Mirage Backstage
+  baseUrl: https://mirage.px-dev.mavenwave.dev/
+
+organization:
+  name: Maven Wave
+
 
 backend:
-  # Note that the baseUrl should be the URL that the browser and other clients
-  # should use when communicating with the backend, i.e. it needs to be
-  # reachable not just from within the backend host, but from all of your
-  # callers. When its value is "http://localhost:7007", it's strictly private
-  # and can't be reached by others.
-  baseUrl: http://localhost:7007
+  apiUrl: "http://mirage.px-dev.mavenwave.dev/run"
+  # Used for enabling authentication, secret is shared by all backend plugins
+  # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
+  # information on the format
+  # auth:
+  #   keys:
+  #     - secret: ${BACKEND_SECRET}
+
+  # baseUrl: http://backstage-mike.px.igniteme.dev
+
+  baseUrl: http://mirage.px-dev.mavenwave.dev/
   listen:
     port: 7007
-    # The following host directive binds to all IPv4 interfaces when its value
-    # is "0.0.0.0". This is the most permissive setting. The right value depends
-    # on your specific deployment. If you remove the host line entirely, the
-    # backend will bind on the interface that corresponds to the backend.baseUrl
-    # hostname.
-    host: 0.0.0.0
-
-  # config options: https://node-postgres.com/api/client
+    # Uncomment the following host directive to bind to all IPv4 interfaces and
+    # not just the baseUrl hostname.
+    # host: 0.0.0.0
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
+    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+  cors:
+    origin: http://mirage.px-dev.mavenwave.dev/ 
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  # This is for local development only, it is not recommended to use this in production
+  # The production database configuration is stored in app-config.production.yaml
   database:
-    client: pg
-    connection:
-      host: ${POSTGRES_HOST}
-      port: ${POSTGRES_PORT}
-      user: ${POSTGRES_USER}
-      password: ${POSTGRES_PASSWORD}
-      # https://node-postgres.com/features/ssl
-      # you can set the sslmode configuration option via the `PGSSLMODE` environment variable
-      # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
-      # ssl:
-      #   ca: # if you have a CA file and want to verify it you can uncomment this section
-      #     $file: <file-path>/ca/server.crt
+    client: better-sqlite3
+    connection: ':memory:'
+    # client: pg
+    # connection:
+    #   host: localhost #${POSTGRES_HOST}
+    #   port: 5432
+    #   user: postgres # ${POSTGRES_USER}
+    #   password: secret # ${POSTGRES_PASSWORD}
+    # plugin: 
+    #   catalog:
+    #     connection:
+    #       database: postgres
+      # app:
+      #   connection:
+      #     database: postgres
+  cache:
+    store: memory
+
+      
+  # workingdirectory: /tmp # use this to configure a working directory for the scaffolder, defaults to the os temp-dir
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+      # apps:
+        # - $include: github-app-backstage-projectx-test1-credentials.yaml
+
+proxy:
+  '/test':
+    target: 'https://example.com'
+    changeorigin: true
+  # '/argocd/api':
+  #   target: https://localhost:8083/api/v1/
+  #   changeorigin: true
+  #   # only if your argocd api has self-signed cert
+  #   secure: false
+  #   headers:
+  #     cookie:
+  #       $env: argocd_auth_token
+# reference documentation http://backstage.io/docs/features/techdocs/configuration
+# note: after experimenting with basic setup, use ci/cd to generate docs
+# and an external cloud storage when deploying techdocs for production use-case.
+# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+techdocs:
+  builder: 'local' # alternatives - 'external'
+  generator:
+    runin: 'docker' # alternatives - 'local'
+  publisher:
+    type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
+
+auth:
+  providers: 
+    github:
+      development:
+        clientId: ${GITHUB_CLIENT_ID}
+        clientSecret: ${GITHUB_CLIENT_SECRET}
+
+scaffolder:
+  # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
-  # Overrides the default list locations from app-config.yaml as these contain example data.
-  # See https://backstage.io/docs/features/software-catalog/software-catalog-overview#adding-components-to-the-catalog for more details
-  # on how to get entities into the catalog.
-  locations: []
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+
+    ## uncomment these lines to add more example data
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+
+    ## uncomment these lines to add an example org
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+    #   rules:
+    #     - allow: [user, group]
+
+# This is for k8s cluster management
+# Currently, just using a minikube cluster
+# TODO: Install backstage in GKE then point to GKE cluster
+
+kubernetes:
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocationMethdos:
+    - type: 'config'
+      clusters:
+        - url: http://127.0.0.1:9999 # found by running `kubectl cluster-info`
+          name: minikube # unique within backstage project
+          authProvider: 'serviceAccount' # uses a k8s sa, can use google sa
+          skipTLSVerify: false # k8s client verifies the TLS certificate presented by the API
+          skipMetricsLookup: true
+          # serviceAccountToken: ${K8S_MINIKUBE_TOKEN} # kubectl get secret
+          # dashboardUrl: http://127.0.0.1:64713
+          # dashboardApp: standard
+          # caData: ${K8S_CONFIG_CA_DATA}
+          caFile: '~/.minikube/ca.pem'
+          # customResources:
+          #   - group: 'argoproj.io'
+          #     apiVersion: 'v1alpha1'
+          #     plural: 'rollouts'
+
+
