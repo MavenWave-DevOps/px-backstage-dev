@@ -1,13 +1,13 @@
 app:
   title: Scaffolded Backstage App
   # baseUrl: http://backstage-mike.px.igniteme.dev
-  baseUrl: http://localhost:3000
+  baseUrl: https://mirage.px-dev.mavenwave.dev/
 
 organization:
   name: Tidal Wave
 
-argocdAutopilot:
-  apiUrl: "http://localhost:8080/run"
+# argocdAutopilot:
+#   apiUrl: "http://localhost:8080/run"
 
 backend:
   apiUrl: "http://localhost:8080/run"
@@ -69,14 +69,14 @@ proxy:
   '/test':
     target: 'https://example.com'
     changeorigin: true
-  '/argocd/api':
-    target: https://localhost:8083/api/v1/
-    changeorigin: true
-    # only if your argocd api has self-signed cert
-    secure: false
-    headers:
-      cookie:
-        $env: argocd_auth_token
+  # '/argocd/api':
+  #   target: https://localhost:8083/api/v1/
+  #   changeorigin: true
+  #   # only if your argocd api has self-signed cert
+  #   secure: false
+  #   headers:
+  #     cookie:
+  #       $env: argocd_auth_token
 # reference documentation http://backstage.io/docs/features/techdocs/configuration
 # note: after experimenting with basic setup, use ci/cd to generate docs
 # and an external cloud storage when deploying techdocs for production use-case.
