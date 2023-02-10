@@ -1,10 +1,10 @@
 app:
-  title: Scaffolded Backstage App
+  title: Mirage Backstage
   # baseUrl: http://backstage-mike.px.igniteme.dev
   baseUrl: https://mirage.px-dev.mavenwave.dev/
 
 organization:
-  name: Tidal Wave
+  name: Maven Wave
 
 # argocdAutopilot:
 #   apiUrl: "http://localhost:8080/run"
