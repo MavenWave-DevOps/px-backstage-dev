@@ -17,7 +17,7 @@ backend:
 
   # baseUrl: http://backstage-mike.px.igniteme.dev
 
-  baseUrl: http://mirage.px-dev.mavenwave.dev/
+  baseUrl: http://mirage.px-dev.mavenwave.dev
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
