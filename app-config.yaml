@@ -97,8 +97,8 @@ scaffolder:
 
 catalog:
   locations:
-    - type: file
-      target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
+    - type: url
+      target: https://github.com/MavenWave-DevOps/test-docs-template 
   # rules:
   #   - allow: [Component, System, API, Resource, Location]
 
