@@ -102,6 +102,8 @@ catalog:
   locations:
     - type: file
       target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
+      rules:
+        - allow: [ Template ]
     ## uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
