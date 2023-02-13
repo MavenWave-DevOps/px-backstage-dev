@@ -102,13 +102,15 @@ catalog:
       # target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
       rules:
         - allow: [ Plugin, Template, User ]
+    - type: url
+      target: https://github.com/MavenWave-DevOps/test-docs-template 
   # rules:
   #   - allow: [Component, System, API, Resource, Location]
 
 
     ## uncomment these lines to add more example data
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
 
     ## uncomment these lines to add an example org
     # - type: url
