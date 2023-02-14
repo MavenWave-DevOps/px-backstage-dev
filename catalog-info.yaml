@@ -37,11 +37,17 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: gcp-folder
-  annotations:
-    'backstage.io/kubernetes-id': dice-roller
-  name: kubernetes
 spec:
   lifecycle: production
   owner: mirage-team
+  type: service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: datasci-project
+spec:
+  lifecycle: produciton
+  owner: data
   type: service
 
