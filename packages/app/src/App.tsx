@@ -24,6 +24,12 @@ import {
   techdocsPlugin,
   TechDocsReaderPage,
 } from '@backstage/plugin-techdocs';
+import {
+  CostInsightsPage,
+  CostInsightsProjectGrowthInstructionsPage,
+  CostInsightsLabelDataflowInstructionsPage,
+} from '@backstage/plugin-cost-insights';
+import { GraphiQLPage } from '@backstage/plugin-graphiql';
 import { darkTheme, lightTheme } from '@backstage/theme';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
@@ -107,16 +113,16 @@ const app = createApp({
         </ThemeProvider>
       ),
     },
-    {
-      id: 'aperture',
-      title: 'Aperture',
-      variant: 'light',
-      Provider: ({ children }) => (
-        <ThemeProvider theme={apertureTheme}>
-          <CssBaseline>{children}</CssBaseline>
-        </ThemeProvider>
-      ),
-    },
+    // {
+    //   id: 'aperture',
+    //   title: 'Aperture',
+    //   variant: 'light',
+    //   Provider: ({ children }) => (
+    //     <ThemeProvider theme={apertureTheme}>
+    //       <CssBaseline>{children}</CssBaseline>
+    //     </ThemeProvider>
+    //   ),
+    // },
   ],
 
   components: {
