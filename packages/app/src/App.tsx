@@ -11,7 +11,12 @@ import {
   catalogImportPlugin,
 } from '@backstage/plugin-catalog-import';
 import { ScaffolderPage, scaffolderPlugin } from '@backstage/plugin-scaffolder';
+import {
+  CatalogGraphPage,
+  catalogGraphPlugin,
+} from '@backstage/plugin-catalog-graph';
 import { orgPlugin } from '@backstage/plugin-org';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { SearchPage } from '@backstage/plugin-search';
 import { TechRadarPage } from '@backstage/plugin-tech-radar';
 import {
@@ -19,18 +24,27 @@ import {
   techdocsPlugin,
   TechDocsReaderPage,
 } from '@backstage/plugin-techdocs';
+import {
+  CostInsightsPage,
+  CostInsightsProjectGrowthInstructionsPage,
+  CostInsightsLabelDataflowInstructionsPage,
+} from '@backstage/plugin-cost-insights';
+import { GraphiQLPage } from '@backstage/plugin-graphiql';
+import { darkTheme, lightTheme } from '@backstage/theme';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { UserSettingsPage } from '@backstage/plugin-user-settings';
 import { apis } from './apis';
+import { createApp } from '@backstage/app-defaults';
 import { entityPage } from './components/catalog/EntityPage';
+// import { orgPlugin } from '@backstage/plugin-org';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
 
 import { AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
-import { createApp } from '@backstage/app-defaults';
+// import { createApp } from '@backstage/app-defaults';
 import { FlatRoutes } from '@backstage/core-app-api';
-import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
+// import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
@@ -74,7 +88,43 @@ const app = createApp({
     bind(orgPlugin.externalRoutes, {
       catalogIndex: catalogPlugin.routes.catalogIndex,
     });
+    bind(catalogGraphPlugin.externalRoutes, {
+      catalogEntity: catalogPlugin.routes.catalogEntity,
+    });
   },
+  themes: [
+    {
+      id: 'light',
+      title: 'Light',
+      variant: 'light',
+      Provider: ({ children }) => (
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline>{children}</CssBaseline>
+        </ThemeProvider>
+      ),
+    },
+    {
+      id: 'dark',
+      title: 'Dark',
+      variant: 'dark',
+      Provider: ({ children }) => (
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline>{children}</CssBaseline>
+        </ThemeProvider>
+      ),
+    },
+    // {
+    //   id: 'aperture',
+    //   title: 'Aperture',
+    //   variant: 'light',
+    //   Provider: ({ children }) => (
+    //     <ThemeProvider theme={apertureTheme}>
+    //       <CssBaseline>{children}</CssBaseline>
+    //     </ThemeProvider>
+    //   ),
+    // },
+  ],
+
   components: {
       SignInPage: props => (
         <SignInPage
@@ -92,6 +142,7 @@ const AppRouter = app.getRouter();
 const routes = (
   <FlatRoutes>
     <Route path="/" element={<Navigate to="catalog" />} />
+    <Route path="/api-docs" element={<ApiExplorerPage />} />
     <Route path="/catalog" element={<CatalogIndexPage />} />
     <Route
       path="/catalog/:namespace/:kind/:name"
@@ -99,6 +150,15 @@ const routes = (
     >
       {entityPage}
     </Route>
+    <Route path="/cost-insights" element={<CostInsightsPage />} />
+    <Route
+      path="/cost-insights/investigating-growth"
+      element={<CostInsightsProjectGrowthInstructionsPage />}
+    />
+    <Route
+      path="/cost-insights/labeling-jobs"
+      element={<CostInsightsLabelDataflowInstructionsPage />}
+    />
     <Route path="/docs" element={<TechDocsIndexPage />} />
     <Route
       path="/docs/:namespace/:kind/:name/*"
@@ -108,6 +168,8 @@ const routes = (
         <ReportIssue />
       </TechDocsAddons>
     </Route>
+    <Route path="/graphiql" element={<GraphiQLPage />} />
+
     <Route path="/create" element={<ScaffolderPage />} />
     <Route path="/api-docs" element={<ApiExplorerPage />} />
     <Route

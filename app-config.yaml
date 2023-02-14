@@ -1,6 +1,19 @@
 app:
   title: Mirage Backstage
   baseUrl: https://mirage.px-dev.mavenwave.dev/
+  support:
+    url: https://github.com/backstage/backstage/issues
+    items:
+      - title: Backstage Community
+        icon: chat
+        links:
+          - url: https://backstage.io/docs/overview/support
+            title: Support and community
+      - title: Backstage News
+        icon: docs
+        links:
+          - url: https://backstage.io/blog/
+            title: Backstage Blog
 
 organization:
   name: Maven Wave
@@ -78,13 +91,6 @@ proxy:
 # note: after experimenting with basic setup, use ci/cd to generate docs
 # and an external cloud storage when deploying techdocs for production use-case.
 # https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
-techdocs:
-  builder: 'local' # alternatives - 'external'
-  generator:
-    runin: 'docker' # alternatives - 'local'
-  publisher:
-    type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
-
 auth:
   providers: 
     github:
@@ -97,6 +103,69 @@ scaffolder:
 
 catalog:
   locations:
+    # Backstage example components
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml
+      # target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
+
+    - type: url
+      target: https://github.com/MavenWave-DevOps/px-onboard-template/blob/main/template.yaml
+      rules:
+        - allow: [ Template ]
+
+    # Backstage example systems
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-systems.yaml
+
+    # Backstage example APIs
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-apis.yaml
+
+    # Backstage example organization groups
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
+
+    # Backstage example domains
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-domains.yaml
+
+    # Backstage example resources
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-resources.yaml
+
+    # The backstage demo deployment (this)
+    - type: url
+      target: https://github.com/backstage/demo/blob/master/catalog-info.yaml
+
+    # The backstage library repository
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/catalog-info.yaml
+
+costInsights:
+  engineerCost: 200000
+  products:
+    computeEngine:
+      name: Compute Engine
+      icon: compute
+    cloudStorage:
+      name: Cloud Storage
+      icon: storage
+    bigQuery:
+      name: BigQuery
+      icon: search
+  metrics:
+    DAU:
+      name: Daily Active Users
+      default: true
+    MSC:
+      name: Monthly Subscribers
+
+techdocs:
+  builder: 'external'
+  generator:
+    runIn: 'local' # alternatives - 'docker'
+  publisher:
+    type: 'local'
     - type: file
       target: https://github.com/MavenWave-DevOps/test-docs-template/template.yaml
       # target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
