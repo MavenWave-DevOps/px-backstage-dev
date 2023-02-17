@@ -106,6 +106,10 @@ catalog:
       target: https://github.com/MavenWave-DevOps/px-onboard-template/blob/main/template.yaml
       rules:
         - allow: [ Template ]
+    - type: url
+      target: https://github.com/MavenWave-DevOps/template-mayo-team/blob/main/template.yaml
+      rules:
+        - allow: [ Template ]
     ## uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
