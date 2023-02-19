@@ -97,6 +97,10 @@ auth:
       development:
         clientId: ${GITHUB_CLIENT_ID}
         clientSecret: ${GITHUB_CLIENT_SECRET}
+    google:
+      development:
+        clientId: ${AUTH_GOOGLE_CLIENT_ID}
+        clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -117,6 +121,7 @@ catalog:
       target: https://github.com/MavenWave-DevOps/template-mayo-team/blob/main/template.yaml
       rules:
         - allow: [ Template ]
+
     # Backstage example systems
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-systems.yaml

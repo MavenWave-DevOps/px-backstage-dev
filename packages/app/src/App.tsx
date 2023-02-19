@@ -49,6 +49,7 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { googleAuthApiRef } from '@backstage/core-plugin-api';
 import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
 
 const githubProvider: SignInProviderConfig = {
@@ -58,6 +59,13 @@ const githubProvider: SignInProviderConfig = {
     apiRef: githubAuthApiRef,
 };
 
+const googleProvider: SignInProviderConfig = {
+    id: 'google-auth-provider',
+    title: 'Google',
+    message: 'Sign in using Google',
+    apiRef: googleAuthApiRef,
+};
+
 const app = createApp({
   apis,
   components: {
@@ -65,12 +73,20 @@ const app = createApp({
       <SignInPage
         {...props}
         auto
-        providers={[{
+        providers={[
+        {
           id: 'github-auth-provider',
           title: 'GitHub',
           message: 'Sign in using GitHub',
           apiRef: githubAuthApiRef,
-        },"guest"]}
+        },
+        // {
+        //   id: 'google-auth-provider',
+        //   title: 'Google',
+        //   message: 'Sign in using Google',
+        //   apiRef: googleAuthApiRef,
+        // },
+        "guest"]}
       />
     ),
   },
@@ -113,16 +129,16 @@ const app = createApp({
         </ThemeProvider>
       ),
     },
-    // {
-    //   id: 'aperture',
-    //   title: 'Aperture',
-    //   variant: 'light',
-    //   Provider: ({ children }) => (
-    //     <ThemeProvider theme={apertureTheme}>
-    //       <CssBaseline>{children}</CssBaseline>
-    //     </ThemeProvider>
-    //   ),
-    // },
+    {
+      id: 'aperture',
+      title: 'Aperture',
+      variant: 'light',
+      Provider: ({ children }) => (
+        <ThemeProvider theme={apertureTheme}>
+          <CssBaseline>{children}</CssBaseline>
+        </ThemeProvider>
+      ),
+    },
   ],
 
   components: {
@@ -130,7 +146,7 @@ const app = createApp({
         <SignInPage
           {...props}
           auto
-          provider={githubProvider}
+          provider={githubProvider, googleProvider}
         />
       ),
     },
