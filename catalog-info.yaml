@@ -1,16 +1,16 @@
-#apiVersion: backstage.io/v1alpha1
-#kind: Component
-#metadata:
-#  name: backstage-local
-#  description: An example of a Backstage application.
-#  # Example for optional annotations
-#  # annotations:
-#  #   github.com/project-slug: backstage/backstage
-#  #   backstage.io/techdocs-ref: dir:.
-#spec:
-#  type: website
-#  owner: john@example.com
-#  lifecycle: experimental
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+ name: backstage-local
+ description: An example of a Backstage application.
+ # Example for optional annotations
+ # annotations:
+ #   github.com/project-slug: backstage/backstage
+ #   backstage.io/techdocs-ref: dir:.
+spec:
+ type: website
+ owner: john@example.com
+ lifecycle: experimental
 
 #apiVersion: backstage.io/v1alpha1
 #kind: Component
@@ -32,22 +32,22 @@
 #   owner: my-team
 #   type: service
 #
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: gcp-folder
-spec:
-  lifecycle: production
-  owner: mirage-team
-  type: service
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: datasci-project
-spec:
-  lifecycle: produciton
-  owner: data
-  type: service
+# ---
+# apiVersion: backstage.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: gcp-folder
+# spec:
+#   lifecycle: production
+#   owner: mirage-team
+#   type: service
+# ---
+# apiVersion: backstage.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: datasci-project
+# spec:
+#   lifecycle: produciton
+#   owner: data
+#   type: service
 
