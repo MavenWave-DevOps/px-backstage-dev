@@ -1,6 +1,6 @@
 app:
   title: Mirage Backstage
-  baseUrl: https://mirage.px-dev.mavenwave.dev/
+  baseUrl: https://mirage.px-dev.mavenwave.dev
   support:
     url: https://github.com/backstage/backstage/issues
     items:

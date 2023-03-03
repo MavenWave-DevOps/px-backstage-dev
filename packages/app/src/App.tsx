@@ -41,6 +41,8 @@ import { entityPage } from './components/catalog/EntityPage';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
 
+import { EntityMyPluginContent } from '@internal/plugin-my-plugin';
+
 import { AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
 // import { createApp } from '@backstage/app-defaults';
 import { FlatRoutes } from '@backstage/core-app-api';
@@ -186,6 +188,8 @@ const routes = (
     </Route>
     <Route path="/graphiql" element={<GraphiQLPage />} />
 
+    <Route path="/my-plugin" element={<EntityMyPluginContent />}/>
+
     <Route path="/create" element={<ScaffolderPage />} />
     <Route path="/api-docs" element={<ApiExplorerPage />} />
     <Route
@@ -205,6 +209,7 @@ const routes = (
     </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
+    <Route path="/my-plugin" element={<EntityMyPluginContent />} />
   </FlatRoutes>
 );
 
