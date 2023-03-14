@@ -25,6 +25,9 @@ yarn install
 yarn dev
 ```
 
+## 🚀 CI/CD <a name = "cicd"></a>
+The main branch is connected to Google Cloud Build CI/CD pipeline and argocd image updater.
+
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [Node.js](https://nodejs.org/en/docs/) - Backstage is ran on Node.js
