@@ -144,13 +144,13 @@ const app = createApp({
   ],
 
   components: {
-      SignInPage: props => (
-        <SignInPage
-          {...props}
-          auto
-          provider={}// githubProvider, googleProvider}
-        />
-      ),
+      // SignInPage: props => (
+      //   <SignInPage
+      //     {...props}
+      //     auto
+      //     provider={}// githubProvider, googleProvider}
+      //   />
+      // ),
     },
 });
 
