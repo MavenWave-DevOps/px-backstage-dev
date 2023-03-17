@@ -13,13 +13,14 @@ This repository is for development of Backstage for the Mayo Common Control Plan
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
+Only do the following if you have env vars for SSO and authentication
+  - Secret values can be found in GCP console secret manager.
 Set env vars:
 ```
 source env/secrets.sh
 ```
 
 To start the app, run:
-
 ```
 yarn install
 yarn dev
