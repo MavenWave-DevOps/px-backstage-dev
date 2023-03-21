@@ -1,6 +1,6 @@
 app:
   title: Mirage Backstage
-  baseUrl: http://localhost:3000 #https://mirage.px-dev.mavenwave.dev
+  baseUrl: http://mirage.px-dev.mavenwave.dev #http://localhost:3000 #https://mirage.px-dev.mavenwave.dev
   support:
     url: https://github.com/backstage/backstage/issues
     items:
@@ -30,7 +30,7 @@ backend:
 
   # baseUrl: http://backstage-mike.px.igniteme.dev
 
-  baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
+  baseUrl: http://mirage.px-dev.mavenwave.dev # http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
