@@ -31,6 +31,7 @@ import {
 } from '@backstage/plugin-cost-insights';
 import { GraphiQLPage } from '@backstage/plugin-graphiql';
 import { darkTheme, lightTheme } from '@backstage/theme';
+import { apertureTheme } from './themes/aperture.ts';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { UserSettingsPage } from '@backstage/plugin-user-settings';
@@ -76,18 +77,18 @@ const app = createApp({
         {...props}
         auto
         providers={[
-        // {
-        //   id: 'github-auth-provider',
-        //   title: 'GitHub',
-        //   message: 'Sign in using GitHub',
-        //   apiRef: githubAuthApiRef,
-        // },
-        // {
-        //   id: 'google-auth-provider',
-        //   title: 'Google',
-        //   message: 'Sign in using Google',
-        //   apiRef: googleAuthApiRef,
-        // },
+        {
+          id: 'github-auth-provider',
+          title: 'GitHub',
+          message: 'Sign in using GitHub',
+          apiRef: githubAuthApiRef,
+        },
+        {
+          id: 'google-auth-provider',
+          title: 'Google',
+          message: 'Sign in using Google',
+          apiRef: googleAuthApiRef,
+        },
         "guest"]}
       />
     ),
@@ -144,13 +145,13 @@ const app = createApp({
   ],
 
   components: {
-      // SignInPage: props => (
-      //   <SignInPage
-      //     {...props}
-      //     auto
-      //     provider={}// githubProvider, googleProvider}
-      //   />
-      // ),
+      SignInPage: props => (
+        <SignInPage
+          {...props}
+          auto
+          provider={githubProvider, googleProvider}
+        />
+      ),
     },
 });
 
