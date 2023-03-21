@@ -82,12 +82,12 @@ const app = createApp({
           message: 'Sign in using GitHub',
           apiRef: githubAuthApiRef,
         },
-        // {
-        //   id: 'google-auth-provider',
-        //   title: 'Google',
-        //   message: 'Sign in using Google',
-        //   apiRef: googleAuthApiRef,
-        // },
+        {
+          id: 'google-auth-provider',
+          title: 'Google',
+          message: 'Sign in using Google',
+          apiRef: googleAuthApiRef,
+        },
         "guest"]}
       />
     ),
