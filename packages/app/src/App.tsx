@@ -31,6 +31,7 @@ import {
 } from '@backstage/plugin-cost-insights';
 import { GraphiQLPage } from '@backstage/plugin-graphiql';
 import { darkTheme, lightTheme } from '@backstage/theme';
+import { apertureTheme } from './themes/aperture.ts';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { UserSettingsPage } from '@backstage/plugin-user-settings';
@@ -76,19 +77,10 @@ const app = createApp({
         {...props}
         auto
         providers={[
-        // {
-        //   id: 'github-auth-provider',
-        //   title: 'GitHub',
-        //   message: 'Sign in using GitHub',
-        //   apiRef: githubAuthApiRef,
-        // },
-        // {
-        //   id: 'google-auth-provider',
-        //   title: 'Google',
-        //   message: 'Sign in using Google',
-        //   apiRef: googleAuthApiRef,
-        // },
-        "guest"]}
+          'guest',
+          githubProvider,
+          googleProvider,
+        ]}
       />
     ),
   },
@@ -131,27 +123,17 @@ const app = createApp({
         </ThemeProvider>
       ),
     },
-    // {
-    //   id: 'aperture',
-    //   title: 'Aperture',
-    //   variant: 'light',
-    //   Provider: ({ children }) => (
-    //     <ThemeProvider theme={apertureTheme}>
-    //       <CssBaseline>{children}</CssBaseline>
-    //     </ThemeProvider>
-    //   ),
-    // },
-  ],
-
-  components: {
-      // SignInPage: props => (
-      //   <SignInPage
-      //     {...props}
-      //     auto
-      //     provider={}// githubProvider, googleProvider}
-      //   />
-      // ),
+    {
+      id: 'aperture',
+      title: 'Aperture',
+      variant: 'light',
+      Provider: ({ children }) => (
+        <ThemeProvider theme={apertureTheme}>
+          <CssBaseline>{children}</CssBaseline>
+        </ThemeProvider>
+      ),
     },
+  ],
 });
 
 const AppProvider = app.getProvider();
