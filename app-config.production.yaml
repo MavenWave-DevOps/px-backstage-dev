@@ -7,7 +7,7 @@ organization:
 
 
 backend:
-  apiUrl: "http://mirage.px-dev.mavenwave.dev/run"
+  apiUrl: "https://mirage.px-dev.mavenwave.dev/run"
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
   # information on the format
@@ -17,7 +17,7 @@ backend:
 
   # baseUrl: http://backstage-mike.px.igniteme.dev
 
-  baseUrl: http://mirage.px-dev.mavenwave.dev
+  baseUrl: https://mirage.px-dev.mavenwave.dev
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
@@ -28,7 +28,7 @@ backend:
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
-    origin: http://localhost:7007
+    origin: https://mirage.px-dev.mavenwave.dev 
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
