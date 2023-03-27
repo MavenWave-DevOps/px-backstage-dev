@@ -37,6 +37,16 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: gcp-folder
+  annotations:
+    grafana/tag-selector: "Kubernetes"
+  tags:
+    - web
+    - frontend
+    - backstage
+  links:
+    - url: https://backstage.xxxxxx.xxx.xx
+      title: Backstage
+      icon: cloud
 spec:
   lifecycle: production
   owner: mirage-team
@@ -50,4 +60,3 @@ spec:
   lifecycle: produciton
   owner: data
   type: service
-

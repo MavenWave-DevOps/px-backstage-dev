@@ -12,6 +12,14 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: example-website
+  annotations:
+    grafana/tag-selector: "Kubernetes"
+  tags:
+    - web
+  links:
+    - url: https://www.mavenwave.com
+      title: Mirage
+      icon: cloud
 spec:
   type: website
   lifecycle: experimental
