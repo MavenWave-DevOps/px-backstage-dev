@@ -4,7 +4,7 @@ steps:
   args:
     - --destination=us.gcr.io/px-test1-project-ici/mayo-backstage:$COMMIT_SHA
     - --destination=us.gcr.io/px-test1-project-ici/mayo-backstage:latest
-    - --dockerfile=./packages/app/Dockerfile
+    - --dockerfile=./Dockerfile
     - --context=.
     - --cache=true
     - --cache-ttl=240h
