@@ -51,7 +51,7 @@ import { FlatRoutes } from '@backstage/core-app-api';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { githubAuthApiRef, oktaAuthApiRef } from '@backstage/core-plugin-api';
 import { googleAuthApiRef } from '@backstage/core-plugin-api';
 import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
 
@@ -69,6 +69,14 @@ const googleProvider: SignInProviderConfig = {
     apiRef: googleAuthApiRef,
 };
 
+
+const oktaProvider: SignInProviderConfig = {
+  id: 'okta-auth-provider',
+  title: 'Okta',
+  message: 'Sign in using okta',
+  apiRef: oktaAuthApiRef,
+};
+
 const app = createApp({
   apis,
   components: {
@@ -79,7 +87,9 @@ const app = createApp({
         providers={[
           'guest',
           githubProvider,
+          oktaProvider,
           googleProvider,
+          
         ]}
       />
     ),

@@ -101,6 +101,15 @@ auth:
       development:
         clientId: ${AUTH_GOOGLE_CLIENT_ID}
         clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+    
+    okta:
+      development:
+        clientId: 
+        clientSecret: 
+        audience:                          
+        authServerId: ${AUTH_OKTA_AUTH_SERVER_ID} # Optional
+        idp: ${AUTH_OKTA_IDP} # Optional
+        
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
