@@ -44,45 +44,26 @@ import { Root } from './components/Root';
 
 import { EntityMyPluginContent } from '@internal/plugin-my-plugin';
 
-import { AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
+import { AlertDisplay, OAuthRequestDialog, SignInPage } from '@backstage/core-components';
 // import { createApp } from '@backstage/app-defaults';
 import { FlatRoutes } from '@backstage/core-app-api';
-// import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
-
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
-import { googleAuthApiRef } from '@backstage/core-plugin-api';
-import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
-
-const githubProvider: SignInProviderConfig = {
-    id: 'github-auth-provider',
-    title: 'GitHub',
-    message: 'Sign in using Github',
-    apiRef: githubAuthApiRef,
-};
-
-const googleProvider: SignInProviderConfig = {
-    id: 'google-auth-provider',
-    title: 'Google',
-    message: 'Sign in using Google',
-    apiRef: googleAuthApiRef,
-};
+import { providers } from './identityProviders';
 
 const app = createApp({
   apis,
   components: {
-    SignInPage: props => (
-      <SignInPage
-        {...props}
-        auto
-        providers={[
-          'guest',
-          githubProvider,
-          googleProvider,
-        ]}
-      />
-    ),
+    SignInPage: props => {
+      return (
+        <SignInPage
+          {...props}
+          providers={['guest', 'custom', ...providers]}
+          title="Select a sign-in method"
+          align="center"
+        />
+      );
+    },
   },
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
