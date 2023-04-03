@@ -14,11 +14,16 @@ app:
         links:
           - url: https://backstage.io/blog/
             title: Backstage Blog
+  permission:
+    enabled: true
 
 organization:
   name: Maven Wave
 
 backend:
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
