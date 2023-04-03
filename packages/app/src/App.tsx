@@ -76,7 +76,6 @@ const app = createApp({
       <SignInPage
         {...props}
         providers={[
-<<<<<<< HEAD
         {
           id: 'github-auth-provider',
           title: 'GitHub',
@@ -90,12 +89,10 @@ const app = createApp({
           apiRef: googleAuthApiRef,
         },
         "guest"]}
-=======
         'guest',
         githubProvider,
         googleProvider,
         ]}
->>>>>>> e544d2aec7b8839fc370b708e252832b94d114c7
       />
     ),
   },
