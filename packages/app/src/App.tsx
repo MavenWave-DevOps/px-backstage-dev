@@ -131,16 +131,16 @@ const app = createApp({
         </ThemeProvider>
       ),
     },
-    {
-      id: 'aperture',
-      title: 'Aperture',
-      variant: 'light',
-      Provider: ({ children }) => (
-        <ThemeProvider theme={apertureTheme}>
-          <CssBaseline>{children}</CssBaseline>
-        </ThemeProvider>
-      ),
-    },
+    // {
+    //   id: 'aperture',
+    //   title: 'Aperture',
+    //   variant: 'light',
+    //   Provider: ({ children }) => (
+    //     <ThemeProvider theme={apertureTheme}>
+    //       <CssBaseline>{children}</CssBaseline>
+    //     </ThemeProvider>
+    //   ),
+    // },
   ],
 
   components: {
