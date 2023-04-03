@@ -60,9 +60,17 @@ import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { EntityMyPluginContent } from '@internal/plugin-my-plugin';
 // import { EntityArgocdAutopilotContent } from '@internal/plugin-argocd-autopilot';
 import {
-    EntityArgoCDOverviewCard,
-    isArgocdAvailable
+  EntityArgoCDOverviewCard,
+  isArgocdAvailable
 } from '@roadiehq/backstage-plugin-argo-cd';
+
+import {
+  EntityGrafanaDashboardsCard,
+} from '@k-phoen/backstage-plugin-grafana';
+
+import {
+  EntityGrafanaAlertsCard,
+} from '@k-phoen/backstage-plugin-grafana';
 
 import { EntityKubernetesContent } from '@backstage/plugin-kubernetes';
 
@@ -124,13 +132,13 @@ const entityWarningContent = (
 const overviewContent = (
   <Grid container spacing={3} alignItems="stretch">
     {entityWarningContent}
-      <EntitySwitch>
-          <EntitySwitch.Case if={e => Boolean(isArgocdAvailable(e))}>
-              <Grid item md={12}>
-                  <EntityArgoCDOverviewCard />
-              </Grid>
-          </EntitySwitch.Case>
-      </EntitySwitch>
+    <EntitySwitch>
+      <EntitySwitch.Case if={e => Boolean(isArgocdAvailable(e))}>
+        <Grid item md={12}>
+          <EntityArgoCDOverviewCard />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
     <Grid item md={6}>
       <EntityAboutCard variant="gridItem" />
     </Grid>
@@ -143,6 +151,14 @@ const overviewContent = (
     </Grid>
     <Grid item md={8} xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem" />
+    </Grid>
+
+    <Grid item md={6}>
+      <EntityGrafanaDashboardsCard />
+    </Grid>
+
+    <Grid item md={6}>
+      <EntityGrafanaAlertsCard />
     </Grid>
   </Grid>
 );
