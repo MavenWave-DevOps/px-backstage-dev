@@ -1,9 +1,7 @@
 import {
   googleAuthApiRef,
-  oktaAuthApiRef,
   githubAuthApiRef,
   microsoftAuthApiRef,
-
 } from '@backstage/core-plugin-api';
 
 export const providers = [
@@ -25,11 +23,5 @@ export const providers = [
     title: 'GitHub',
     message: 'Sign In using GitHub',
     apiRef: githubAuthApiRef,
-  },
-  {
-    id: 'okta-auth-provider',
-    title: 'Okta',
-    message: 'Sign In using Okta',
-    apiRef: oktaAuthApiRef,
   },
 ];

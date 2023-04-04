@@ -6,14 +6,20 @@ This repository is for development of Backstage for the Mayo Common Control Plan
 
 ## 📝 Table of Contents
 
+- [Requirements](#requirements)
 - [Getting Started](#getting_started)
 - [Built Using](#built_using)
 - [CI/CD](#cicd)
 - [Authors](#authors)
 
+## ⚓ Requirements <a name = "requirements"></a>
+
+- node version `v16.20.0`
+- yarn version `1.22.19`
+
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-Set env vars:
+Source secrets:
 ```
 source env/secrets.sh
 ```

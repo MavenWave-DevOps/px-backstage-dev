@@ -21,9 +21,10 @@ organization:
   name: Maven Wave
 
 backend:
-  auth:
-    keys:
-      - secret: ${BACKEND_SECRET}
+  # auth:
+  #   keys:
+  #     - secret: ${BACKEND_SECRET}
+
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
@@ -104,6 +105,7 @@ grafana:
 # and an external cloud storage when deploying techdocs for production use-case.
 # https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
 auth:
+  environment: development
   providers:
     github:
       development:
@@ -113,17 +115,18 @@ auth:
       development:
         clientId: ${AUTH_GOOGLE_CLIENT_ID}
         clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+    microsoft:
+      development:
+        clientId: ${AUTH_MICROSOFT_CLIENT_ID}
+        clientSecret: ${AUTH_MICROSOFT_CLIENT_SECRET}
+        tenantId: ${AUTH_MICROSOFT_TENANT_ID}
+
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
   locations:
-    # Backstage example components
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml
-    # target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
-
     - type: url
       target: https://github.com/MavenWave-DevOps/px-onboard-template/blob/main/template.yaml
       rules:
@@ -134,33 +137,11 @@ catalog:
       rules:
         - allow: [Template]
 
-    # Backstage example systems
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-systems.yaml
-    #
-    # # Backstage example APIs
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-apis.yaml
-    #
-    # # Backstage example organization groups
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
-    #
-    # # Backstage example domains
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-domains.yaml
-    #
-    # # Backstage example resources
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-resources.yaml
-    #
-    # # The backstage demo deployment (this)
-    # - type: url
-    #   target: https://github.com/backstage/demo/blob/master/catalog-info.yaml
-    #
-    # # The backstage library repository
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/catalog-info.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-systems.yaml
+
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-apis.yaml
 
 costInsights:
   engineerCost: 200000
