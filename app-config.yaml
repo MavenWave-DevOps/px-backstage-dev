@@ -35,7 +35,7 @@ backend:
 
   # baseUrl: http://backstage-mike.px.igniteme.dev
 
-  baseUrl: http://localhost # http://mirage.px-dev.mavenwave.dev
+  baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
   listen:
     port: 7007
     # Uncomment the following host directive to bind to all IPv4 interfaces and
