@@ -40,16 +40,17 @@ function makeCreateEnv(config: Config) {
   const discovery = SingleHostDiscovery.fromConfig(config);
   const cacheManager = CacheManager.fromConfig(config);
   const databaseManager = DatabaseManager.fromConfig(config, { logger: root });
-  const tokenManager = ServerTokenManager.fromConfig(config, { logger: root});
+  // const tokenManager = ServerTokenManager.fromConfig(config, { logger: root});
+  const tokenManager = ServerTokenManager.noop()
   const taskScheduler = TaskScheduler.fromConfig(config);
 
   const identity = DefaultIdentityClient.create({
     discovery,
   });
-  // const permissions = ServerPermissionClient.fromConfig(config, {
-  //   discovery,
-  //   tokenManager,
-  // });
+  const permissions = ServerPermissionClient.fromConfig(config, {
+    discovery,
+    tokenManager,
+  });
 
   root.info(`Created UrlReader ${reader}`);
 
@@ -67,7 +68,7 @@ function makeCreateEnv(config: Config) {
       discovery,
       tokenManager,
       scheduler,
-      // permissions,
+      permissions,
       identity,
     };
   };
