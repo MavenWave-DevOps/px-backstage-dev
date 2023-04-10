@@ -8,18 +8,19 @@ steps:
 #     - --context=.
 #     - --cache=true
 #     - --cache-ttl=240h
-- name: node:14
-  entrypoint: "bash"
-  args:
-  - '-c'
-  - |
-    yarn install; yarn add --cwd packages/backend; yarn --cwd packages/backend backstage-cli package build --role backend
+#
+# - name: node:16
+#   entrypoint: "bash"
+#   args:
+#   - '-c'
+#   - |
+#     yarn install; yarn add --cwd packages/backend; yarn --cwd packages/backend backstage-cli package build --role backend
 
 - name: "gcr.io/kaniko-project/executor:latest"
   args:
     - --destination=us.gcr.io/px-test1-project-ici/mayo-backstage:$COMMIT_SHA
     - --destination=us.gcr.io/px-test1-project-ici/mayo-backstage:latest
-    - --dockerfile=./packages/backend/Dockerfile
+    - --dockerfile=./Dockerfile
     - --context=.
     - --cache=true
     - --cache-ttl=240h

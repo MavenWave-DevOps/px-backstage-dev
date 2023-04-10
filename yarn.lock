@@ -12358,7 +12358,7 @@ expect@^29.0.0, expect@^29.5.0:
     jest-message-util "^29.5.0"
     jest-util "^29.5.0"
 
-express-promise-router@^4.1.0:
+express-promise-router@^4.1.0, express-promise-router@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/express-promise-router/-/express-promise-router-4.1.1.tgz#8fac102060b9bcc868f84d34fbb12fd8fa494291"
   integrity sha512-Lkvcy/ZGrBhzkl3y7uYBHLMtLI4D6XQ2kiFg9dq7fbktBch5gjqJ0+KovX0cvCAvTJw92raWunRLM/OM+5l4fA==
@@ -17461,9 +17461,9 @@ nunjucks@^3.2.3:
     commander "^5.1.0"
 
 nwsapi@^2.2.0, nwsapi@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.2.tgz#e5418863e7905df67d51ec95938d67bf801f0bb0"
-  integrity sha512-90yv+6538zuvUMnN+zCr8LuV6bPFdq50304114vJYJ8RDyK8D5O9Phpbd6SZWgI7PwzmmfN1upeOJlvybDSgCw==
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.3.tgz#00e04dfd5a4a751e5ec2fecdc75dfd2f0db820fa"
+  integrity sha512-jscxIO4/VKScHlbmFBdV1Z6LXnLO+ZR4VMtypudUdfwtKxUN3TQcNFIHLwKtrUbDyHN4/GycY9+oRGZ2XMXYPw==
 
 oauth-sign@~0.9.0:
   version "0.9.0"
