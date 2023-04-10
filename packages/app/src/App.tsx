@@ -38,14 +38,12 @@ import { UserSettingsPage } from '@backstage/plugin-user-settings';
 import { apis } from './apis';
 import { createApp } from '@backstage/app-defaults';
 import { entityPage } from './components/catalog/EntityPage';
-// import { orgPlugin } from '@backstage/plugin-org';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
 
 import { EntityMyPluginContent } from '@internal/plugin-my-plugin';
 
 import { AlertDisplay, OAuthRequestDialog, SignInPage } from '@backstage/core-components';
-// import { createApp } from '@backstage/app-defaults';
 import { FlatRoutes } from '@backstage/core-app-api';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
