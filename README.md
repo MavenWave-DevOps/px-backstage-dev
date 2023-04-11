@@ -41,7 +41,7 @@ yarn dev
 ## 🚀 CI/CD <a name = "cicd"></a>
 The main branch is connected to Google Cloud Build CI/CD pipeline and argocd image updater.
 
-## ⛏️ Build the Container <a name = "build_the_container"></a>
+## 🏗️ Build the Container <a name = "build_the_container"></a>
 To push code, test the container build locally. First, set the docker buildkit to be true. 
 Then run the build command:
 ```
