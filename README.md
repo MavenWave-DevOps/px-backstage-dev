@@ -8,9 +8,10 @@ This repository is for development of Backstage for the Mayo Common Control Plan
 
 - [Requirements](#requirements)
 - [Getting Started](#getting_started)
-- [Built Using](#built_using)
+- [Testing](#testing)
 - [CI/CD](#cicd)
 - [Build the Container](#build_the_container)
+- [Built Using](#built_using)
 - [Authors](#authors)
 
 ## ⚓ Requirements <a name = "requirements"></a>
@@ -33,10 +34,15 @@ To start the app, run:
 yarn install
 yarn dev
 ```
-## ⛏️ Built Using <a name = "built_using"></a>
 
-- [Node.js](https://nodejs.org/en/docs/) - Backstage is ran on Node.js
-- [ReactJS](https://reactjs.org/) - Typescript Frontend library
+## 🧪 Testing <a name = "testing"></a>
+To develop on this repository, you must write a test for any plugin and run the code against the tests.
+See example plugin for an example test to run.
+Local testing run:
+```
+yarn backstage-cli repo test
+```
+TODO - This repository is set up with an action to test and will fail if any new components do not pass the tests.
 
 ## 🚀 CI/CD <a name = "cicd"></a>
 The main branch is connected to Google Cloud Build CI/CD pipeline and argocd image updater.
@@ -57,6 +63,11 @@ docker ps
 docker stop <Container ID>
 ```
 Documentation: https://backstage.io/docs/deployment/docker/
+
+## ⛏️ Built Using <a name = "built_using"></a>
+
+- [Node.js](https://nodejs.org/en/docs/) - Backstage is ran on Node.js
+- [ReactJS](https://reactjs.org/) - Typescript Frontend library
 
 ## ✍️ Authors <a name = "authors"></a>
 
