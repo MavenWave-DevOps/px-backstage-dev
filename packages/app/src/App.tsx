@@ -47,7 +47,7 @@ import { AlertDisplay, OAuthRequestDialog, SignInPage } from '@backstage/core-co
 import { FlatRoutes } from '@backstage/core-app-api';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
-import { providers } from './identityProviders';
+import { providers } from './components/signin/identityProviders';
 
 const app = createApp({
   apis,

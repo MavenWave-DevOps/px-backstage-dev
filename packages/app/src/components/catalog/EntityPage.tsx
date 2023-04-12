@@ -58,7 +58,6 @@ import {
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { EntityMyPluginContent } from '@internal/plugin-my-plugin';
-// import { EntityArgocdAutopilotContent } from '@internal/plugin-argocd-autopilot';
 import {
   EntityArgoCDOverviewCard,
   isArgocdAvailable

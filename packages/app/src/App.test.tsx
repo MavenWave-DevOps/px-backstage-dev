@@ -9,8 +9,15 @@ describe('App', () => {
       APP_CONFIG: [
         {
           data: {
-            app: { title: 'Test' },
-            backend: { baseUrl: 'http://localhost:7007' },
+            app: { 
+              title: 'Test'
+            },
+            backend: {
+              baseUrl: 'http://localhost:7007'
+            },
+            lighthouse: {
+              baseUrl: 'http://localhost:3003'
+            },
             techdocs: {
               storageUrl: 'http://localhost:7007/api/techdocs/static/docs',
             },

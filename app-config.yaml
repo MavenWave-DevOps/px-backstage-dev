@@ -36,19 +36,12 @@ backend:
   baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
   listen:
     port: 7007
-    # Uncomment the following host directive to bind to all IPv4 interfaces and
-    # not just the baseUrl hostname.
-    # host: 0.0.0.0
   csp:
     connect-src: ["'self'", "http:", "https:"]
-    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
-    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
     origin: http://localhost:7007
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
-  # This is for local development only, it is not recommended to use this in production
-  # The production database configuration is stored in app-config.production.yaml
   database:
     client: better-sqlite3
     connection: ":memory:"
@@ -68,8 +61,6 @@ backend:
   cache:
     store: memory
 
-  # workingdirectory: /tmp # use this to configure a working directory for the scaffolder, defaults to the os temp-dir
-
 integrations:
   github:
     - host: github.com
@@ -85,21 +76,18 @@ proxy:
 
 grafana:
   domain: https://backstage.devstats.cncf.io
-# reference documentation http://backstage.io/docs/features/techdocs/configuration
-# note: after experimenting with basic setup, use ci/cd to generate docs
-# and an external cloud storage when deploying techdocs for production use-case.
-# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+
 auth:
   environment: development
   providers:
-    github:
-      development:
-        clientId: ${GITHUB_CLIENT_ID}
-        clientSecret: ${GITHUB_CLIENT_SECRET}
-    google:
-      development:
-        clientId: ${AUTH_GOOGLE_CLIENT_ID}
-        clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+    # github:
+    #   development:
+    #     clientId: ${GITHUB_CLIENT_ID}
+    #     clientSecret: ${GITHUB_CLIENT_SECRET}
+    # google:
+    #   development:
+    #     clientId: ${AUTH_GOOGLE_CLIENT_ID}
+    #     clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
     microsoft:
       development:
         clientId: ${AUTH_MICROSOFT_CLIENT_ID}
