@@ -15,12 +15,12 @@ import {
   AnyApiFactory,
   configApiRef,
   createApiFactory,
-  discoveryApiRef,
+  // discoveryApiRef,
   errorApiRef,
   githubAuthApiRef,
-  oauthRequestApiRef,
+  // oauthRequestApiRef,
 } from '@backstage/core-plugin-api';
-import { GithubAuth } from '@backstage/core-app-api';
+// import { GithubAuth } from '@backstage/core-app-api';
 
 export const apis: AnyApiFactory[] = [
   createApiFactory({

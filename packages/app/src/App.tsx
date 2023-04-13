@@ -31,7 +31,7 @@ import {
 } from '@backstage/plugin-cost-insights';
 import { GraphiQLPage } from '@backstage/plugin-graphiql';
 import { darkTheme, lightTheme } from '@backstage/theme';
-import { apertureTheme } from './themes/aperture.ts';
+import { apertureTheme } from './themes/aperture';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { UserSettingsPage } from '@backstage/plugin-user-settings';

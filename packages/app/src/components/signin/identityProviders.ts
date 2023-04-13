@@ -1,6 +1,4 @@
 import {
-  googleAuthApiRef,
-  githubAuthApiRef,
   microsoftAuthApiRef,
 } from '@backstage/core-plugin-api';
 
