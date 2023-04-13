@@ -16,11 +16,11 @@ jobs:
         node-version: '16.20.0'
         cache: 'yarn'
     
-    - name: Compile TypeScript
-      run: yarn tsc
-    
     - name: Install dependencies
       run: yarn install --frozen-lockfile
+      
+    - name: Compile TypeScript
+      run: yarn tsc
       
     - name: Test
       run: yarn backstage-cli repo build
