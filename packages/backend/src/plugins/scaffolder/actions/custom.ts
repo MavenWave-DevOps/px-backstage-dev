@@ -1,6 +1,5 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-backend';
-import fs from 'fs-extra';
-// import * as fs from 'fs';
+const fse = require("fs-extra");
 
 export const createNewFileAction = () => {
     return createTemplateAction<{ contents: string; filename: string }>({
@@ -24,7 +23,7 @@ export const createNewFileAction = () => {
             },
         },
         async handler(ctx) {
-            await fs.outputFile(
+            await fse.outputFile(
                 `${ctx.workspacePath}/${ctx.input.filename}`,
                 ctx.input.contents,
             );

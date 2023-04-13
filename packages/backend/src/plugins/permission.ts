@@ -1,6 +1,6 @@
 import { createRouter } from '@backstage/plugin-permission-backend';
 import {
-    AuthorizeResult, PolicyDecision, isResourcePermission,
+    AuthorizeResult, PolicyDecision, isPermission,
 } from '@backstage/plugin-permission-common';
 import { PermissionPolicy, PolicyQuery, } from '@backstage/plugin-permission-node';
 
@@ -26,7 +26,7 @@ class TestPermissionPolicy implements PermissionPolicy {
           {
             allOf: [
               catalogConditions.isEntityKind({kinds:['template']}),
-              catalogCondition.isEntityOwner({
+              catalogConditions.isEntityOwner({
                 claims: user?.identity.ownershipEntityRefs ?? [],
               }),
             ],
