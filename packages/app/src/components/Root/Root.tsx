@@ -91,9 +91,9 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarScrollWrapper>
           <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar" />
         </SidebarScrollWrapper>
+        <SidebarDivider />
       </SidebarGroup>
-      <SidebarDivider />
-      <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar" />
+      
       <SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights" />
       <SidebarItem icon={GraphiQLIcon} to="graphiql" text="GraphiQL" />
       <SidebarSpace />
