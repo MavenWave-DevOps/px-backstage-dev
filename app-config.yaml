@@ -27,9 +27,7 @@ backend:
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
   # information on the format
-  # auth:
-  #   keys:
-  #     - secret: ${BACKEND_SECRET}
+  
 
   # baseUrl: http://backstage-mike.px.igniteme.dev
 
@@ -60,13 +58,19 @@ backend:
     #     database: postgres
   cache:
     store: memory
+  
+  reading:
+    allow:
+      - host: dev.azure.com
 
 integrations:
   github:
     - host: github.com
       token: ${GITHUB_TOKEN}
-      # apps:
-      # - $include: github-app-backstage-projectx-test1-credentials.yaml
+  
+  azure:
+    - host: dev.azure.com
+      token: ${AZURE_TOKEN}
 
 proxy:
   "/grafana/api":
@@ -80,14 +84,7 @@ grafana:
 auth:
   environment: development
   providers:
-    # github:
-    #   development:
-    #     clientId: ${GITHUB_CLIENT_ID}
-    #     clientSecret: ${GITHUB_CLIENT_SECRET}
-    # google:
-    #   development:
-    #     clientId: ${AUTH_GOOGLE_CLIENT_ID}
-    #     clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+    
     microsoft:
       development:
         clientId: ${AUTH_MICROSOFT_CLIENT_ID}
@@ -99,7 +96,11 @@ scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
-  locations: []
+  locations:
+    - type: url
+      target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
+      rules:
+        - allow: [Template]
 
 costInsights:
   engineerCost: 200000
@@ -151,3 +152,8 @@ kubernetes:
           #   - group: 'argoproj.io'
           #     apiVersion: 'v1alpha1'
           #     plural: 'rollouts'
+
+azureDevOps:
+    host: dev.azure.com
+    token: ${AZURE_TOKEN}
+    organization: santoshhkumarr
