@@ -258,7 +258,7 @@ const createCustomThemeOverrides = (
   };
 };
 
-export const apertureTheme: BackstageTheme = {
+export const mayoTheme: BackstageTheme = {
   ...baseTheme,
   overrides: {
     ...baseTheme.overrides,

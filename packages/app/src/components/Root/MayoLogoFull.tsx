@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   }
 });
 
-export const ApertureLogoFull = () => {
+export const MayoLogoFull = () => {
   const classes = useStyles();
 
   return (

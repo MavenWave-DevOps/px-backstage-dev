@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const ApertureLogoIcon = () => {
+export const MayoLogoIcon = () => {
   const classes = useStyles();
 
   return (

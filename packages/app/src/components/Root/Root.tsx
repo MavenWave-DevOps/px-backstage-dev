@@ -30,8 +30,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import { appThemeApiRef, useApi } from '@backstage/core-plugin-api'
-import { ApertureLogoFull } from './ApertureLogoFull'
-import { ApertureLogoIcon } from './ApertureLogoIcon'
+import { MayoLogoFull } from './MayoLogoFull'
+import { MayoLogoIcon } from './MayoLogoIcon'
 import { BackstageTheme } from '@backstage/theme'
 
 const useSidebarLogoStyles = makeStyles<BackstageTheme, { themeId: string }>({
@@ -58,8 +58,8 @@ const SidebarLogo = () => {
     },
   }))({ themeId: themeId! })
 
-  const fullLogo = themeId === 'aperture' ? <ApertureLogoFull /> : <LogoFull />
-  const iconLogo = themeId === 'aperture' ? <ApertureLogoIcon /> : <LogoIcon />
+  const fullLogo = themeId === 'mayo' ? <MayoLogoFull /> : <LogoFull />
+  const iconLogo = themeId === 'mayo' ? <MayoLogoIcon /> : <LogoIcon />
 
   return (
     <div className={`${classes.root} ${width.root}`}>
