@@ -74,12 +74,13 @@ integrations:
 
 proxy:
   "/grafana/api":
-    target: https://backstage.devstats.cncf.io
+    target: https://monitoring.px-dev.mavenwave.dev/
     headers:
       Authorization: Bearer ${GRAFANA_TOKEN}
 
 grafana:
-  domain: https://backstage.devstats.cncf.io
+  domain: https://monitoring.px-dev.mavenwave.dev/
+  unifiedAlerting: true
 
 auth:
   environment: development
