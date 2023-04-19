@@ -96,6 +96,8 @@ scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
+  rules:
+    - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
       target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
@@ -156,4 +158,4 @@ kubernetes:
 azureDevOps:
     host: dev.azure.com
     token: ${AZURE_TOKEN}
-    organization: santoshhkumarr
+    organization: foster-devops
