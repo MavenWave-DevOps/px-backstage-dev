@@ -32,7 +32,7 @@ const baseTheme = createTheme({
   palette: {
     ...lightTheme.palette,
     primary: {
-      main: '#0052CC',
+      main: '#0057b8',
       light: '#4C9AFF',
       dark: '#172B4D',
     },
@@ -77,16 +77,17 @@ const baseTheme = createTheme({
       ...lightTheme.palette.navigation,
       background: '#172B4D',
       color: '#FFFFFF',
-      indicator: '#2684FF',
+      indicator: '#0057b8',
       navItem: {
         hoverBackground: 'rgba(116,118,121,0.6)',
-      },
+      }
     },
     text: {
       primary: '#172B48',
     },
     background: {
-      default: '#FFFFFF',
+      default: '#e6e6e6',
+      paper: '#d9d9df'
     },
   },
   fontFamily: 'Roboto, sans-serif',
@@ -257,7 +258,7 @@ const createCustomThemeOverrides = (
   };
 };
 
-export const apertureTheme: BackstageTheme = {
+export const mayoTheme: BackstageTheme = {
   ...baseTheme,
   overrides: {
     ...baseTheme.overrides,

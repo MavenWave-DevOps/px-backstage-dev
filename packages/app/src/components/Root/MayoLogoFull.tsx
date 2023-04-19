@@ -2,19 +2,19 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  logo: {
+  svg: {
     fill: '#fff',
     height: 'auto',
     width: '100%',
-  },
+  }
 });
 
-export const LogoFull = () => {
+export const MayoLogoFull = () => {
   const classes = useStyles();
 
   return (
 <svg version="1.1" id="layer" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-viewBox="0 0 652 652" className={classes.logo}>
+viewBox="0 0 652 652" className={classes.svg}>
 <path id="Shape" d="M147.1,265.3h-32v36.3c0,16.5,5.9,28.1,15.9,36.3v-5c-7.3-8.6-8.6-18.2-8.6-26.8v-9.9h12.2v41.3
 c0,15.2-4.3,34.4-31.1,46.3c-25.8-11.6-30.7-29.4-31.1-43.9c12.2-8.3,19.2-20.5,19.2-38.7v-5h11.9h7.6V289h-7.6H91.6h-7.3H65.1v43.6
 v4.3l0,0c3-2,5.3-4,7.3-5.9l0,0v-34.7h11.9v9.6c0,12.6-2.3,28.1-24.8,38.3c-22.5-9.9-24.8-25.8-24.8-38.3v-33.4h24.8h24.8v12.9h7.3
@@ -119,5 +119,3 @@ v-1.3h5.3h8.3v1.3c-1.7,0-3.3,0-3.6,0.3c-0.3,0-0.3,0.3-0.3,0.7c0,0.3,0.3,1,1,2.3l
 
   );
 };
-
-export default LogoFull
