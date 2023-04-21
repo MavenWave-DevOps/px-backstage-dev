@@ -24,12 +24,6 @@ backend:
   #     - secret: ${BACKEND_SECRET}
 
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
-  # Used for enabling authentication, secret is shared by all backend plugins
-  # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
-  # information on the format
-  
-
-  # baseUrl: http://backstage-mike.px.igniteme.dev
 
   baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
   listen:
@@ -37,7 +31,7 @@ backend:
   csp:
     connect-src: ["'self'", "http:", "https:"]
   cors:
-    origin: http://localhost:7007
+    origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
@@ -56,6 +50,7 @@ backend:
     # app:
     #   connection:
     #     database: postgres
+  
   cache:
     store: memory
   
@@ -70,7 +65,7 @@ integrations:
   
   azure:
     - host: dev.azure.com
-      token: ${AZURE_TOKEN}
+      token: &token ${AZURE_TOKEN}
 
 proxy:
   "/grafana/api":
@@ -88,15 +83,23 @@ auth:
     
     microsoft:
       development:
-        clientId: ${AUTH_MICROSOFT_CLIENT_ID}
-        clientSecret: ${AUTH_MICROSOFT_CLIENT_SECRET}
-        tenantId: ${AUTH_MICROSOFT_TENANT_ID}
+        clientId: &clientId ${AUTH_MICROSOFT_CLIENT_ID}
+        clientSecret: &clientSecret ${AUTH_MICROSOFT_CLIENT_SECRET}
+        tenantId: &tenantId ${AUTH_MICROSOFT_TENANT_ID}
 
-
-scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+scaffold:
 
 catalog:
+  processors:
+    microsoftGraphOrg:
+      providers:
+        # - target: https://graph.microsoft.com/v1.0
+        #   authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
+        - tenantId: *tenantId
+          clientId: *clientId
+          clientSecret: *clientSecret
+  rules:
+    - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
       target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
@@ -156,5 +159,5 @@ kubernetes:
 
 azureDevOps:
     host: dev.azure.com
-    token: ${AZURE_TOKEN}
-    organization: santoshhkumarr
+    token: *token
+    organization: foster-devops
