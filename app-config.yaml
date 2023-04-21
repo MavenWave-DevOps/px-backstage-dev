@@ -24,8 +24,6 @@ backend:
   #     - secret: ${BACKEND_SECRET}
 
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
-  
-  # baseUrl: http://backstage-mike.px.igniteme.dev
 
   baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
   listen:
@@ -39,6 +37,19 @@ backend:
   database:
     client: better-sqlite3
     connection: ":memory:"
+    # client: pg
+    # connection:
+    #   host: localhost #${POSTGRES_HOST}
+    #   port: 5432
+    #   user: postgres # ${POSTGRES_USER}
+    #   password: secret # ${POSTGRES_PASSWORD}
+    # plugin:
+    #   catalog:
+    #     connection:
+    #       database: postgres
+    # app:
+    #   connection:
+    #     database: postgres
   
   cache:
     store: memory
@@ -76,27 +87,19 @@ auth:
         clientSecret: &clientSecret ${AUTH_MICROSOFT_CLIENT_SECRET}
         tenantId: &tenantId ${AUTH_MICROSOFT_TENANT_ID}
 
+scaffold:
+
 catalog:
-  import:
   processors:
     microsoftGraphOrg:
       providers:
-        - target: https://graph.microsoft.com/v1.0
-          authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
-          tenantId: *tenantId
+        # - target: https://graph.microsoft.com/v1.0
+        #   authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
+        - tenantId: *tenantId
           clientId: *clientId
           clientSecret: *clientSecret
   rules:
-    - allow:
-        - API
-        - Component
-        - Domain
-        - Group
-        - System
-        - User
-        - Template
-        - Resource
-        - Location
+    - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
       target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
@@ -157,4 +160,4 @@ kubernetes:
 azureDevOps:
     host: dev.azure.com
     token: *token
-    organization: santoshhkumarr
+    organization: foster-devops
