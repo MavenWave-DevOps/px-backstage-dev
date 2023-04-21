@@ -24,11 +24,7 @@ backend:
   #     - secret: ${BACKEND_SECRET}
 
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
-  # Used for enabling authentication, secret is shared by all backend plugins
-  # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
-  # information on the format
   
-
   # baseUrl: http://backstage-mike.px.igniteme.dev
 
   baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
@@ -43,19 +39,7 @@ backend:
   database:
     client: better-sqlite3
     connection: ":memory:"
-    # client: pg
-    # connection:
-    #   host: localhost #${POSTGRES_HOST}
-    #   port: 5432
-    #   user: postgres # ${POSTGRES_USER}
-    #   password: secret # ${POSTGRES_PASSWORD}
-    # plugin:
-    #   catalog:
-    #     connection:
-    #       database: postgres
-    # app:
-    #   connection:
-    #     database: postgres
+  
   cache:
     store: memory
   
@@ -70,16 +54,17 @@ integrations:
   
   azure:
     - host: dev.azure.com
-      token: ${AZURE_TOKEN}
+      token: &token ${AZURE_TOKEN}
 
 proxy:
   "/grafana/api":
-    target: https://backstage.devstats.cncf.io
+    target: https://monitoring.px-dev.mavenwave.dev/
     headers:
       Authorization: Bearer ${GRAFANA_TOKEN}
 
 grafana:
-  domain: https://backstage.devstats.cncf.io
+  domain: https://monitoring.px-dev.mavenwave.dev/
+  unifiedAlerting: true
 
 auth:
   environment: development
@@ -87,15 +72,31 @@ auth:
     
     microsoft:
       development:
-        clientId: ${AUTH_MICROSOFT_CLIENT_ID}
-        clientSecret: ${AUTH_MICROSOFT_CLIENT_SECRET}
-        tenantId: ${AUTH_MICROSOFT_TENANT_ID}
-
-
-scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+        clientId: &clientId ${AUTH_MICROSOFT_CLIENT_ID}
+        clientSecret: &clientSecret ${AUTH_MICROSOFT_CLIENT_SECRET}
+        tenantId: &tenantId ${AUTH_MICROSOFT_TENANT_ID}
 
 catalog:
+  import:
+  processors:
+    microsoftGraphOrg:
+      providers:
+        - target: https://graph.microsoft.com/v1.0
+          authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
+          tenantId: *tenantId
+          clientId: *clientId
+          clientSecret: *clientSecret
+  rules:
+    - allow:
+        - API
+        - Component
+        - Domain
+        - Group
+        - System
+        - User
+        - Template
+        - Resource
+        - Location
   locations:
     - type: url
       target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
@@ -155,5 +156,5 @@ kubernetes:
 
 azureDevOps:
     host: dev.azure.com
-    token: ${AZURE_TOKEN}
+    token: *token
     organization: santoshhkumarr

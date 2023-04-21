@@ -48,6 +48,18 @@ import { FlatRoutes } from '@backstage/core-app-api';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import { providers } from './components/signin/identityProviders';
+import {
+  RELATION_API_CONSUMED_BY,
+  RELATION_API_PROVIDED_BY,
+  RELATION_CONSUMES_API,
+  RELATION_DEPENDENCY_OF,
+  RELATION_DEPENDS_ON,
+  RELATION_HAS_PART,
+  RELATION_OWNED_BY,
+  RELATION_OWNER_OF,
+  RELATION_PART_OF,
+  RELATION_PROVIDES_API,
+} from '@backstage/catalog-model';
 
 const app = createApp({
   apis,
@@ -169,8 +181,32 @@ const routes = (
       {searchPage}
     </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
+
+       <Route path="/catalog-graph" element={<CatalogGraphPage
+      initialState={{
+        selectedKinds: ['component', 'domain', 'system', 'api', 'group'],
+        selectedRelations: [
+          RELATION_OWNER_OF,
+          RELATION_OWNED_BY,
+          RELATION_CONSUMES_API,
+          RELATION_API_CONSUMED_BY,
+          RELATION_PROVIDES_API,
+          RELATION_API_PROVIDED_BY,
+          RELATION_HAS_PART,
+          RELATION_PART_OF,
+          RELATION_DEPENDS_ON,
+          RELATION_DEPENDENCY_OF,
+
+
+        ],
+      }}
+
+    />} />
+
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/my-plugin" element={<EntityMyPluginContent />} />
+
+    
   </FlatRoutes>
 );
 
