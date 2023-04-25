@@ -59,13 +59,13 @@ backend:
       - host: dev.azure.com
 
 integrations:
-  github:
-    - host: github.com
-      token: ${GITHUB_TOKEN}
+  # github:
+  #   - host: github.com
+  #     token: ${GITHUB_TOKEN}
   
   azure:
     - host: dev.azure.com
-      token: &token ${AZURE_TOKEN}
+      token: ${AZURE_TOKEN}
 
 proxy:
   "/grafana/api":
@@ -102,9 +102,13 @@ catalog:
     - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
-      target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
+      target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-a?path=/template.yaml
       rules:
         - allow: [Template]
+    # - type: url
+    #   target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
+    #   rules:
+    #     - allow: [Template]
 
 costInsights:
   engineerCost: 200000
@@ -159,5 +163,5 @@ kubernetes:
 
 azureDevOps:
     host: dev.azure.com
-    token: *token
+    token: ${AZURE_TOKEN} 
     organization: foster-devops
