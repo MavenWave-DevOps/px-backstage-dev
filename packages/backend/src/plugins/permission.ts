@@ -15,10 +15,15 @@ class TestPermissionPolicy implements PermissionPolicy {
     request: PolicyQuery,
     user?: BackstageIdentityResponse
   ):Promise<PolicyDecision> {
-    if(isPermission(request.permission,catalogEntityReadPermission)){
-      if(user?.identity.ownershipEntityRefs.includes('group:default/dataScience')){
+    if (isPermission(request.permission, catalogEntityReadPermission)) {
+      
+      if(user?.identity.ownershipEntityRefs.includes('group:default/PlatformAdmin')){
         return{result: AuthorizeResult.ALLOW}
       }
+
+      /**
+       *  To-Do: few more conditional block for other groups to allow/Deny access on templates
+       */
 
       return createCatalogConditionalDecision(
         request.permission, {
@@ -27,7 +32,7 @@ class TestPermissionPolicy implements PermissionPolicy {
             allOf: [
               catalogConditions.isEntityKind({kinds:['template']}),
               catalogConditions.isEntityOwner({
-                claims: user?.identity.ownershipEntityRefs ?? [],
+                claims: user?.identity.ownershipEntityRefs ?? ['Group'],
               }),
             ],
           },

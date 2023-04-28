@@ -18,10 +18,13 @@ app:
 organization:
   name: Maven Wave
 
+permission:
+  enabled: true
+
 backend:
-  # auth:
-  #   keys:
-  #     - secret: ${BACKEND_SECRET}
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}  # run this command to get BACKEND_SECRET ->  node -p 'require("crypto").randomBytes(24).toString("base64")'
 
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
 
