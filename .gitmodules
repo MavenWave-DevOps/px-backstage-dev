@@ -1,0 +1,3 @@
+[submodule "scaffolder-backend-module-azure-repositories"]
+	path = scaffolder-backend-module-azure-repositories
+	url = ./scaffolder-backend-module-azure-repositories
