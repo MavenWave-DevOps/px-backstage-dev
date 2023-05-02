@@ -10,11 +10,21 @@ import { PluginEnvironment } from '../types';
 import { BackstageIdentityResponse } from '@backstage/plugin-auth-node';
 import { catalogEntityReadPermission } from '@backstage/plugin-catalog-common/alpha';
 
+const { token } = await this.tokenManager.getToken();
+const response = await fetch(pluginBackendApiUrl, {
+  method: 'GET',
+  headers: {
+    ...headers,
+    Authorization: `Bearer ${token}`
+  },
+});
+
 class TestPermissionPolicy implements PermissionPolicy {
   async handle(
     request: PolicyQuery,
     user?: BackstageIdentityResponse
   ):Promise<PolicyDecision> {
+    await tokenManager.authenticate(token);
     if (isPermission(request.permission, catalogEntityReadPermission)) {
       
       if(user?.identity.ownershipEntityRefs.includes('group:default/PlatformAdmin')){

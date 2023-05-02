@@ -18,25 +18,25 @@ export default async function createPlugin(
     tokenManager: env.tokenManager,
     providerFactories: {
       ...defaultAuthProviderFactories,
-      microsoft: providers.microsoft.create({
-        signIn: {
-          resolver:
-            providers.microsoft.resolvers.emailMatchingUserEntityAnnotation(),
-        },
-      }),
+      // microsoft: providers.microsoft.create({
+      //   signIn: {
+      //     resolver:
+      //       providers.microsoft.resolvers.emailMatchingUserEntityAnnotation(),
+      //   },
+      // }),
 
       /**
        *  Please do not delete commented code below
        */
 
-      // microsoft: providers.microsoft.create({
-      //   signIn: {
-      //     resolver: async ({ profile }, ctx) => {
-      //       if (!profile.email) {
-      //         throw new Error(
-      //             'Login failed, user profile does not contain an email',
-      //         );
-      //       }
+      microsoft: providers.microsoft.create({
+        signIn: {
+          resolver: async ({ profile }, ctx) => {
+            if (!profile.email) {
+              throw new Error(
+                  'Login failed, user profile does not contain an email',
+              );
+            }
 
             // const { token } = await this.tokenManager.getToken();
             // const response = await fetch(pluginBackendApiUrl, {
@@ -48,22 +48,22 @@ export default async function createPlugin(
             // });
             // await tokenManager.authenticate(token);
 
-      //       const [id] = profile.email.split('@')
-      //       const userEntityRef = stringifyEntityRef({
-      //         kind: 'User',
-      //         name: id,
-      //         namespace: DEFAULT_NAMESPACE,
-      //       });
-      //
-      //       return ctx.issueToken({
-      //         claims: {
-      //           sub: userEntityRef,
-      //           ent: [userEntityRef],
-      //         },
-      //       });
-      //     },
-      //   },
-      // }),
+            const [id] = profile.email.split('@')
+            const userEntityRef = stringifyEntityRef({
+              kind: 'User',
+              name: id,
+              namespace: DEFAULT_NAMESPACE,
+            });
+
+            return ctx.issueToken({
+              claims: {
+                sub: userEntityRef,
+                ent: [userEntityRef],
+              },
+            });
+          },
+        },
+      }),
 
       // google: providers.google.create({
       //   signIn: {
