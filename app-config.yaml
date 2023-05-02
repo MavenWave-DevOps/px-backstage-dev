@@ -65,7 +65,8 @@ integrations:
   
   azure:
     - host: dev.azure.com
-      token: ${AZURE_TOKEN}
+      token: ${azure_token_foster_ac}
+      # token: ${AZURE_TOKEN}
 
 proxy:
   "/grafana/api":
@@ -102,7 +103,7 @@ catalog:
     - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
-      target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-a?path=/template.yaml
+      target: https://dev.azure.com/foster-devops/mayo-backstage/_git/backstage_catalog?path=/catalogCollection/fetch.yaml
       rules:
         - allow: [Template]
     # - type: url
@@ -163,5 +164,6 @@ kubernetes:
 
 azureDevOps:
     host: dev.azure.com
-    token: ${AZURE_TOKEN} 
+    token: ${azure_token_foster_ac}
+    # token: ${AZURE_TOKEN}
     organization: foster-devops
