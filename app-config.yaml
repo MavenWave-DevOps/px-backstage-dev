@@ -15,8 +15,8 @@ app:
           - url: https://backstage.io/blog/
             title: Backstage Blog
 
-organization:
-  name: Maven Wave
+  organization:
+    name: Maven Wave
 
 permission:
   enabled: true
@@ -34,7 +34,7 @@ backend:
   csp:
     connect-src: ["'self'", "http:", "https:"]
   cors:
-    origin: http://localhost:3000
+    origin: http://localhost:7007
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
@@ -96,9 +96,9 @@ catalog:
   processors:
     microsoftGraphOrg:
       providers:
-        # - target: https://graph.microsoft.com/v1.0
-        #   authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
-        - tenantId: *tenantId
+        - target: https://graph.microsoft.com/v1.0
+          authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
+          tenantId: *tenantId
           clientId: *clientId
           clientSecret: *clientSecret
   rules:

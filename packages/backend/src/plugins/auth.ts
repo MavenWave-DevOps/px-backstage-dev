@@ -18,7 +18,6 @@ export default async function createPlugin(
     tokenManager: env.tokenManager,
     providerFactories: {
       ...defaultAuthProviderFactories,
-
       microsoft: providers.microsoft.create({
         signIn: {
           resolver:
@@ -30,7 +29,6 @@ export default async function createPlugin(
        *  Please do not delete commented code below
        */
 
-      
       // microsoft: providers.microsoft.create({
       //   signIn: {
       //     resolver: async ({ profile }, ctx) => {
@@ -39,13 +37,24 @@ export default async function createPlugin(
       //             'Login failed, user profile does not contain an email',
       //         );
       //       }
-      //       const [localPart] = profile.email.split('@')
+
+            // const { token } = await this.tokenManager.getToken();
+            // const response = await fetch(pluginBackendApiUrl, {
+            //   method: 'GET',
+            //   headers: {
+            //     ...headers,
+            //     Authorization: `Bearer ${token}`,
+            //   },
+            // });
+            // await tokenManager.authenticate(token);
+
+      //       const [id] = profile.email.split('@')
       //       const userEntityRef = stringifyEntityRef({
       //         kind: 'User',
-      //         name: localPart,
+      //         name: id,
       //         namespace: DEFAULT_NAMESPACE,
       //       });
-
+      //
       //       return ctx.issueToken({
       //         claims: {
       //           sub: userEntityRef,
@@ -56,45 +65,45 @@ export default async function createPlugin(
       //   },
       // }),
 
-      google: providers.google.create({
-        signIn: {
-          resolver: async ({ profile }, ctx) => {
-            if (!profile.email) {
-              throw new Error(
-                'Login failed, user profile does not contain an email',
-              );
-            }
-            const [localPart] = profile.email.split('@');
-            const userEntityRef = stringifyEntityRef({
-              kind: 'User',
-              name: localPart,
-              namespace: DEFAULT_NAMESPACE,
-            });
-          
-            return ctx.issueToken({
-              claims: {
-                sub: userEntityRef,
-                ent: [userEntityRef],
-              },
-            });
-          },
-        },
-      }),
-
-      github: providers.github.create({
-        signIn: {
-          resolver(_, ctx) {
-            const userRef = 'user:default/guest'; // Must be a full entity reference
-            return ctx.issueToken({
-              claims: {
-                sub: userRef, // The user's own identity
-                ent: [userRef], // A list of identities that the user claims ownership through
-              },
-            });
-          },
-          // resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
-        },
-      }),
+      // google: providers.google.create({
+      //   signIn: {
+      //     resolver: async ({ profile }, ctx) => {
+      //       if (!profile.email) {
+      //         throw new Error(
+      //           'Login failed, user profile does not contain an email',
+      //         );
+      //       }
+      //       const [localPart] = profile.email.split('@');
+      //       const userEntityRef = stringifyEntityRef({
+      //         kind: 'User',
+      //         name: localPart,
+      //         namespace: DEFAULT_NAMESPACE,
+      //       });
+      //     
+      //       return ctx.issueToken({
+      //         claims: {
+      //           sub: userEntityRef,
+      //           ent: [userEntityRef],
+      //         },
+      //       });
+      //     },
+      //   },
+      // }),
+      //
+      // github: providers.github.create({
+      //   signIn: {
+      //     resolver(_, ctx) {
+      //       const userRef = 'user:default/guest'; // Must be a full entity reference
+      //       return ctx.issueToken({
+      //         claims: {
+      //           sub: userRef, // The user's own identity
+      //           ent: [userRef], // A list of identities that the user claims ownership through
+      //         },
+      //       });
+      //     },
+      //     // resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
+      //   },
+      // }),
     },
   });
 }
