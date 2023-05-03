@@ -18,10 +18,13 @@ app:
 organization:
   name: Maven Wave
 
+permission:
+  enabled: true
+
 backend:
-  # auth:
-  #   keys:
-  #     - secret: ${BACKEND_SECRET}
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
 
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
 
@@ -103,6 +106,7 @@ catalog:
     - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
+      # target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
       target: https://dev.azure.com/foster-devops/mayo-backstage/_git/backstage_catalog?path=/catalogCollection/fetch.yaml
       rules:
         - allow: [Template]
