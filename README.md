@@ -49,6 +49,8 @@ The main branch is connected to Google Cloud Build CI/CD pipeline and argocd ima
 
 ## 🏗️ Build the Container <a name = "build_the_container"></a>
 To push code, test the container build locally. First, set the docker buildkit to be true. 
+*** Follow these docs to run the conatiners for postgresql configuration. ***
+
 Then run the build command:
 ```
 docker image build -t <tag> .
