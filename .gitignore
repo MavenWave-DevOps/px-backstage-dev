@@ -55,3 +55,5 @@ site
 secrets/
 secrets/*
 env.sh
+
+*.dep

@@ -6,16 +6,23 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-      - '5432:5432'
-#     volumes:
-#       - db:/var/lib/postgresql/data
-# volumes:
-#   db:
-#     driver: local
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
 
+  backstage:
+    image: backstage
+    restart: always
+    ports:
+      - 7007:7007
+    environment:
+      - POSTGRES_HOST=db # ${POSTGRES_HOST}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - AUTH_MICROSOFT_CLIENT_ID=${AUTH_MICROSOFT_CLIENT_ID}
+      - AUTH_MICROSOFT_CLIENT_SECRET=${AUTH_MICROSOFT_CLIENT_SECRET}
+      - AUTH_MICROSOFT_TENANT_ID=${AUTH_MICROSOFT_TENANT_ID}
+      - AZURE_TOKEN=${AZURE_TOKEN}

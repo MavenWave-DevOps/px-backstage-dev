@@ -38,18 +38,20 @@ backend:
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
-    client: better-sqlite3
-    connection: ":memory:"
-    # client: pg
-    # connection:
-    #   host: localhost #${POSTGRES_HOST}
-    #   port: 5432
-    #   user: postgres # ${POSTGRES_USER}
-    #   password: secret # ${POSTGRES_PASSWORD}
+    # client: better-sqlite3
+    # connection: ":memory:"
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: 5432
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
     # plugin:
-    #   catalog:
-    #     connection:
-    #       database: postgres
+    #   auth:
+    #     client:
+      # catalog:
+      #   connection:
+      #     database: backstage_plugin_catalog 
     # app:
     #   connection:
     #     database: postgres
