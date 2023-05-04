@@ -31,7 +31,7 @@ backend:
   csp:
     connect-src: ["'self'", "http:", "https:"]
   cors:
-    origin: http://localhost:3000
+    origin: http://localhost:7007
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
@@ -39,14 +39,16 @@ backend:
     # connection: ":memory:"
     client: pg
     connection:
-      host: localhost #${POSTGRES_HOST}
+      host: ${POSTGRES_HOST}
       port: 5432
-      user: postgres # ${POSTGRES_USER}
-      password: secret # ${POSTGRES_PASSWORD}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
     # plugin:
-    #   catalog:
-    #     connection:
-    #       database: postgres
+    #   auth:
+    #     client:
+      # catalog:
+      #   connection:
+      #     database: backstage_plugin_catalog 
     # app:
     #   connection:
     #     database: postgres

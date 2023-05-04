@@ -7,3 +7,4 @@ plugins/*/dist
 plugins/*/node_modules
 *.local.yaml
 env.sh
+app-credentials.yaml

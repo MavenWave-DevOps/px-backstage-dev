@@ -1,128 +1,142 @@
 app:
   title: Mirage Backstage
-  baseUrl: https://mirage.px-dev.mavenwave.dev/
+  baseUrl: http://localhost:3000 #https://mirage.px-dev.mavenwave.dev
+  support:
+    url: https://github.com/backstage/backstage/issues
+    items:
+      - title: Backstage Community
+        icon: chat
+        links:
+          - url: https://backstage.io/docs/overview/support
+            title: Support and community
+      - title: Backstage News
+        icon: docs
+        links:
+          - url: https://backstage.io/blog/
+            title: Backstage Blog
 
 organization:
   name: Maven Wave
 
-
 backend:
-  apiUrl: "http://mirage.px-dev.mavenwave.dev/run"
-  # Used for enabling authentication, secret is shared by all backend plugins
-  # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
-  # information on the format
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
 
-  # baseUrl: http://backstage-mike.px.igniteme.dev
+  apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
 
-  baseUrl: http://mirage.px-dev.mavenwave.dev
+  baseUrl: http://localhost:7007 # http://mirage.px-dev.mavenwave.dev
   listen:
     port: 7007
-    # Uncomment the following host directive to bind to all IPv4 interfaces and
-    # not just the baseUrl hostname.
-    # host: 0.0.0.0
   csp:
-    connect-src: ["'self'", 'http:', 'https:']
-    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
-    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+    connect-src: ["'self'", "http:", "https:"]
   cors:
     origin: http://localhost:7007
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
-  # This is for local development only, it is not recommended to use this in production
-  # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
-    # client: pg
-    # connection:
-    #   host: localhost #${POSTGRES_HOST}
-    #   port: 5432
-    #   user: postgres # ${POSTGRES_USER}
-    #   password: secret # ${POSTGRES_PASSWORD}
-    # plugin: 
-    #   catalog:
-    #     connection:
-    #       database: postgres
-      # app:
+    # client: better-sqlite3
+    # connection: ":memory:"
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: 5432
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+    # plugin:
+    #   auth:
+    #     client:
+      # catalog:
       #   connection:
-      #     database: postgres
+      #     database: backstage_plugin_catalog 
+    # app:
+    #   connection:
+    #     database: postgres
+  
   cache:
     store: memory
-
-      
-  # workingdirectory: /tmp # use this to configure a working directory for the scaffolder, defaults to the os temp-dir
+  
+  reading:
+    allow:
+      - host: dev.azure.com
 
 integrations:
-  github:
-    - host: github.com
-      token: ${GITHUB_TOKEN}
-      # apps:
-        # - $include: github-app-backstage-projectx-test1-credentials.yaml
+  # github:
+  #   - host: github.com
+  #     token: ${GITHUB_TOKEN}
+  
+  azure:
+    - host: dev.azure.com
+      token: ${AZURE_TOKEN}
 
 proxy:
-  '/test':
-    target: 'https://example.com'
-    changeorigin: true
-  # '/argocd/api':
-  #   target: https://localhost:8083/api/v1/
-  #   changeorigin: true
-  #   # only if your argocd api has self-signed cert
-  #   secure: false
-  #   headers:
-  #     cookie:
-  #       $env: argocd_auth_token
-# reference documentation http://backstage.io/docs/features/techdocs/configuration
-# note: after experimenting with basic setup, use ci/cd to generate docs
-# and an external cloud storage when deploying techdocs for production use-case.
-# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
-techdocs:
-  builder: 'local' # alternatives - 'external'
-  generator:
-    runin: 'docker' # alternatives - 'local'
-  publisher:
-    type: 'local' # alternatives - 'googlegcs' or 'awss3'. read documentation for using alternatives.
+  "/grafana/api":
+    target: https://monitoring.px-dev.mavenwave.dev/
+    headers:
+      Authorization: Bearer ${GRAFANA_TOKEN}
+
+grafana:
+  domain: https://monitoring.px-dev.mavenwave.dev/
+  unifiedAlerting: true
 
 auth:
-  providers: 
-    github:
+  environment: development
+  providers:
+    
+    microsoft:
       development:
-        clientId: ${GITHUB_CLIENT_ID}
-        clientSecret: ${GITHUB_CLIENT_SECRET}
+        clientId: &clientId ${AUTH_MICROSOFT_CLIENT_ID}
+        clientSecret: &clientSecret ${AUTH_MICROSOFT_CLIENT_SECRET}
+        tenantId: &tenantId ${AUTH_MICROSOFT_TENANT_ID}
 
-scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+scaffold:
 
 catalog:
+  processors:
+    microsoftGraphOrg:
+      providers:
+        # - target: https://graph.microsoft.com/v1.0
+        #   authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
+        - tenantId: *tenantId
+          clientId: *clientId
+          clientSecret: *clientSecret
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
-    - type: file
-      target: /Users/michaelfoster/Desktop/project-x/px-backstage/templates/test-docs-template/template.yaml
-
     - type: url
-      target: https://github.com/MavenWave-DevOps/px-onboard-template/blob/main/template.yaml
+      target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-a?path=/template.yaml
       rules:
-        - allow: [ Template ]
-    - type: url
-      target: https://github.com/MavenWave-DevOps/template-mayo-team/blob/main/template.yaml
-      rules:
-        - allow: [ Template ]
-    ## uncomment these lines to add more example data
+        - allow: [Template]
     # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
-    - type: url
-      target: https://github.com/MavenWave-DevOps/test-docs-template/template.yaml
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
-
-    ## uncomment these lines to add an example org
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+    #   target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
     #   rules:
-    #     - allow: [user, group]
+    #     - allow: [Template]
+
+costInsights:
+  engineerCost: 200000
+  products:
+    computeEngine:
+      name: Compute Engine
+      icon: compute
+    cloudStorage:
+      name: Cloud Storage
+      icon: storage
+    bigQuery:
+      name: BigQuery
+      icon: search
+  metrics:
+    DAU:
+      name: Daily Active Users
+      default: true
+    MSC:
+      name: Monthly Subscribers
+
+techdocs:
+  builder: "external"
+  generator:
+    runIn: "local" # alternatives - 'docker'
+  publisher:
+    type: "local"
 
 # This is for k8s cluster management
 # Currently, just using a minikube cluster
@@ -130,23 +144,27 @@ catalog:
 
 kubernetes:
   serviceLocatorMethod:
-    type: 'multiTenant'
+    type: "multiTenant"
   clusterLocationMethdos:
-    - type: 'config'
+    - type: "config"
       clusters:
         - url: http://127.0.0.1:9999 # found by running `kubectl cluster-info`
           name: minikube # unique within backstage project
-          authProvider: 'serviceAccount' # uses a k8s sa, can use google sa
+          authProvider: "serviceAccount" # uses a k8s sa, can use google sa
           skipTLSVerify: false # k8s client verifies the TLS certificate presented by the API
           skipMetricsLookup: true
           # serviceAccountToken: ${K8S_MINIKUBE_TOKEN} # kubectl get secret
           # dashboardUrl: http://127.0.0.1:64713
           # dashboardApp: standard
           # caData: ${K8S_CONFIG_CA_DATA}
-          caFile: '~/.minikube/ca.pem'
+          caFile: "~/.minikube/ca.pem"
           # customResources:
           #   - group: 'argoproj.io'
           #     apiVersion: 'v1alpha1'
           #     plural: 'rollouts'
 
+azureDevOps:
+    host: dev.azure.com
+    token: ${AZURE_TOKEN} 
+    organization: foster-devops
 
