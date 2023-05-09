@@ -117,7 +117,11 @@ catalog:
     - type: url
       target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-C?path=/template.yaml
       rules: 
-        - allow: [Template]    
+        - allow: [Template]  
+    - type: url
+      target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-D?path=/template.yaml
+      rules: 
+        - allow: [Template]          
 
 costInsights:
   engineerCost: 200000
