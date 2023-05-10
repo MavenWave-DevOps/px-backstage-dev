@@ -53,6 +53,7 @@
     ]
   },
   "dependencies": {
+    "@backstage/integration": "^1.4.4",
     "express-promise-router": "^4.1.1",
     "fs-extra": "^11.1.1"
   }
