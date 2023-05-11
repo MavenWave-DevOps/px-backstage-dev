@@ -10,20 +10,19 @@ import { PluginEnvironment } from '../types';
 import { BackstageIdentityResponse } from '@backstage/plugin-auth-node';
 import { catalogEntityReadPermission } from '@backstage/plugin-catalog-common/alpha';
 
-class TestPermissionPolicy implements PermissionPolicy {
+class accessPolicy implements PermissionPolicy {
   async handle(
     request: PolicyQuery,
     user?: BackstageIdentityResponse
   ):Promise<PolicyDecision> {
-    if (isPermission(request.permission, catalogEntityReadPermission)) {
-      
+    if(isPermission(request.permission,catalogEntityReadPermission)){
       if(user?.identity.ownershipEntityRefs.includes('group:default/platform_admin')){
         return{result: AuthorizeResult.ALLOW}
       }
 
-      /**
-       *  To-Do: few more conditional block for other groups to allow/Deny access on templates
-       */
+      if(user?.identity.ownershipEntityRefs.includes('group:default/businessb') || user?.identity.ownershipEntityRefs.includes('group:default/business_a') ){
+        return{result: AuthorizeResult.ALLOW}
+      }
 
       return createCatalogConditionalDecision(
         request.permission, {
@@ -50,7 +49,7 @@ export default async function createPlugin(
         config: env.config,
         logger: env.logger,
         discovery: env.discovery,
-        policy: new TestPermissionPolicy(),
+        policy: new accessPolicy(),
         identity: env.identity,
     });
 }
