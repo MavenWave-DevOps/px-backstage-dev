@@ -3,16 +3,23 @@ import { createTemplateAction } from "@backstage/plugin-scaffolder-node";
 import {InputError} from "@backstage/errors";
 import { createADOPullRequest} from "../helpers";
 import * as GitInterfaces from "azure-devops-node-api/interfaces/GitInterfaces";
-// import {getRepoSourceDirectory} from "../utils";
-// import {resolveSafeChildPath} from "@backstage/backend-common";
 
+/**
+ * Creates an `ado:repo:pr` Scaffolder action.
+ *
+ * @remarks
+ *
+ * This Scaffolder action will create a PR to a repository in Azure DevOps.
+ *
+ * @public
+ */
 export const createAzurePullRequest = (options: {
     integrations: ScmIntegrationRegistry;
 }) => {
     const { integrations } = options;
 
     return createTemplateAction<{
-        // remoteUrl: string;
+        organization?: string;
         sourcePath?: string;
         targetPath?: string;
         title: string;
@@ -21,32 +28,31 @@ export const createAzurePullRequest = (options: {
         supportsIterations?: boolean;
         token?: string;
     }>({
-        id: "ado:repo:pr",
-        description: "Create a PR to the gitops repository in ADO.",
+        id: 'ado:repo:pr',
+        description: 'Create a PR to a repository in Azure DevOps.',
         schema: {
             input: {
                 required: [],
-                type: "object",
+                type: 'object',
                 properties: {
                     input: {
                         type: 'object',
-                        required: ['repoId', 'remoteUrl', 'title'],
+                        required: ['repoId', 'title'],
                         properties: {
-                            // remoteUrl: {
-                            //     title: 'Remote GitOps Repository',
-                            //     description: 'The Git URL to the repo for PR.',
-                            //     type: 'string',
-                            // },
+                            organization: {
+                                title: 'Organization Name',
+                                type: 'string',
+                                description: 'The name of the organization in Azure DevOps.',
+                            },
                             sourcePath: {
-                                type: "string",
-                                title: "Working Subdirectory",
-                                description:
-                                    "The subdirectory of the working directory containing the repository.",
+                                title: 'Source Branch',
+                                type: 'string',
+                                description: 'The branch to merge into the source.',
                             },
                             targetPath: {
-                                title: 'Working Subdirectory',
+                                title: 'Target Branch',
                                 type: 'string',
-                                description: 'The subdirectory of workspace to clone the repo into.',
+                                description: "The branch to merge into (default: main).",
                             },
                             repoId: {
                                 title: 'Remote Repo ID',
@@ -69,9 +75,9 @@ export const createAzurePullRequest = (options: {
                                 type: 'boolean',
                             },
                             token: {
-                                title: "Authenticatino Token",
-                                type: "string",
-                                description: "The token to use for authorization.",
+                                title: 'Authenticatino Token',
+                                type: 'string',
+                                description: 'The token to use for authorization.',
                             },
                         }
                     },
@@ -81,13 +87,10 @@ export const createAzurePullRequest = (options: {
         async handler(ctx) {
             const { title, repoId, project, supportsIterations } = ctx.input;
 
-            const sourcePath = `refs/heads/${ctx.input.sourcePath}` ?? "backstage-test";
-            const targetPath = `refs/heads/${ctx.input.targetPath}` ?? "main";
+            const sourcePath = `refs/heads/${ctx.input.sourcePath}` ?? `refs/heads/scaffolder`;
+            const targetPath = `refs/heads/${ctx.input.targetPath}` ?? `refs/heads/main`;
 
-            console.log("sourcePath: ", sourcePath);
-            console.log("targetPath: ", targetPath);
-
-            const host = "dev.azure.com";
+            const host = 'dev.azure.com';
             const integrationConfig = integrations.azure.byHost(host);
 
             if (!integrationConfig) {
@@ -103,11 +106,10 @@ export const createAzurePullRequest = (options: {
             const pullRequest: GitInterfaces.GitPullRequest = {
                 sourceRefName: sourcePath,
                 targetRefName: targetPath,
-                // remoteUrl: remoteUrl,
                 title: title,
             } as GitInterfaces.GitPullRequest;
 
-            const org = "foster-devops";
+            const org = ctx.input.organization ?? 'notempty';
             const token = ctx.input.token ?? integrationConfig.config.token!;
 
             await createADOPullRequest({

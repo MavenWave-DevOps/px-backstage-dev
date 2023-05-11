@@ -49,7 +49,7 @@ export async function commitAndPushBranch({
     remote = "origin",
     commitMessage,
     gitAuthorInfo,
-    branch = "backstage",
+    branch = "scaffolder",
 }: {
     dir: string;
     auth: { username: string; password: string } | { token: string };

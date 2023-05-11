@@ -5,6 +5,16 @@ import {getRepoSourceDirectory} from "../utils";
 import {InputError} from "@backstage/errors";
 import {commitAndPushBranch} from "../helpers";
 
+/**
+ * Creates an `ado:repo:push` Scaffolder action.
+ *
+ * @remarks
+ *
+ * This Scaffolder action will check out a branch and push to a repository from the workspace to the cloned
+ * ADO repository.
+ *
+ * @public
+ */
 export const commitAndPushADOBranch = (options: {
     integrations: ScmIntegrationRegistry;
     config: Config;
