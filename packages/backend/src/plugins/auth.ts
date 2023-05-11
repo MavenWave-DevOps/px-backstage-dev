@@ -19,7 +19,7 @@ export default async function createPlugin(
     providerFactories: {
       ...defaultAuthProviderFactories,
 
-       microsoft: providers.microsoft.create({
+      microsoft: providers.microsoft.create({
         signIn: {
           resolver:
             providers.microsoft.resolvers.emailMatchingUserEntityAnnotation(),
