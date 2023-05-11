@@ -34,7 +34,7 @@ backend:
   csp:
     connect-src: ["'self'", "http:", "https:"]
   cors:
-    origin: http://localhost:7007
+    origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
