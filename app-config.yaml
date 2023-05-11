@@ -68,8 +68,7 @@ integrations:
   
   azure:
     - host: dev.azure.com
-      token: ${azure_token_foster_ac}
-      # token: ${AZURE_TOKEN}
+      token: ${AZURE_TOKEN}
 
 proxy:
   "/grafana/api":
@@ -94,26 +93,20 @@ auth:
 scaffold:
 
 catalog:
-  processors:
+  providers:
     microsoftGraphOrg:
-      providers:
-        # - target: https://graph.microsoft.com/v1.0
-        #   authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
-        - tenantId: *tenantId
-          clientId: *clientId
-          clientSecret: *clientSecret
+      default:
+        tenantId: *tenantId
+        clientId: *clientId
+        clientSecret: *clientSecret
   rules:
     - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
     - type: url
-      # target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
       target: https://dev.azure.com/foster-devops/mayo-backstage/_git/backstage_catalog?path=/catalogCollection/fetch.yaml
-      rules:
-        - allow: [Template]
-    # - type: url
-    #   target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
-    #   rules:
-    #     - allow: [Template]
+    
+    - type: url
+      target: https://github.com/MavenWave-DevOps/mayo-backstage-dev/blob/main/catalog-info.yaml
 
 costInsights:
   engineerCost: 200000
@@ -168,6 +161,5 @@ kubernetes:
 
 azureDevOps:
     host: dev.azure.com
-    token: ${azure_token_foster_ac}
-    # token: ${AZURE_TOKEN}
+    token: ${AZURE_TOKEN}
     organization: foster-devops

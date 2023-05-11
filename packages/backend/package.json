@@ -25,6 +25,7 @@
     "@backstage/plugin-auth-backend": "^0.18.1",
     "@backstage/plugin-auth-node": "^0.2.12",
     "@backstage/plugin-azure-devops-backend": "^0.3.22",
+    "@backstage/plugin-azure-devops-common": "^0.3.0",
     "@backstage/plugin-catalog-backend": "^1.8.0",
     "@backstage/plugin-catalog-backend-module-azure": "^0.1.14",
     "@backstage/plugin-catalog-backend-module-msgraph": "^0.5.3",

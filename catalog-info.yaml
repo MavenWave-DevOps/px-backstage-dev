@@ -32,31 +32,62 @@
 #   owner: my-team
 #   type: service
 #
----
+# ---
+# apiVersion: backstage.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: gcp-folder
+#   annotations:
+#     grafana/tag-selector: "Kubernetes"
+#   tags:
+#     - web
+#     - frontend
+#     - backstage
+#   links:
+#     - url: https://backstage.xxxxxx.xxx.xx
+#       title: Backstage
+#       icon: cloud
+# spec:
+#   lifecycle: production
+#   owner: mirage-team
+#   type: service
+# ---
+# apiVersion: backstage.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: datasci-project
+# spec:
+#   lifecycle: produciton
+#   owner: data
+#   type: service
+
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: gcp-folder
+  name: backstage-web
+  description: Backstage experimental app
   annotations:
+    github.com/project-slug: MavenWave-DevOps/mayo-backstage-dev
+    backstage.io/kubernetes-id: backstage
+    backstage.io/techdocs-ref: dir:.
+    argocd/app-name: experimental-backstage
     grafana/tag-selector: "Kubernetes"
+    prometheus.io/rule: 'sum by (backstage)(changes(kube_pod_status_ready{condition="true"}[10m]))'
+    prometheus.io/alert: all
   tags:
     - web
-    - frontend
     - backstage
   links:
-    - url: https://backstage.xxxxxx.xxx.xx
+    - url: https://backstage.io
       title: Backstage
       icon: cloud
 spec:
-  lifecycle: production
-  owner: mirage-team
   type: service
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: datasci-project
-spec:
-  lifecycle: produciton
-  owner: data
-  type: service
+  lifecycle: experimental
+  owner: group:platform_admin
+  system: backstage
+  apiConsumedBy: ["system:backstage"]
+  dependsOn: ["resource:database", "resource:azure-storage"]
+  providesApis:
+    - backstage
+

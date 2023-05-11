@@ -24,12 +24,13 @@ export default async function createPlugin(
    */
 
   builder.addEntityProvider(MicrosoftGraphOrgEntityProvider.fromConfig(env.config, {
-      id: 'production',
-      target: 'https://graph.microsoft.com/v1.0',
+      // id: 'production',
+      // target: 'https://graph.microsoft.com/v1.0',
       logger: env.logger,
       schedule: env.scheduler.createScheduledTaskRunner({
         frequency: ({ minutes: 5 }),
         timeout: ({ minutes: 3 }),
+        initialDelay: { seconds: 10 },
       }),
     }),)
   
