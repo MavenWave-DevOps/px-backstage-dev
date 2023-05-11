@@ -23,7 +23,6 @@ class accessPolicy implements PermissionPolicy {
       if(user?.identity.ownershipEntityRefs.includes('group:default/businessb') || user?.identity.ownershipEntityRefs.includes('group:default/business_a') ){
         return{result: AuthorizeResult.ALLOW}
       }
-      
 
       return createCatalogConditionalDecision(
         request.permission, {
@@ -32,7 +31,7 @@ class accessPolicy implements PermissionPolicy {
             allOf: [
               catalogConditions.isEntityKind({kinds:['template']}),
               catalogConditions.isEntityOwner({
-                claims: user?.identity.ownershipEntityRefs ?? [],
+                claims: user?.identity.ownershipEntityRefs ?? ['Group'],
               }),
             ],
           },

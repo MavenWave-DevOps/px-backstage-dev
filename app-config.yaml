@@ -15,8 +15,11 @@ app:
           - url: https://backstage.io/blog/
             title: Backstage Blog
 
-organization:
-  name: Maven Wave
+  organization:
+    name: Maven Wave
+
+permission:
+  enabled: true
 
 permission:
   enabled: true
@@ -24,7 +27,7 @@ permission:
 backend:
   auth:
     keys:
-      - secret: ${BACKEND_SECRET}
+      - secret: ${BACKEND_SECRET}  # run this command to get BACKEND_SECRET ->  node -p 'require("crypto").randomBytes(24).toString("base64")'
 
   apiUrl: http://localhost:7007 # "http://mirage.px-dev.mavenwave.dev/run"
 
@@ -38,18 +41,20 @@ backend:
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
-    client: better-sqlite3
-    connection: ":memory:"
-    # client: pg
-    # connection:
-    #   host: localhost #${POSTGRES_HOST}
-    #   port: 5432
-    #   user: postgres # ${POSTGRES_USER}
-    #   password: secret # ${POSTGRES_PASSWORD}
+    # client: better-sqlite3
+    # connection: ":memory:"
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: 5432
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
     # plugin:
-    #   catalog:
-    #     connection:
-    #       database: postgres
+    #   auth:
+    #     client:
+      # catalog:
+      #   connection:
+      #     database: backstage_plugin_catalog 
     # app:
     #   connection:
     #     database: postgres
@@ -96,9 +101,12 @@ catalog:
   providers:
     microsoftGraphOrg:
       default:
-        tenantId: *tenantId
-        clientId: *clientId
-        clientSecret: *clientSecret
+        - target: https://graph.microsoft.com/v1.0
+          authority: https://login.microsoftonline.com  # choose this option to avaoid personal token based authentication 
+          tenantId: *tenantId
+          clientId: *clientId
+          clientSecret: *clientSecret
+
   rules:
     - allow: [Group, User, Plugin, Template, Component, System, API, Resource, Location]
   locations:
@@ -107,6 +115,18 @@ catalog:
     
     - type: url
       target: https://github.com/MavenWave-DevOps/mayo-backstage-dev/blob/main/catalog-info.yaml
+
+    - target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-a?path=/template.yaml
+      rules:
+        - allow: [Template]
+    # - type: url
+    #   target: https://dev.azure.com/santoshhkumarr/_git/REASSERT?path=/ado-templates/template.yaml
+    #   rules:
+    #     - allow: [Template]
+    - type: url
+      target: https://dev.azure.com/foster-devops/mayo-backstage/_git/ex-template-C?path=/template.yaml
+      rules: 
+        - allow: [Template]    
 
 costInsights:
   engineerCost: 200000
