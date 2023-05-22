@@ -28,7 +28,7 @@ import scaffolder from './plugins/scaffolder';
 import proxy from './plugins/proxy';
 import techdocs from './plugins/techdocs';
 import search from './plugins/search';
-// import kubernetes from './plugins/kubernetes';
+import kubernetes from './plugins/kubernetes';
 import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
@@ -42,7 +42,6 @@ function makeCreateEnv(config: Config) {
   const cacheManager = CacheManager.fromConfig(config);
   const databaseManager = DatabaseManager.fromConfig(config, { logger: root });
   const tokenManager = ServerTokenManager.fromConfig(config, { logger: root});
-  // const tokenManager = ServerTokenManager.noop()
   const taskScheduler = TaskScheduler.fromConfig(config);
 
   const identity = DefaultIdentityClient.create({
@@ -100,7 +99,7 @@ async function main() {
   apiRouter.use('/techdocs', await techdocs(techdocsEnv));
   apiRouter.use('/proxy', await proxy(proxyEnv));
   apiRouter.use('/search', await search(searchEnv));
-  apiRouter.use('/kubernetes', await search(kubernetesEnv));
+  apiRouter.use('/kubernetes', await kubernetes(kubernetesEnv));
   apiRouter.use('/azure-devops', await azureDevOps(azureDevOpsEnv));
   apiRouter.use('/permission', await permission(permissionEnv));
 

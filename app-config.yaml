@@ -73,6 +73,13 @@ integrations:
       token: ${AZURE_TOKEN}
 
 proxy:
+  "/argocd/api":
+    target: https://localhost:8080/
+    changeOrigin: true
+    secure: false
+    headers:
+      Cookie:
+        $env: ARGOCD_AUTH_TOKEN
   "/grafana/api":
     target: https://monitoring.px-dev.mavenwave.dev/
     headers:
@@ -169,19 +176,19 @@ techdocs:
 kubernetes:
   serviceLocatorMethod:
     type: "multiTenant"
-  clusterLocationMethdos:
+  clusterLocatorMethods:
     - type: "config"
       clusters:
-        - url: http://127.0.0.1:9999 # found by running `kubectl cluster-info`
+        - url: ${K8S_MINKUBE_URL} # found by running `kubectl cluster-info`
           name: minikube # unique within backstage project
-          authProvider: "serviceAccount" # uses a k8s sa, can use google sa
+          authProvider: 'serviceAccount' # uses a k8s sa, can use google sa
           skipTLSVerify: false # k8s client verifies the TLS certificate presented by the API
           skipMetricsLookup: true
-          # serviceAccountToken: ${K8S_MINIKUBE_TOKEN} # kubectl get secret
+          serviceAccountToken: ${K8S_MINIKUBE_TOKEN} # kubectl get secret
           # dashboardUrl: http://127.0.0.1:64713
           # dashboardApp: standard
           # caData: ${K8S_CONFIG_CA_DATA}
-          caFile: "~/.minikube/ca.pem"
+#          caFile: "~/.minikube/ca.pem"
           # customResources:
           #   - group: 'argoproj.io'
           #     apiVersion: 'v1alpha1'
