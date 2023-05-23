@@ -74,7 +74,7 @@ integrations:
 
 proxy:
   "/argocd/api":
-    target: https://localhost:8080/
+    target: https://argocd.px-dev.mavenwave.dev/api/v1/
     changeOrigin: true
     secure: false
     headers:
