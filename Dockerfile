@@ -27,7 +27,7 @@ ENV CYPRESS_INSTALL_BINARY=0
 RUN --mount=type=cache,target=/home/node/.cache/yarn,sharing=locked,uid=1000,gid=1000 \
     yarn install --frozen-lockfile --network-timeout 600000
 
-COPY --chown=node:node
+COPY --chown=node:node . .
 
 RUN yarn tsc
 RUN yarn --cwd packages/backend build
