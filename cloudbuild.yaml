@@ -11,7 +11,7 @@ steps:
   args:
     - --destination=us.gcr.io/px-test1-project-ici/px-backstage:$COMMIT_SHA
     - --destination=us.gcr.io/px-test1-project-ici/px-backstage:latest
-    - --dockerfile=./packages/backend/Dockerfile
+    - --dockerfile=./Dockerfile
     - --context=.
     - --cache=true
     - --cache-ttl=240h
