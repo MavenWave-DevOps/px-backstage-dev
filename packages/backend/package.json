@@ -36,6 +36,7 @@
     "@backstage/plugin-techdocs-backend": "^1.7.1",
     "@internal/plugin-argocd-autopilot-backend-backend": "^0.1.0",
     "@roadiehq/scaffolder-backend-module-http-request": "^3.2.0",
+    "@types/fs-extra": "^11.0.2",
     "app": "link:../app",
     "better-sqlite3": "^7.5.0",
     "dockerode": "^3.3.1",

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {useEffect, useState} from 'react';
 import { useEntity } from '@backstage/plugin-catalog-react';
 // import Button from "./CustomButtonComponent";
@@ -61,7 +62,7 @@ export const ExampleComponent = () => {
         setAction(event.target.value as string);
     };
 
-    const handleChecked = (event) => {
+    const handleChecked = (event: any) => {
         // updating an object instead of a Map
         setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
     }

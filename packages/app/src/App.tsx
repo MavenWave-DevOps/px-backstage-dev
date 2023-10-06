@@ -29,9 +29,7 @@ import {
   CostInsightsProjectGrowthInstructionsPage,
   CostInsightsLabelDataflowInstructionsPage,
 } from '@backstage/plugin-cost-insights';
-import { GraphiQLPage } from '@backstage/plugin-graphiql';
 import { darkTheme, lightTheme } from '@backstage/theme';
-import { apertureTheme } from './themes/aperture.ts';
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { UserSettingsPage } from '@backstage/plugin-user-settings';
@@ -122,16 +120,6 @@ const app = createApp({
         </ThemeProvider>
       ),
     },
-    {
-      id: 'aperture',
-      title: 'Aperture',
-      variant: 'light',
-      Provider: ({ children }) => (
-        <ThemeProvider theme={apertureTheme}>
-          <CssBaseline>{children}</CssBaseline>
-        </ThemeProvider>
-      ),
-    },
   ],
 });
 
@@ -167,7 +155,6 @@ const routes = (
         <ReportIssue />
       </TechDocsAddons>
     </Route>
-    <Route path="/graphiql" element={<GraphiQLPage />} />
 
     <Route path="/my-plugin" element={<EntityMyPluginContent />}/>
 

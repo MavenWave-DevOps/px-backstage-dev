@@ -8,15 +8,18 @@ export type ArgoResponse = {
     link: string,
 }
 
+
 export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
     private readonly apiUrl: string
     private readonly discoveryApi: DiscoveryApi;
-    constructor(options: {
+
+    constructor(
+      options: {
         discoveryApi: DiscoveryApi;
         apiUrl: string;
-    }) {
+      }) {
         this.discoveryApi = options.discoveryApi;
-        this.apiUrl = options.apiUrl
+        this.apiUrl = options.apiUrl;
     }
     // private async handleResponse(response: Response): Promise<any> {
     //     if (!response.ok) {
@@ -97,8 +100,9 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
         return [['Form is invalid']]
     }
 
-    async PostArgoApi(action: string, manType: string, checkedItems: any,): Promise<ArgoResponse> {
+    async PostArgoApi(action: string, manType: string, checkedItems: any): Promise<ArgoResponse> {
         console.log("Api Url: ", this.apiUrl)
+        console.log("Discovery Api: ", this.discoveryApi)
         console.log(action)
         console.log("Checked Items are: ", checkedItems)
         const tokenPath=".github_token"
@@ -153,7 +157,7 @@ export class ArgocdAutopilotBackendClient implements ArgocdAutopilotApi {
                 returnMessage = {
                     message: JSON.parse(formattedResponse[0])["message"],
                     logs: logArr,
-                    link: JSON.parse(formattedResponse[0])["link"]
+                    link: JSON.parse(formattedResponse[0])["link"],
                 }
                 console.log(returnMessage.logs)
                 //return { status: returnMessage.message};

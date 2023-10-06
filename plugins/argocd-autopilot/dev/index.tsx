@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { Entity } from '@backstage/catalog-model';
 import { EntityProvider } from '@backstage/plugin-catalog-react';
@@ -5,6 +6,7 @@ import { createDevApp } from '@backstage/dev-utils';
 import { TestApiProvider } from '@backstage/test-utils';
 import { argocdAutopilotPlugin, EntityArgocdAutopilotContent } from '../src/plugin';
 import { ArgocdAutopilotApi, argocdAutopilotApiRef } from "../src";
+import { DiscoveryApi } from '@backstage/core-plugin-api';
 // import * as fs from 'fs';
 // import * as stream from 'stream';
 import axios from 'axios';
@@ -105,7 +107,7 @@ class MockPluginClient implements ArgocdAutopilotApi {
         return [['Form is invalid']]
     }
 
-    async PostArgoApi(action: string, manType: string, checkedItems: any, apiUrl: string,): Promise<ArgoResponse> {
+    async PostArgoApi(action: string, manType: string, checkedItems: any): Promise<ArgoResponse> {
         console.log("Called Post func")
         console.log(action)
         console.log("Checked Items are: ", checkedItems)
@@ -136,7 +138,6 @@ class MockPluginClient implements ArgocdAutopilotApi {
             try {
                 axios.defaults.adapter = require('axios/lib/adapters/http')
 
-
                 const d = {
                     //'https://github.com/tony-mw/autotest-argo-demo.git'
                     'git-repo': repo,
@@ -145,8 +146,9 @@ class MockPluginClient implements ArgocdAutopilotApi {
                     'args': trimmedArgsArr
                 }
                 console.log("data: ", d)
+                console.log("DiscoveryApi: ", this.discoveryApi)
                 const {data} = await axios.post<string>(
-                    apiUrl,
+                    this.apiUrl,
                     d,
                     {
                         headers: {'Content-Type': 'application/json'},
@@ -163,7 +165,7 @@ class MockPluginClient implements ArgocdAutopilotApi {
                     link: JSON.parse(formattedResponse[0])["link"]
                 }
                 console.log(returnMessage.logs)
-                //return { status: returnMessage.message};
+                // return { status: returnMessage.message};
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     console.log('error message: ', error.message);

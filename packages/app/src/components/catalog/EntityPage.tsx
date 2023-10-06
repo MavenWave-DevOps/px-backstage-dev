@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Grid } from '@material-ui/core';
-import BadgeIcon from '@material-ui/icons/CallToAction';
 import {
   EntityApiDefinitionCard,
   EntityConsumedApisCard,
@@ -9,7 +8,6 @@ import {
   EntityProvidedApisCard,
   EntityProvidingComponentsCard,
 } from '@backstage/plugin-api-docs';
-import { EntityBadgesDialog } from '@backstage/plugin-badges';
 import {
   EntityAboutCard,
   EntityDependsOnComponentsCard,

@@ -1,6 +1,5 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-backend';
-// import fs from 'fs-extra';
-import * as fs from 'fs';
+import fs from 'fs-extra';
 
 export const createNewFileAction = () => {
     return createTemplateAction<{ contents: string; filename: string }>({

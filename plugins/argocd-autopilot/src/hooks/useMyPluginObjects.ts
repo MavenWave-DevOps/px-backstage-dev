@@ -10,8 +10,8 @@ export const useMyPluginObjects = () => {
     const myPluginApi = useApi(argocdAutopilotApiRef);
     const getObjects = async () => {
         try {
-            const resp = await myPluginApi.PostArgoApi();
-            setStatus(resp.status);
+            const resp = await myPluginApi.PostArgoApi("","","");
+            setStatus(resp.message);
         } catch (e) {
             setError(true);
         } finally {
@@ -22,7 +22,8 @@ export const useMyPluginObjects = () => {
         getObjects();
     });
     return {
-        status
+      error,
+      loading,
+      status,
     }
 }
-@ts-ignore

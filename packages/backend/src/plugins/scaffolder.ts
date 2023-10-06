@@ -22,7 +22,7 @@ export default async function createPlugin(
   });
 
   const actions = [
-    // ...builtInActions,
+    ...builtInActions,
     createNewFileAction(),
     createHttpBackstageAction({config: env.config}),
     ...createBuiltinActions({

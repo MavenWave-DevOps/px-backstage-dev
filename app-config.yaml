@@ -92,6 +92,7 @@ proxy:
 # and an external cloud storage when deploying techdocs for production use-case.
 # https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
 auth:
+  environment: development
   providers: 
     github:
       development:
