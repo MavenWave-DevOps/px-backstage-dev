@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FROM node:16-bullseye-slim
+FROM node:16-bullseye-slim AS packages
 
 WORKDIR /app
 COPY package.json yarn.lock ./
