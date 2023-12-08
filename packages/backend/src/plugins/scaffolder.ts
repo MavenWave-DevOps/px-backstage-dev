@@ -25,12 +25,6 @@ export default async function createPlugin(
     ...builtInActions,
     createNewFileAction(),
     createHttpBackstageAction({config: env.config}),
-    ...createBuiltinActions({
-        integrations,
-        config: env.config,
-        catalogClient,
-        reader: env.reader,
-    }),
   ];
 
   return await createRouter({
