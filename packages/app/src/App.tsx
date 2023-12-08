@@ -52,6 +52,8 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
 import { googleAuthApiRef } from '@backstage/core-plugin-api';
 import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
+// import { CostInsightsPage } from '@internal/plugin-cost-insights';
+import { GcpCostPage } from '@internal/plugin-gcp-cost';
 
 const githubProvider: SignInProviderConfig = {
     id: 'github-auth-provider',
@@ -174,6 +176,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/my-plugin" element={<EntityMyPluginContent />} />
+    <Route path="/gcp-cost" element={<GcpCostPage />} />
   </FlatRoutes>
 );
 
